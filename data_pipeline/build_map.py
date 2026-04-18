@@ -29,7 +29,7 @@ import pandas as pd
 
 from pipeline_utils import PIPELINE_DIR
 
-OUT_HTML = PIPELINE_DIR.parent / "site" / "map.html"
+OUT_HTML = PIPELINE_DIR.parent / "docs" / "map.html"
 ANALYSIS_XLSX = PIPELINE_DIR / "coc_analysis_ready.xlsx"
 
 STATE_CENTROIDS = {

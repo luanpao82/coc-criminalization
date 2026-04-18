@@ -32,7 +32,7 @@ import shutil
 
 from pipeline_utils import DATA_DIR, PIPELINE_DIR
 
-SITE_DIR = PIPELINE_DIR.parent / "site"
+SITE_DIR = PIPELINE_DIR.parent / "docs"
 SITE_DIR.mkdir(parents=True, exist_ok=True)
 DOWNLOADS_DIR = SITE_DIR / "downloads"
 
