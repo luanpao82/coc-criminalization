@@ -1,0 +1,5 @@
+iter,date,extractor_version,weighted_acc,adjusted_acc,A_acc,B_acc,C_acc,scope,total_diffs,top_error,fix_applied,regression_pass
+1,2026-04-17,pdf_native_v0.1,0.9923,0.9923,0.9980,,0.8500,5-CoC pilot 1A+1B1 (520 fields),4,E1_wrap_capture_missing,baseline_run,
+2,2026-04-17,pdf_native_v0.2,0.9942,0.9942,0.9980,,0.9375,5-CoC pilot 1A+1B1 (520 fields),3,E3_manual_errors_only,wrap_capture_for_1A_2_3_4,pass
+3,2026-04-17,pdf_native_v0.3,0.9930,0.9930,0.9956,,0.9375,5-CoC pilot 1A+1B1+1C1-3+1D1-4-6+1D9b+1C4c+1C5c+1C7c+1D10a+2A5+scalars (1210 fields),5,E3_manual_errors_only,expand_to_1C_1D_sections_1D4_criminalization,pass
+4,2026-04-17,pdf_native_v0.4,0.9662,0.9825,0.9708,0.9436,0.9490,full 2024 corpus (292 CoCs, 69361 fields),2324,E3_manual_blank_auto_filled,corpus_wide_run_with_percent_and_label_normalization,pass

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Descriptives &amp; Grants Pass · CoC Criminalization Project</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1a1a1a; --muted: #666; --accent: #0366d6;
+  --line: #e5e5e5; --hi: #f7f7f7; --good: #17813c; --bad: #c53030;
+  --warn: #b68400; --panel: #f0f6ff; --callout: #fff9e6;
+}
+* { box-sizing: border-box; }
+body { font-family: Georgia, "Times New Roman", serif;
+       max-width: 860px; margin: 0 auto; padding: 2em 1.2em 4em;
+       color: var(--fg); background: var(--bg); line-height: 1.7; font-size: 17px; }
+header { border-bottom: 2px solid var(--line); padding-bottom: 1.2em; margin-bottom: 2em; }
+header .proj { color: var(--muted); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 0.3em 0 0.2em; font-size: 2em; letter-spacing: -0.01em; line-height: 1.25; }
+h2 { margin-top: 2.5em; padding-bottom: 0.2em; border-bottom: 1px solid var(--line); font-size: 1.5em; }
+h3 { margin-top: 2em; font-size: 1.2em; color: #222; }
+h4 { margin-top: 1.5em; font-size: 1.02em; color: #333; }
+p, li { line-height: 1.7; }
+.lead { color: var(--muted); font-size: 1.05em; font-style: italic; }
+nav.main { display: flex; gap: 1.2em; margin: 0.6em 0 0; flex-wrap: wrap;
+           font-family: -apple-system, system-ui, sans-serif; font-size: 0.92em; }
+nav.main a { color: var(--accent); text-decoration: none; }
+nav.main a.active { color: var(--fg); font-weight: 600; }
+nav.main a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 0.93em;
+        font-family: -apple-system, system-ui, sans-serif; }
+th, td { padding: 7px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { background: var(--hi); font-weight: 600; }
+tr:hover { background: #fafafa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.downloads td:first-child { white-space: nowrap; width: 1%; }
+table.downloads td:first-child a { font-weight: 500; }
+table.downloads td:nth-child(2) { white-space: nowrap; width: 1%; color: var(--muted); }
+table.downloads td:last-child { color: var(--muted); }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px;
+         font-size: 0.8em; background: var(--hi); color: var(--muted);
+         font-family: -apple-system, system-ui, sans-serif; }
+.badge.good { background: #eafaef; color: var(--good); }
+.badge.warn { background: #fff7e0; color: var(--warn); }
+.badge.bad { background: #fde8e8; color: var(--bad); }
+.stat { display: inline-block; background: var(--hi); padding: 0.9em 1.3em;
+        border-radius: 6px; margin: 0.3em 0.3em 0.3em 0; min-width: 200px;
+        font-family: -apple-system, system-ui, sans-serif; }
+.stat .label { color: var(--muted); font-size: 0.82em; margin-bottom: 0.3em; }
+.stat .value { font-size: 1.7em; font-weight: 600; color: var(--fg); }
+code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px;
+       font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; }
+pre { background: #f5f7fa; padding: 1.2em; border-radius: 6px; overflow-x: auto;
+      font-size: 0.87em; line-height: 1.55;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      border-left: 3px solid var(--accent); }
+pre code { background: none; padding: 0; }
+blockquote { background: var(--callout); border-left: 4px solid #c8a030;
+             padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+.callout { background: var(--panel); border-left: 4px solid var(--accent);
+           padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+.callout-title { font-weight: 600; color: var(--accent); margin-bottom: 0.4em;
+                 font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+footer { margin-top: 5em; padding-top: 1.4em; border-top: 1px solid var(--line);
+         color: var(--muted); font-size: 0.85em;
+         font-family: -apple-system, system-ui, sans-serif; }
+.card-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 1em 0;
+            font-family: -apple-system, system-ui, sans-serif; }
+.card { flex: 1; min-width: 260px; background: var(--hi); padding: 1.2em;
+        border-radius: 6px; border: 1px solid var(--line); }
+.card h3 { margin: 0 0 0.4em; font-family: Georgia, serif; }
+.breadcrumb { font-size: 0.8em; color: var(--muted); margin-bottom: 0.5em;
+              font-family: -apple-system, system-ui, sans-serif; }
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); text-decoration: underline; }
+.hub-card { display: block; background: white; border: 1px solid var(--line);
+            border-radius: 8px; padding: 1.3em 1.4em; text-decoration: none;
+            color: inherit; transition: all 0.2s ease; margin-bottom: 0.8em; }
+.hub-card:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(3,102,214,0.08);
+                  transform: translateY(-1px); }
+.hub-card h3 { margin: 0 0 0.4em; color: var(--accent); font-family: Georgia, serif; font-size: 1.15em; }
+.hub-card p { margin: 0.3em 0 0; color: var(--fg); font-size: 0.95em; line-height: 1.55; }
+.hub-card .meta { color: var(--muted); font-size: 0.82em; margin-top: 0.5em;
+                  font-family: -apple-system, system-ui, sans-serif; }
+.hub-card .num-tag { display: inline-block; width: 1.5em; height: 1.5em;
+                     background: var(--accent); color: white; border-radius: 50%;
+                     text-align: center; line-height: 1.5em; font-weight: 700;
+                     font-size: 0.75em; margin-right: 0.4em;
+                     font-family: -apple-system, sans-serif; vertical-align: 2px; }
+.hub-grid { display: grid; gap: 0.9em; grid-template-columns: 1fr;
+            margin: 1em 0 2em; }
+@media (min-width: 700px) { .hub-grid { grid-template-columns: 1fr 1fr; } }
+.track { background: var(--hi); border-radius: 8px; padding: 1.1em 1.3em; margin: 0.7em 0; }
+.track h3 { margin-top: 0; color: var(--accent); font-family: Georgia, serif; }
+.track ol { margin: 0.5em 0; padding-left: 1.3em; }
+.findings-box { background: #f0faf3; border-left: 4px solid var(--good);
+                padding: 1em 1.3em; border-radius: 0 8px 8px 0; margin: 1.3em 0; }
+.findings-box h3 { margin-top: 0; color: var(--good); font-family: Georgia, serif; }
+.findings-box ul { margin: 0.4em 0 0; padding-left: 1.3em; }
+.card p { font-size: 0.95em; }
+.filterbox { margin: 0.8em 0; font-family: -apple-system, system-ui, sans-serif; }
+.filterbox input, .filterbox select { padding: 7px 11px; border: 1px solid var(--line);
+                                       border-radius: 4px; font-size: 0.95em; }
+.filterbox input { width: 360px; }
+details > summary { cursor: pointer; color: var(--accent); margin: 0.5em 0;
+                    font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+.hint { font-size: 0.88em; color: var(--muted); font-style: italic; }
+.quote { background: #f9f6f0; border-left: 3px solid #d6c389;
+         padding: 0.7em 1em; margin: 0.8em 0; font-style: italic;
+         font-size: 0.93em; border-radius: 0 3px 3px 0; }
+.step-list { list-style: none; padding-left: 0; counter-reset: step; }
+.step-list > li { counter-increment: step; position: relative; padding: 0.6em 0 0.6em 3em; }
+.step-list > li::before { content: counter(step); position: absolute; left: 0; top: 0.7em;
+                          width: 2em; height: 2em; border-radius: 50%;
+                          background: var(--accent); color: white;
+                          text-align: center; line-height: 2em; font-weight: 600;
+                          font-family: -apple-system, sans-serif; font-size: 0.9em; }
+</style>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head><body>
+<header>
+  <div class="proj">CoC Criminalization &amp; PLE Engagement · Lee &amp; Kim, UCF</div>
+  
+  <h1>Descriptives &amp; Grants Pass</h1>
+  <p class="lead">How the anti-criminalization index moved year-to-year, and what that tells us about the 2024 Supreme Court ruling.</p>
+  <nav class="main"><a class="" href="index.html">Overview</a><a class="" href="data.html">Data development and cleaning</a><a class="" href="design.html">Research design and measurement</a><a class="active" href="descriptive.html">Descriptive stats</a><a class="" href="results.html">Analysis results</a></nav>
+</header>
+
+    <p class="lead">Descriptive statistics for the anti-criminalization
+    activity index (<code>crim_activity_index</code>) across FY2022, FY2023,
+    and FY2024 — with an explicit view into <em>what</em> shifted after the
+    June 2024 Supreme Court ruling in <em>City of Grants Pass v. Johnson</em>.</p>
+
+    <h2>Grants Pass as the policy shock</h2>
+    <div class="callout">
+      <p><strong><em>City of Grants Pass v. Johnson</em></strong> (603 U.S. ___,
+      decided June 28, 2024) held 6–3 that enforcing public-camping ordinances
+      against people experiencing homelessness <em>does not</em> constitute
+      cruel and unusual punishment under the Eighth Amendment. The decision
+      overruled the Ninth Circuit's <em>Martin v. Boise</em> (2019) framework
+      that had effectively blocked anti-camping enforcement in nine western
+      states when shelter space was unavailable.</p>
+      <p>The FY2024 HUD CoC Application deadline was <strong>October 30, 2024</strong> —
+      four months after the ruling. FY2024 reports therefore capture CoCs'
+      first documented anti-criminalization posture after the legal landscape
+      shifted. The design exploits this timing as a quasi-exogenous shock.</p>
+    </div>
+
+    <h2>Sample</h2>
+    <table><thead><tr><th>Fiscal year</th><th class='num'>Records</th><th class='num'>Unique CoCs</th><th class='num'>IV-coded</th><th class='num'>Nonprofit</th><th class='num'>Government</th><th class='num'>% Nonprofit</th><th class='num'>With DV</th></tr></thead><tbody><tr><td>FY2022</td><td class='num'>166</td><td class='num'>166</td><td class='num'>165</td><td class='num'>82</td><td class='num'>83</td><td class='num'>49.4%</td><td class='num'>141</td></tr><tr><td>FY2023</td><td class='num'>193</td><td class='num'>193</td><td class='num'>193</td><td class='num'>97</td><td class='num'>96</td><td class='num'>50.3%</td><td class='num'>186</td></tr><tr><td>FY2024</td><td class='num'>292</td><td class='num'>292</td><td class='num'>288</td><td class='num'>153</td><td class='num'>135</td><td class='num'>52.4%</td><td class='num'>285</td></tr></tbody></table>
+    <p class="hint">FY2024 is the largest because HUD folded YHDP recipients
+    into the main competition that year. Nonprofit/government shares are
+    remarkably stable (49% → 50% → 52% nonprofit).</p>
+
+    <h2>Activity index — means over time</h2>
+    <div id="ts_chart" style="width:100%"></div>
+    <p>The yellow band marks the post-Grants Pass period. Both groups show
+    essentially <strong>parallel pre-trends</strong> (FY22 → FY23) followed by
+    a <strong>sharp, nearly identical jump</strong> in FY2024.</p>
+
+    <h2>Descriptive table</h2>
+    <table><thead><tr><th>Group / Year</th><th class='num'>N</th><th class='num'>Mean</th><th class='num'>Median</th><th class='num'>SD</th><th class='num'>Min</th><th class='num'>Max</th><th class='num'>At 1.0</th></tr></thead><tbody><tr style='background:#eef4fb'><td colspan='8'><strong>FY2022</strong></td></tr><tr><td>  Overall</td><td class='num'>141</td><td class='num'>0.713</td><td class='num'>0.667</td><td class='num'>0.269</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>55 (39%)</td></tr><tr><td>  Nonprofit-led</td><td class='num'>74</td><td class='num'>0.703</td><td class='num'>0.667</td><td class='num'>0.244</td><td class='num'>0.17</td><td class='num'>1.00</td><td class='num'>24 (32%)</td></tr><tr><td>  Government-led</td><td class='num'>67</td><td class='num'>0.724</td><td class='num'>0.833</td><td class='num'>0.295</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>31 (46%)</td></tr><tr style='background:#eef4fb'><td colspan='8'><strong>FY2023</strong></td></tr><tr><td>  Overall</td><td class='num'>186</td><td class='num'>0.729</td><td class='num'>0.667</td><td class='num'>0.264</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>80 (43%)</td></tr><tr><td>  Nonprofit-led</td><td class='num'>94</td><td class='num'>0.731</td><td class='num'>0.667</td><td class='num'>0.248</td><td class='num'>0.17</td><td class='num'>1.00</td><td class='num'>38 (40%)</td></tr><tr><td>  Government-led</td><td class='num'>92</td><td class='num'>0.726</td><td class='num'>0.667</td><td class='num'>0.280</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>42 (46%)</td></tr><tr style='background:#eef4fb'><td colspan='8'><strong>FY2024</strong></td></tr><tr><td>  Overall</td><td class='num'>285</td><td class='num'>0.812</td><td class='num'>1.000</td><td class='num'>0.260</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>166 (58%)</td></tr><tr><td>  Nonprofit-led</td><td class='num'>152</td><td class='num'>0.816</td><td class='num'>1.000</td><td class='num'>0.249</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>87 (57%)</td></tr><tr><td>  Government-led</td><td class='num'>132</td><td class='num'>0.808</td><td class='num'>1.000</td><td class='num'>0.273</td><td class='num'>0.00</td><td class='num'>1.00</td><td class='num'>79 (60%)</td></tr></tbody></table>
+    <p class="hint">Note the dramatic rise in the "at 1.0" count (all-Yes CoCs):
+    55 (39%) in FY2022 → 80 (43%) in FY2023 → <strong>166 (58%)</strong> in FY2024.</p>
+
+    <h2>Year-over-year changes (Δ mean)</h2>
+    <table><thead><tr><th>Group</th><th class='num'>FY22 → FY23 (pre)</th><th class='num'>FY23 → FY24 (post-Grants Pass)</th><th class='num'>FY22 → FY24 (total)</th></tr></thead><tbody><tr><td>Overall</td><td class='num'>+0.0157</td><td class='num'><strong>+0.0832</strong></td><td class='num'>+0.0989</td></tr><tr><td>Nonprofit-led</td><td class='num'>+0.0278</td><td class='num'><strong>+0.0853</strong></td><td class='num'>+0.1131</td></tr><tr><td>Government-led</td><td class='num'>+0.0025</td><td class='num'><strong>+0.0817</strong></td><td class='num'>+0.0842</td></tr></tbody></table>
+    <div id="delta_chart" style="width:100%"></div>
+    <p>The pre-period change (FY22 → FY23) was near zero for government-led CoCs
+    (+0.003) and modest for nonprofit-led (+0.028). The post-shock change
+    (FY23 → FY24) is <strong>nearly identical for both groups</strong>
+    (nonprofit +0.085, government +0.082). The difference-in-differences is
+    +0.004 — statistically indistinguishable from zero (wild-cluster bootstrap
+    p = 0.819). <em>See <a href="results.html">Analysis results</a>
+    for the full multilevel DiD.</em></p>
+
+    <h2>Distribution shift</h2>
+    <div id="dist_chart" style="width:100%"></div>
+    <p>Each bar shows the share of CoCs landing in each discrete value of the
+    activity index within a given year. Two things are visible:</p>
+    <ul>
+      <li>The <strong>0.50 bucket shrinks</strong> in FY2024 (FY22 38% →
+      FY23 39% → FY24 15%): fewer CoCs end up at the "half-yes" level.</li>
+      <li>The <strong>1.00 (all-Yes) bucket balloons</strong> in FY2024
+      (FY22 39% → FY23 43% → FY24 58%): more CoCs report maximal
+      anti-criminalization activity.</li>
+    </ul>
+    <p>This is a <em>bimodal shift</em> — CoCs aren't incrementally adding one
+    more Yes; they're jumping from "half" to "all". Consistent with an
+    instrument-change story (new FY24 form items are easier to check "Yes" to)
+    layered on top of whatever substantive post-Grants Pass response
+    exists.</p>
+
+    <h2>Which cells drove the change?</h2>
+    <div id="heat_chart" style="width:100%"></div>
+    <p>This heatmap reveals the <strong>single most important descriptive
+    finding of the paper</strong>: the FY2024 jump in the activity index is
+    <strong>almost entirely produced by the three "Implementation" cells</strong>
+    (rows 1–3 × column 2), not the "Policymaker engagement" cells.</p>
+    <table style="font-size: 0.92em;">
+      <thead><tr><th>Cell</th><th class='num'>FY2022</th><th class='num'>FY2023</th><th class='num'>FY2024</th><th class='num'>Δ FY23→24</th></tr></thead>
+      <tbody>
+        <tr><td>Row 1 · Policymaker engagement</td><td class='num'>97%</td><td class='num'>97%</td><td class='num'>94%</td><td class='num'>−3 pt</td></tr>
+        <tr><td>Row 1 · <strong>Implementation</strong></td><td class='num'>47%</td><td class='num'>53%</td><td class='num'><strong>76%</strong></td><td class='num'><strong>+23 pt</strong></td></tr>
+        <tr><td>Row 2 · Policymaker engagement</td><td class='num'>96%</td><td class='num'>96%</td><td class='num'>94%</td><td class='num'>−2 pt</td></tr>
+        <tr><td>Row 2 · <strong>Implementation</strong></td><td class='num'>50%</td><td class='num'>52%</td><td class='num'><strong>67%</strong></td><td class='num'><strong>+15 pt</strong></td></tr>
+        <tr><td>Row 3 · Policymaker engagement</td><td class='num'>91%</td><td class='num'>93%</td><td class='num'>93%</td><td class='num'>0 pt</td></tr>
+        <tr><td>Row 3 · <strong>Implementation</strong></td><td class='num'>46%</td><td class='num'>46%</td><td class='num'><strong>64%</strong></td><td class='num'><strong>+18 pt</strong></td></tr>
+      </tbody>
+    </table>
+    <p><strong>Why this matters for interpretation:</strong> the
+    "Implementation" column was labeled differently in each form:</p>
+    <ul>
+      <li>FY2022/23: "Reverse existing criminalization policies" (what you must <em>have undone</em>)</li>
+      <li>FY2024: "Implemented Laws/Policies/Practices that Prevent Criminalization" (what you have <em>implemented</em>)</li>
+    </ul>
+    <p>FY2024's wording is substantially easier to check "Yes" to — any
+    adopted policy, even one existing for years, qualifies. FY2022/23's
+    wording required evidence that an <em>existing criminalization policy was
+    reversed</em>, which is much more stringent. This is why the jump is
+    concentrated entirely in column 2 and why we reach this conclusion:</p>
+
+    <div class="callout">
+      <div class="callout-title">What we're actually observing</div>
+      <p>The +0.083 FY23→FY24 jump in the overall activity index is
+      <strong>partly an instrument artifact</strong>, <strong>partly a real
+      response</strong> to Grants Pass, and in any case
+      <strong>affects nonprofit-led and government-led CoCs equivalently</strong>.
+      The "Policymaker engagement" column — which asked essentially the same
+      question across all three years — actually <em>declined slightly</em>
+      in FY2024 (~3-point drop). The increase is concentrated in the
+      "Implementation" column, whose wording changed in ways that mechanically
+      make "Yes" easier to report.</p>
+      <p>This is why the paper should:</p>
+      <ol>
+        <li>Report cell-level descriptives to make the instrument effect transparent;</li>
+        <li>Rely on DiD (which differences out common shifts) rather than raw year-on-year comparisons;</li>
+        <li>Treat the DiD null as the primary finding — <em>both groups moved identically</em>,
+        so even after the instrument change, leadership type does not predict differential response.</li>
+      </ol>
+    </div>
+
+    
+    <h2>Paired (within-CoC) changes</h2>
+    <p>Restricting to the 100 CoCs observed in all 3 years —
+    the cleanest look at <em>within-CoC</em> change:</p>
+    <table>
+      <thead><tr><th></th><th class='num'>Mean</th></tr></thead>
+      <tbody>
+        <tr><td>FY2022 (pre)</td><td class='num'>0.690</td></tr>
+        <tr><td>FY2023 (pre)</td><td class='num'>0.723</td></tr>
+        <tr><td>FY2024 (post-Grants Pass)</td><td class='num'>0.818</td></tr>
+        <tr><td><strong>Mean paired Δ (FY24 − FY23)</strong></td>
+            <td class='num'><strong>+0.095</strong> (SD 0.309)</td></tr>
+        <tr><td>Share of CoCs that increased</td>
+            <td class='num'>38%</td></tr>
+        <tr><td>Share that decreased</td>
+            <td class='num'>21%</td></tr>
+        <tr><td>Share unchanged</td>
+            <td class='num'>41%</td></tr>
+      </tbody>
+    </table>
+    <p class="hint">Only 38% of CoCs actually
+    raised their score FY23→FY24. The +0.095 mean increase
+    is driven by a subset making large jumps while 41%
+    stayed exactly the same — a signature consistent with the HUD 1D-4 form
+    redesign producing a step-function shift for CoCs that updated their reporting
+    practices, rather than a gradual substantive behavior change.</p>
+    
+
+    <h2>Bottom line</h2>
+    <ul>
+      <li><strong>Pre-period (FY22 → FY23):</strong> roughly stable activity index, with nearly
+      parallel trajectories for nonprofit and government CoCs.</li>
+      <li><strong>Post-Grants Pass (FY23 → FY24):</strong> both groups jump by
+      ~0.08 points. The jump is <em>concentrated in the "Implementation" cells</em>
+      whose wording changed to be easier to check Yes.</li>
+      <li><strong>No differential response</strong> by lead-agency type
+      (DiD ≈ 0, p<sub>boot</sub> = 0.819). The theoretical prediction that
+      nonprofit-led CoCs should more aggressively reject criminalization is
+      not supported.</li>
+      <li><strong>The descriptive story is consistent with — but does not
+      prove — an instrument-change interpretation.</strong> External behavioral
+      data (NLHR ordinance counts, FBI UCR vagrancy arrests) are the next step
+      to validate whether the FY2024 jump reflects real behavior change.</li>
+    </ul>
+
+    <script>
+    Plotly.newPlot("ts_chart", [{"type": "scatter", "mode": "lines+markers+text", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7128, 0.7285, 0.8117], "text": ["0.713", "0.729", "0.812"], "textposition": "top center", "name": "Mean", "line": {"width": 3, "color": "#0366d6"}, "marker": {"size": 10, "color": "#0366d6"}, "error_y": {"type": "data", "visible": true, "array": [0.044295999999999995, 0.037828, 0.030184], "thickness": 1.5}}, {"type": "scatter", "mode": "lines+markers", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7027, 0.7305, 0.8158], "name": "Nonprofit-led", "line": {"width": 2.5, "color": "#17813c", "dash": "solid"}, "marker": {"size": 9, "color": "#17813c"}, "error_y": {"type": "data", "visible": true, "array": [0.055664000000000005, 0.050176, 0.039591999999999995], "thickness": 1, "color": "#17813c"}}, {"type": "scatter", "mode": "lines+markers", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7239, 0.7264, 0.8081], "name": "Government-led", "line": {"width": 2.5, "color": "#c53030", "dash": "solid"}, "marker": {"size": 9, "color": "#c53030"}, "error_y": {"type": "data", "visible": true, "array": [0.070756, 0.057232, 0.046452], "thickness": 1, "color": "#c53030"}}],
+                   {"title": "Anti-criminalization activity index \u2014 yearly means (\u00b11.96\u00b7SE)", "xaxis": {"title": "Fiscal year"}, "yaxis": {"title": "Mean index (0\u20131)", "range": [0.6, 0.9]}, "height": 420, "legend": {"orientation": "h", "y": -0.2}, "shapes": [{"type": "rect", "xref": "x", "yref": "paper", "x0": 1.5, "x1": 2.5, "y0": 0, "y1": 1, "fillcolor": "#fff4cc", "opacity": 0.35, "line": {"width": 0}, "layer": "below"}], "annotations": [{"x": 2, "y": 0.96, "xref": "x", "yref": "paper", "showarrow": false, "text": "Post-Grants Pass \u00b7 HUD 1D-4 redesign", "font": {"color": "#8a6d1f", "size": 11}}]}, {responsive: true});
+    Plotly.newPlot("dist_chart", [{"type": "bar", "name": "FY2022 (n=141)", "x": ["0.00", "0.17", "0.33", "0.50", "0.67", "0.83", "1.00"], "y": [2.1, 1.4, 4.3, 37.6, 7.1, 8.5, 39.0], "text": ["2.1%", "1.4%", "4.3%", "37.6%", "7.1%", "8.5%", "39.0%"], "textposition": "outside", "marker": {"color": "#c9c9c9"}}, {"type": "bar", "name": "FY2023 (n=186)", "x": ["0.00", "0.17", "0.33", "0.50", "0.67", "0.83", "1.00"], "y": [1.6, 0.5, 3.8, 39.2, 5.9, 5.9, 43.0], "text": ["1.6%", "0.5%", "3.8%", "39.2%", "5.9%", "5.9%", "43.0%"], "textposition": "outside", "marker": {"color": "#7fbfff"}}, {"type": "bar", "name": "FY2024 (n=285)", "x": ["0.00", "0.17", "0.33", "0.50", "0.67", "0.83", "1.00"], "y": [2.1, 1.8, 3.5, 15.1, 13.0, 6.3, 58.2], "text": ["2.1%", "1.8%", "3.5%", "15.1%", "13.0%", "6.3%", "58.2%"], "textposition": "outside", "marker": {"color": "#0366d6"}}],
+                   {"title": "Distribution of activity index by year (% of CoCs in each bucket)", "xaxis": {"title": "Activity index bucket"}, "yaxis": {"title": "Share of CoCs in that year (%)", "range": [0, 65]}, "barmode": "group", "height": 400, "legend": {"orientation": "h", "y": -0.15}}, {responsive: true});
+    Plotly.newPlot("delta_chart", [{"type": "bar", "name": "Nonprofit-led", "x": ["FY22 \u2192 FY23 (pre-period)", "FY23 \u2192 FY24 (post-Grants Pass)"], "y": [0.0278, 0.0853], "text": ["+0.028", "+0.085"], "textposition": "outside", "marker": {"color": "#17813c"}}, {"type": "bar", "name": "Government-led", "x": ["FY22 \u2192 FY23 (pre-period)", "FY23 \u2192 FY24 (post-Grants Pass)"], "y": [0.0025, 0.0817], "text": ["+0.003", "+0.082"], "textposition": "outside", "marker": {"color": "#c53030"}}],
+                   {"title": "Year-over-year change by lead-agency type", "yaxis": {"title": "\u0394 mean activity index", "range": [-0.02, 0.12]}, "barmode": "group", "height": 380, "legend": {"orientation": "h", "y": -0.15}}, {responsive: true});
+    Plotly.newPlot("heat_chart", [{"type": "heatmap", "z": [[97.2, 97.3, 93.7], [46.8, 53.2, 75.7], [96.5, 96.2, 94.0], [49.6, 51.6, 66.5], [91.5, 93.0, 92.9], [46.1, 45.7, 63.6]], "x": ["FY2022", "FY2023", "FY2024"], "y": ["Row 1 \u00b7 Policymaker engagement", "Row 1 \u00b7 Implementation", "Row 2 \u00b7 Policymaker engagement", "Row 2 \u00b7 Implementation", "Row 3 \u00b7 Policymaker engagement", "Row 3 \u00b7 Implementation"], "colorscale": [[0, "#fee5d9"], [0.5, "#fcbba1"], [1, "#a50f15"]], "zmin": 40, "zmax": 100, "text": [["97%", "97%", "94%"], ["47%", "53%", "76%"], ["96%", "96%", "94%"], ["50%", "52%", "66%"], ["92%", "93%", "93%"], ["46%", "46%", "64%"]], "texttemplate": "%{text}", "textfont": {"color": "#111"}, "colorbar": {"title": "Yes %", "thickness": 10, "len": 0.7}}],
+                   {"title": "Cell-level Yes rates \u2014 which 1D-4 cells drove the FY2024 jump?", "xaxis": {"side": "top"}, "yaxis": {"autorange": "reversed"}, "height": 360, "margin": {"t": 60, "l": 260, "r": 20, "b": 20}}, {responsive: true});
+    </script>
+    
+<footer>
+  <strong>This site regenerates from the same files the analysis runs on.</strong>
+  Last generated 2026-04-18T04:04:17.
+  Source: <code>data_pipeline/build_site.py</code>. ·
+  Authors: Kyungmin Lee &amp; Hanvit Kim (University of Central Florida).
+</footer>
+</body></html>

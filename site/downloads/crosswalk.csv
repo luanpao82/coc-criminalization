@@ -1,0 +1,114 @@
+canonical_prefix,example_field_id,title_2024,qid_2024,qid_2023,title_2023,qid_2022,title_2022,match_confidence,needs_review,notes
+1a_1a,1a_1a,"CoC Name and Number: AL-500 - Birmingham/Jefferson, St. Clair, Shelby",1A-1,1A-1,"CoC Name and Number: AL-500 - Birmingham/Jefferson, St. Clair, Shelby",1A-1,"CoC Name and Number: AL-500 - Birmingham/Jefferson, St. Clair, Shelby",1.0,FALSE,
+1a_1b,1a_1b,CoC Number,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+1a_2,1a_2,Collaborative Applicant Name: One Roof,1A-2,1A-2,Collaborative Applicant Name: One Roof,1A-2,Collaborative Applicant Name: One Roof,1.0,FALSE,
+1a_3,1a_3,CoC Designation: CA,1A-3,1A-3,CoC Designation: CA,1A-3,CoC Designation: CA,1.0,FALSE,
+1a_4,1a_4,HMIS Lead: One Roof,1A-4,1A-4,HMIS Lead: One Roof,1A-4,HMIS Lead: One Roof,1.0,FALSE,
+1b_1,1b_1_1_meetings,Inclusive Structure and Participation–Participation in Coordinated Entry.,1B-1,1B-1,Inclusive Structure and Participation–Participation in Coordinated Entry.,1B-1,Inclusive Structure and Participation–Participation in Coordinated Entry.,1.0,FALSE,
+1b_1a,1b_1a,Inclusive Structure and Participation–Participation in Coordinated Entry.,1B-1,1B-1,Inclusive Structure and Participation–Participation in Coordinated Entry.,1B-1,Inclusive Structure and Participation–Participation in Coordinated Entry.,1.0,FALSE,
+1b_2,1b_2,Open Invitation for New Members.,1B-2,1B-2,Open Invitation for New Members.,1B-2,Open Invitation for New Members.,1.0,FALSE,
+1b_3,1b_3,CoC’s Strategy to Solicit/Consider Opinions on Preventing and Ending Homelessness.,1B-3,1B-3,CoC’s Strategy to Solicit/Consider Opinions on Preventing and Ending Homelessness.,1B-3,CoC’s Strategy to Solicit/Consider Opinions on Preventing and Ending Homelessness.,1.0,FALSE,
+1b_4,1b_4,Public Notification for Proposals from Organizations Not Previously Awarded CoC Program,1B-4,1B-4,Public Notification for Proposals from Organizations Not Previously Awarded CoC Program,1B-4,Public Notification for Proposals from Organizations Not Previously Awarded CoC Program,1.0,FALSE,
+1c_1,1c_1_1,"Coordination with Federal, State, Local, Private, and Other Organizations.",1C-1,1C-1,"Coordination with Federal, State, Local, Private, and Other Organizations.",1C-1,"Coordination with Federal, State, Local, Private, and Other Organizations.",1.0,FALSE,
+1c_2,1c_2_1,CoC Consultation with ESG Program Recipients.,1C-2,1C-2,CoC Consultation with ESG Program Recipients.,1C-2,CoC Consultation with ESG Program Recipients.,1.0,FALSE,
+1c_3,1c_3_1,Ensuring Families are not Separated.,1C-3,1C-3,Ensuring Families are not Separated.,1C-3,Ensuring Families are not Separated.,1.0,FALSE,
+1c_4,1c_4_1,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1C-4,1C-4,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1C-4,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1.0,FALSE,
+1c_4a,1c_4a,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1C-4,1C-4,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1C-4,"CoC Collaboration Related to Children and Youth–SEAs, LEAs, School Districts.",1.0,FALSE,
+1c_4b,1c_4b,Informing Individuals and Families Who Have Recently Begun Experiencing Homelessness about,1C-4b,1C-4b,Informing Individuals and Families Experiencing Homelessness about Eligibility for Educational,1C-4b,Informing Individuals and Families Experiencing Homelessness about Eligibility for Educational,1.0,FALSE,
+1c_4c,1c_4c_1_mou,Written/Formal Agreements or Partnerships with Early Childhood Services Providers.,1C-4c,1C-4c,Written/Formal Agreements or Partnerships with Early Childhood Services Providers.,1C-4c,Written/Formal Agreements or Partnerships with Early Childhood Services Providers.,1.0,FALSE,
+1c_5,1c_5_1,"Addressing Needs of Survivors of Domestic Violence, Dating Violence, Sexual Assault, and Stalking–Collaboration",1C-5,1C-5,"Addressing Needs of Domestic Violence, Dating Violence, Sexual Assault, and Stalking Survivors–Collaboration",1C-5,"Addressing Needs of Domestic Violence, Dating Violence, Sexual Assault, and Stalking",1.0,FALSE,
+1c_5a,1c_5a,"Addressing Needs of Survivors of Domestic Violence, Dating Violence, Sexual Assault, and Stalking–Collaboration",1C-5,1C-5,"Addressing Needs of Domestic Violence, Dating Violence, Sexual Assault, and Stalking Survivors–Collaboration",1C-5,"Addressing Needs of Domestic Violence, Dating Violence, Sexual Assault, and Stalking",1.0,FALSE,
+1c_5b,1c_5b,"Implemented Safety Planning, Confidentiality Protocols in Your CoC’s Coordinated Entry to",1C-5b,1C-5b,"Coordinated Annual Training on Best Practices to Address the Needs of Domestic Violence,",1C-5b,"Using De-identified Aggregate Data to Address the Needs of Domestic Violence, Dating Violence,",1.0,FALSE,
+1c_5c,1c_5c_1_proj,Coordinated Annual Training on Best Practices to Address the Needs of Survivors of Domestic,1C-5c,1C-5c,"Implemented Safety Planning, Confidentiality Protocols in Your CoC’s Coordinated Entry to",1C-5c,"Communicating Emergency Transfer Plan to Domestic Violence, Dating Violence, Sexual Assault,",1.0,FALSE,
+1c_5d,1c_5d,Implemented VAWA-Required Written Emergency Transfer Plan Policies and Procedures for,1C-5d,1C-5d,"Used De-identified Aggregate Data to Address the Needs of Domestic Violence, Dating Violence,",1C-5d,"Access to Housing for Survivors of Domestic Violence, Dating Violence, Sexual Assault, and",1.0,FALSE,
+1c_5e,1c_5e,"Facilitating Safe Access to Housing and Services for Survivors of Domestic Violence, Dating",1C-5e,1C-5e,"Implemented Emergency Transfer Plan Policies and Procedures for Domestic Violence, Dating",1C-5e,"Including Safety, Planning, and Confidentiality Protocols in Coordinated Entry to Address the",1.0,FALSE,
+1c_5f,1c_5f,"Identifying and Removing Barriers for Survivors of Domestic Violence, Dating Violence, Sexual",1C-5f,1C-5f,"Access to Housing for Survivors of Domestic Violence, Dating Violence, Sexual Assault, and",1C-5d,"Access to Housing for Survivors of Domestic Violence, Dating Violence, Sexual Assault, and",0.71,TRUE,low_similarity_fuzzy
+1c_6a,1c_6a,"Addressing the Needs of Lesbian, Gay, Bisexual, Transgender and Queer+–Anti-Discrimination",1C-6,1C-6,"Addressing the Needs of Lesbian, Gay, Bisexual, Transgender and Queer+–Anti-Discrimination",1C-6,"Addressing the Needs of Lesbian, Gay, Bisexual, Transgender and Queer+–Anti-Discrimination",1.0,FALSE,
+1c_7,1c_7_pha_name_1,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1C-7,1C-7,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1C-7,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1.0,FALSE,
+1c_7a,1c_7a,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1C-7,1C-7,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1C-7,Public Housing Agencies within Your CoC’s Geographic Area–New Admissions–General/Limited,1.0,FALSE,
+1c_7b,1c_7b_1,Moving On Strategy with Affordable Housing Providers.,1C-7b,1C-7b,Moving On Strategy with Affordable Housing Providers.,1C-7b,Moving On Strategy with Affordable Housing Providers.,1.0,FALSE,
+1c_7c,1c_7c_1,Include Units from PHA Administered Programs in Your CoC’s Coordinated Entry.,1C-7c,1C-7c,Include Units from PHA Administered Programs in Your CoC’s Coordinated Entry.,1C-7c,Include Units from PHA Administered Programs in Your CoC’s Coordinated Entry.,1.0,FALSE,
+1c_7d,1c_7d_1,Submitting CoC and PHA Joint Applications for Funding for People Experiencing Homelessness.,1C-7d,1C-7d,Submitting CoC and PHA Joint Applications for Funding for People Experiencing Homelessness.,1C-7d,Submitting CoC and PHA Joint Applications for Funding for People Experiencing Homelessness.,1.0,FALSE,
+1c_7e,1c_7e,Coordinating with PHA(s) to Apply for or Implement HCV Dedicated to Homelessness Including,1C-7e,1C-7e,Coordinating with PHA(s) to Apply for or Implement HCV Dedicated to Homelessness Including,1C-7e,Coordinating with PHA(s) to Apply for or Implement HCV Dedicated to Homelessness Including,1.0,FALSE,
+1d_1,1d_1_1,Preventing People Transitioning from Public Systems from Experiencing Homelessness.,1D-1,1D-1,Discharge Planning Coordination.,1D-1,Discharge Planning Coordination.,1.0,FALSE,
+1d_2,1d_2_1,Housing First–Lowering Barriers to Entry.,1D-2,1D-2,Housing First–Lowering Barriers to Entry.,1D-2,Housing First–Lowering Barriers to Entry.,1.0,FALSE,
+1d_2a,1d_2a,Housing First–Lowering Barriers to Entry.,1D-2,1D-2,Housing First–Lowering Barriers to Entry.,1D-2,Housing First–Lowering Barriers to Entry.,1.0,FALSE,
+1d_3,1d_3,Street Outreach–Data–Reaching People Least Likely to Request Assistance.,1D-3,1D-3,Street Outreach–Scope.,1D-3,Street Outreach–Scope.,1.0,FALSE,
+1d_4,1d_4_1_policymakers,Strategies to Prevent Criminalization of Homelessness.,1D-4,1D-4,Strategies to Prevent Criminalization of Homelessness.,1D-4,Strategies to Prevent Criminalization of Homelessness.,1.0,FALSE,
+1d_5,1d_5_hmis,Rapid Rehousing–RRH Beds as Reported in the Housing Inventory Count (HIC) or Longitudinal,1D-5,1D-5,Rapid Rehousing–RRH Beds as Reported in the Housing Inventory Count (HIC) or Longitudinal,1D-5,Rapid Rehousing–RRH Beds as Reported in the Housing Inventory Count (HIC).,1.0,FALSE,
+1d_6,1d_6_1,Mainstream Benefits–CoC Annual Training of Project Staff.,1D-6,1D-6,Mainstream Benefits–CoC Annual Training of Project Staff.,1D-6,Mainstream Benefits–CoC Annual Training of Project Staff.,1.0,FALSE,
+1d_6a,1d_6a,Mainstream Benefits–CoC Annual Training of Project Staff.,1D-6,1D-6,Mainstream Benefits–CoC Annual Training of Project Staff.,1D-6,Mainstream Benefits–CoC Annual Training of Project Staff.,1.0,FALSE,
+1d_7,1d_7,,,1D-7,Increasing Capacity for Non-Congregate Sheltering.,1D-7,Increasing Capacity for Non-Congregate Sheltering.,1.0,FALSE,
+1d_7a,1d_7a,,,1D-7,Increasing Capacity for Non-Congregate Sheltering.,1D-7,Increasing Capacity for Non-Congregate Sheltering.,1.0,FALSE,
+1d_8,1d_8,Coordinated Entry Standard Processes.,1D-8,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1D-9,Centralized or Coordinated Entry System–Assessment Process.,0.646,TRUE,low_similarity_fuzzy
+1d_8a,1d_8a,Coordinated Entry Standard Processes.,1D-8,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1D-9,Centralized or Coordinated Entry System–Assessment Process.,0.646,TRUE,low_similarity_fuzzy
+1d_8b,1d_8b,Coordinated Entry–Informing Program Participants about Their Rights and Remedies–Reporting,1D-8b,1D-9b,Informing Program Participant about Rights and Remedies through Centralized or Coordinated,,,0.678,TRUE,no_2022_match;low_similarity_fuzzy
+1d_9,1d_9_1,Advancing Racial Equity in Homelessness–Conducting Assessment.,1D-9,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1.0,FALSE,
+1d_9a,1d_9a,Advancing Racial Equity in Homelessness–Conducting Assessment.,1D-9,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1D-9,Centralized or Coordinated Entry System–Assessment Process.,1.0,FALSE,
+1d_9b,1d_9b_1,Implemented Strategies to Prevent or Eliminate Racial Disparities.,1D-9b,1D-9b,Informing Program Participant about Rights and Remedies through Centralized or Coordinated,1D-10b,Strategies to Address Racial Disparities.,0.673,TRUE,low_similarity_fuzzy
+1d_9c,1d_9c,"Plan for Ongoing Evaluation of System-level Processes, Policies, and Procedures for Racial",1D-9c,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+1d_9d,1d_9d,Plan for Using Data to Track Progress on Preventing or Eliminating Racial Disparities.,1D-9d,1D-10d,Tracked Progress on Preventing or Eliminating Disparities.,1D-10d,Tracking Progress on Preventing or Eliminating Disparities.,0.772,TRUE,low_similarity_fuzzy
+1d_10,1d_10,Involving Individuals with Lived Experience of Homelessness in Service Delivery and,1D-10,1D-10,Advancing Racial Equity in Homelessness–Conducting Assessment.,1D-10,Promoting Racial Equity in Homelessness–Conducing Assessment.,1.0,FALSE,
+1d_10a,1d_10a_1_years,Active CoC Participation of Individuals with Lived Experience of Homelessness.,1D-10a,1D-10a,Process for Analyzing Racial Disparities–Identified Racial Disparities in Provision or Outcomes of,1D-10a,Process for Analyzing Racial Disparities–Identifying Racial Disparities in Provision or Outcomes of,1.0,FALSE,
+1d_10b,1d_10b,Professional Development and Employment Opportunities for Individuals with Lived Experience of,1D-10b,1D-10b,Implemented Strategies that Address Racial Disparities.,1D-10b,Strategies to Address Racial Disparities.,1.0,FALSE,
+1d_10c,1d_10c,Routinely Gathering Feedback and Addressing Challenges of Individuals with Lived Experience of,1D-10c,1D-10c,Implemented Strategies that Address Known Disparities.,1D-10c,Actions Taken to Address Known Disparities.,1.0,FALSE,
+1d_11,1d_11,Increasing Affordable Housing Supply.,1D-11,1D-11,Involving Individuals with Lived Experience of Homelessness in Service Delivery and,1D-11,Involving Individuals with Lived Experience of Homelessness in Service Delivery and,1.0,FALSE,
+1e_1,1e_1_1,"Web Posting of Advance Public Notice of Your CoC’s Local Competition Deadline, Scoring and",1E-1,1E-1,Web Posting of Your CoC’s Local Competition Deadline–Advance Public Notice.,1E-1,Web Posting of Your CoC’s Local Competition Deadline–Advance Public Notice.,1.0,FALSE,
+1e_2,1e_2_1,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1E-2,1E-2,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1E-2,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1.0,FALSE,
+1e_2a,1e_2a_1,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1E-2,1E-2,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1E-2,Project Review and Ranking Process Your CoC Used in Its Local Competition. We use the,1.0,FALSE,
+1e_2b,1e_2b,Addressing Severe Barriers in the Local Project Review and Ranking Process.,1E-2b,1E-2b,Addressing Severe Barriers in the Local Project Review and Ranking Process.,1E-2b,Addressing Severe Barriers in the Local Project Review and Ranking Process.,1.0,FALSE,
+1e_3,1e_3,Advancing Racial Equity through Participation of Over-Represented Populations in the Local,1E-3,1E-3,Advancing Racial Equity through Participation of Over-Represented Populations in the Local,1E-3,Promoting Racial Equity in the Local Competition Review and Ranking Process.,1.0,FALSE,
+1e_4,1e_4,Reallocation–Reviewing Performance of Existing Projects.,1E-4,1E-4,Reallocation–Reviewing Performance of Existing Projects.,1E-4,Reallocation–Reviewing Performance of Existing Projects.,1.0,FALSE,
+1e_4a,1e_4a,Reallocation–Reviewing Performance of Existing Projects.,1E-4,1E-4,Reallocation–Reviewing Performance of Existing Projects.,1E-4,Reallocation–Reviewing Performance of Existing Projects.,1.0,FALSE,
+1e_5,1e_5_1,Projects Rejected/Reduced–Notification Outside of e-snaps.,1E-5,1E-5,Projects Rejected/Reduced–Notification Outside of e-snaps.,1E-5,Projects Rejected/Reduced–Notification Outside of e-snaps.,1.0,FALSE,
+1e_5a,1e_5a,Projects Rejected/Reduced–Notification Outside of e-snaps.,1E-5,1E-5,Projects Rejected/Reduced–Notification Outside of e-snaps.,1E-5,Projects Rejected/Reduced–Notification Outside of e-snaps.,1.0,FALSE,
+1e_5b,1e_5b,Local Competition Selection Results for All Projects.,1E-5b,1E-5b,Local Competition Selection Results for All Projects.,1E-5b,Local Competition Selection Results–Scores for All Projects.,1.0,FALSE,
+1e_5c,1e_5c,Web Posting of CoC-Approved Consolidated Application 2 Days Before CoC Program,1E-5c,1E-5c,Web Posting of CoC-Approved Consolidated Application 2 Days Before CoC Program,1E-5c,1E-5c. Web Posting of CoC-Approved Consolidated Application.,1.0,FALSE,
+1e_5d,1e_5d,Notification to Community Members and Key,1E-5d,1E-5d,Notification to Community Members and Key,1E-5d,Notification to Community Members and Key,1.0,FALSE,
+2a_1,2a_1,HMIS Vendor.,2A-1,2A-1,HMIS Vendor.,2A-1,HMIS Vendor.,1.0,FALSE,
+2a_2,2a_2,HMIS Implementation Coverage Area.,2A-2,2A-2,HMIS Implementation Coverage Area.,2A-2,HMIS Implementation Coverage Area.,1.0,FALSE,
+2a_3,2a_3,HIC Data Submission in HDX.,2A-3,2A-3,HIC Data Submission in HDX.,2A-3,HIC Data Submission in HDX.,1.0,FALSE,
+2a_4,2a_4,Comparable Databases for DV Providers–CoC and HMIS Lead Supporting Data Collection and,2A-4,2A-4,Comparable Database for DV Providers–CoC and HMIS Lead Supporting Data Collection and,2A-4,Comparable Database for DV Providers–CoC and HMIS Lead Supporting Data Collection and,1.0,FALSE,
+2a_5_1_non_vsp,2a_5_1_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_1_vsp,2a_5_1_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_1_hmis,2a_5_1_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_1_coverage,2a_5_1_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_2_non_vsp,2a_5_2_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_2_vsp,2a_5_2_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_2_hmis,2a_5_2_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_2_coverage,2a_5_2_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_3_non_vsp,2a_5_3_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_3_vsp,2a_5_3_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_3_hmis,2a_5_3_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_3_coverage,2a_5_3_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_4_non_vsp,2a_5_4_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_4_vsp,2a_5_4_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_4_hmis,2a_5_4_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_4_coverage,2a_5_4_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_5_non_vsp,2a_5_5_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_5_vsp,2a_5_5_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_5_hmis,2a_5_5_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_5_coverage,2a_5_5_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_6_non_vsp,2a_5_6_non_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_6_vsp,2a_5_6_vsp,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_6_hmis,2a_5_6_hmis,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5_6_coverage,2a_5_6_coverage,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+2a_5a,2a_5a,"Bed Coverage Rate–Using HIC, HMIS Data–CoC Merger Bonus Points.",2A-5,2A-5,"Bed Coverage Rate–Using HIC, HMIS Data–CoC Merger Bonus Points.",2A-5,"Bed Coverage Rate–Using HIC, HMIS Data–CoC Merger Bonus Points.",1.0,FALSE,
+2a_6,2a_6,Longitudinal System Analysis (LSA) Submission in HDX 2.0.,2A-6,2A-6,Longitudinal System Analysis (LSA) Submission in HDX 2.0.,2A-6,Longitudinal System Analysis (LSA) Submission in HDX 2.0.,1.0,FALSE,
+2b_1,2b_1,PIT Count Date.,2B-1,2B-1,PIT Count Date.,2B-1,PIT Count Date.,1.0,FALSE,
+2b_2,2b_2,PIT Count Data–HDX Submission Date.,2B-2,2B-2,PIT Count Data–HDX Submission Date.,2B-2,PIT Count Data–HDX Submission Date.,1.0,FALSE,
+2b_3,2b_3,PIT Count–Effectively Counting Youth in Your CoC’s Most Recent Unsheltered PIT Count.,2B-3,2B-3,PIT Count–Effectively Counting Youth in Your CoC’s Most Recent Unsheltered PIT Count.,2B-3,PIT Count–Effectively Counting Youth.,1.0,FALSE,
+2b_4,2b_4,PIT Count–Methodology Change–CoC Merger Bonus Points.,2B-4,2B-4,PIT Count–Methodology Change–CoC Merger Bonus Points.,2B-4,PIT Count–Methodology Change–CoC Merger Bonus Points.,1.0,FALSE,
+2c_1,2c_1,Reducing the Number of First Time Homeless–Risk Factors Your CoC Uses.,2C-1,2C-1,Reduction in the Number of First Time Homeless–Risk Factors Your CoC Uses.,2C-1,Reduction in the Number of First Time Homeless–Risk Factors Your CoC Uses.,1.0,FALSE,
+2c_1a,2c_1a_1,Reducing the Number of First Time Homeless–Risk Factors Your CoC Uses.,2C-1,2C-1,Reduction in the Number of First Time Homeless–Risk Factors Your CoC Uses.,2C-1,Reduction in the Number of First Time Homeless–Risk Factors Your CoC Uses.,1.0,FALSE,
+2c_2,2c_2,Reducing Length of Time Homeless–CoC’s Strategy.,2C-2,2C-2,Length of Time Homeless–CoC's Strategy to Reduce.,2C-2,Length of Time Homeless–CoC's Strategy to Reduce.,1.0,FALSE,
+2c_3,2c_3,Successful Permanent Housing Placement or Retention –CoC’s Strategy.,2C-3,2C-3,Exits to Permanent Housing Destinations/Retention of Permanent Housing–CoC’s Strategy,2C-3,Exits to Permanent Housing Destinations/Retention of Permanent Housing–CoC’s Strategy,1.0,FALSE,
+2c_4,2c_4,Reducing Returns to Homelessness–CoC’s Strategy.,2C-4,2C-4,Returns to Homelessness–CoC’s Strategy to Reduce Rate.,2C-4,Returns to Homelessness–CoC’s Strategy to Reduce Rate.,1.0,FALSE,
+2c_5,2c_5,Increasing Employment Cash Income–CoC's Strategy.,2C-5,2C-5,Increasing Employment Cash Income–CoC's Strategy.,2C-5,Increasing Employment Cash Income–CoC's Strategy.,1.0,FALSE,
+2c_5a,2c_5a,Increasing Employment Cash Income–CoC's Strategy.,2C-5,2C-5,Increasing Employment Cash Income–CoC's Strategy.,2C-5,Increasing Employment Cash Income–CoC's Strategy.,1.0,FALSE,
+3a_1,3a_1,New PH-PSH/PH-RRH Project–Leveraging Housing Resources.,3A-1,3A-1,New PH-PSH/PH-RRH Project–Leveraging Housing Resources.,3A-1,New PH-PSH/PH-RRH Project–Leveraging Housing Resources.,1.0,FALSE,
+3a_2,3a_2,New PH-PSH/PH-RRH Project–Leveraging Healthcare Resources.,3A-2,3A-2,New PH-PSH/PH-RRH Project–Leveraging Healthcare Resources.,3A-2,New PH-PSH/PH-RRH Project–Leveraging Healthcare Resources.,1.0,FALSE,
+3c_1,3c_1,Designating SSO/TH/Joint TH and PH-RRH Component Projects to Serve Persons Experiencing,3C-1,3C-1,Designating SSO/TH/Joint TH and PH-RRH Component Projects to Serving Persons,3C-1,Designating SSO/TH/Joint TH and PH-RRH Component Projects to Serving Persons,1.0,FALSE,
+4a_1,4a_1,New DV Bonus Project Applicants.,4A-1,4A-1,New DV Bonus Project Applications.,4A-1,New DV Bonus Project Applications.,1.0,FALSE,
+4a_1a_1,4a_1a_1,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy
+4a_1a_2,4a_1a_2,,,,,,,1.0,TRUE,no_2023_match;no_2022_match;low_similarity_fuzzy

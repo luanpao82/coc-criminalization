@@ -1,0 +1,322 @@
+coc_id,state,matched_counties,n_matched,biden_share,source
+AK-501,AK,,0,0.392,state_fallback
+AL-500,AL,jefferson;st. clair;shelby,3,0.4589,county_matched
+AL-502,AL,,0,0.3657,state_fallback
+AL-504,AL,montgomery,1,0.6509,county_matched
+AL-506,AL,tuscaloosa,1,0.4188,county_matched
+AR-500,AR,,0,0.3478,state_fallback
+AR-501,AR,,0,0.3478,state_fallback
+AR-503,AR,,0,0.3478,state_fallback
+AZ-500,AZ,,0,0.4936,state_fallback
+AZ-502,AZ,maricopa,1,0.5029,county_matched
+CA-500,CA,santa clara,1,0.7266,county_matched
+CA-501,CA,,0,0.635,state_fallback
+CA-502,CA,alameda,1,0.8023,county_matched
+CA-503,CA,sacramento,1,0.6137,county_matched
+CA-504,CA,sonoma,1,0.7453,county_matched
+CA-505,CA,contra costa,1,0.7164,county_matched
+CA-506,CA,monterey;san benito,2,0.6828,county_matched
+CA-507,CA,marin,1,0.8234,county_matched
+CA-508,CA,santa cruz,1,0.789,county_matched
+CA-509,CA,mendocino,1,0.6642,county_matched
+CA-510,CA,stanislaus,1,0.4926,county_matched
+CA-511,CA,san joaquin,1,0.5586,county_matched
+CA-512,CA,san mateo,1,0.7789,county_matched
+CA-513,CA,kings;tulare,2,0.4447,county_matched
+CA-515,CA,placer,1,0.4547,county_matched
+CA-516,CA,shasta;siskiyou;lassen;plumas;del norte;modoc;sierra,7,0.3402,county_matched
+CA-517,CA,napa,1,0.6907,county_matched
+CA-519,CA,butte,1,0.4942,county_matched
+CA-520,CA,merced,1,0.5411,county_matched
+CA-521,CA,yolo,1,0.695,county_matched
+CA-522,CA,humboldt,1,0.6504,county_matched
+CA-523,CA,colusa;glenn;trinity,3,0.3953,county_matched
+CA-524,CA,sutter;yuba,2,0.3948,county_matched
+CA-526,CA,amador;calaveras;mariposa;tuolumne,4,0.3801,county_matched
+CA-527,CA,tehama,1,0.3103,county_matched
+CA-529,CA,lake,1,0.5188,county_matched
+CA-530,CA,alpine;inyo;mono,3,0.5379,county_matched
+CA-531,CA,nevada,1,0.5616,county_matched
+CA-600,CA,los angeles,1,0.7104,county_matched
+CA-601,CA,san diego,1,0.6023,county_matched
+CA-602,CA,orange,1,0.5349,county_matched
+CA-603,CA,santa barbara,1,0.6489,county_matched
+CA-604,CA,kern,1,0.4369,county_matched
+CA-606,CA,,0,0.635,state_fallback
+CA-607,CA,,0,0.635,state_fallback
+CA-608,CA,riverside,1,0.53,county_matched
+CA-609,CA,san bernardino,1,0.5421,county_matched
+CA-611,CA,ventura,1,0.5947,county_matched
+CA-612,CA,,0,0.635,state_fallback
+CA-613,CA,imperial,1,0.6114,county_matched
+CA-614,CA,san luis obispo,1,0.553,county_matched
+CO-500,CO,,0,0.554,state_fallback
+CO-503,CO,,0,0.554,state_fallback
+CO-504,CO,el paso,1,0.4275,county_matched
+CO-505,CO,larimer;weld,2,0.4911,county_matched
+CT-503,CT,fairfield,1,0.629,county_matched
+CT-505,CT,,0,0.5924,state_fallback
+DC-500,DC,,0,0.9215,state_fallback
+DE-500,DE,,0,0.5878,state_fallback
+FL-500,FL,sarasota;manatee,2,0.4313,county_matched
+FL-501,FL,hillsborough,1,0.5286,county_matched
+FL-502,FL,pinellas,1,0.4957,county_matched
+FL-504,FL,volusia;flagler,2,0.4187,county_matched
+FL-505,FL,okaloosa;walton,2,0.2785,county_matched
+FL-507,FL,orange;osceola;seminole,3,0.5782,county_matched
+FL-508,FL,alachua;putnam,2,0.56,county_matched
+FL-509,FL,st. lucie;indian river;martin,3,0.4313,county_matched
+FL-510,FL,clay,1,0.308,county_matched
+FL-511,FL,escambia;santa rosa,2,0.3554,county_matched
+FL-512,FL,st. johns,1,0.3615,county_matched
+FL-513,FL,brevard,1,0.4118,county_matched
+FL-514,FL,marion,1,0.3663,county_matched
+FL-517,FL,hendry;hardee;highlands,3,0.3284,county_matched
+FL-518,FL,columbia;hamilton;lafayette;suwannee,4,0.2496,county_matched
+FL-519,FL,pasco,1,0.3943,county_matched
+FL-520,FL,citrus;hernando;lake;sumter,4,0.3508,county_matched
+FL-600,FL,miami-dade,1,0.5341,county_matched
+FL-601,FL,broward,1,0.6461,county_matched
+FL-602,FL,charlotte,1,0.3634,county_matched
+FL-603,FL,lee,1,0.4003,county_matched
+FL-604,FL,monroe,1,0.4556,county_matched
+FL-606,FL,collier,1,0.3735,county_matched
+GA-500,GA,,0,0.495,state_fallback
+GA-501,GA,,0,0.495,state_fallback
+GA-502,GA,fulton,1,0.7259,county_matched
+GA-503,GA,,0,0.495,state_fallback
+GA-504,GA,,0,0.495,state_fallback
+GA-505,GA,,0,0.495,state_fallback
+GA-506,GA,cobb,1,0.5635,county_matched
+GA-507,GA,chatham,1,0.5865,county_matched
+GA-508,GA,dekalb,1,0.8312,county_matched
+GU-500,GU,,0,,unknown
+HI-501,HI,honolulu,1,0.6251,county_matched
+IA-500,IA,woodbury;sioux,2,0.3372,county_matched
+IA-501,IA,,0,0.4489,state_fallback
+IA-502,IA,des moines;polk,2,0.5566,county_matched
+ID-500,ID,boise;ada,2,0.4608,county_matched
+IL-501,IL,dekalb;winnebago;boone,3,0.4945,county_matched
+IL-503,IL,champaign,1,0.5971,county_matched
+IL-506,IL,will,1,0.5311,county_matched
+IL-507,IL,peoria;fulton;tazewell;woodford,4,0.4239,county_matched
+IL-508,IL,st. clair,1,0.5334,county_matched
+IL-510,IL,,0,0.5749,state_fallback
+IL-511,IL,cook,1,0.7435,county_matched
+IL-512,IL,,0,0.5749,state_fallback
+IL-513,IL,sangamon,1,0.467,county_matched
+IL-514,IL,dupage,1,0.5798,county_matched
+IL-515,IL,,0,0.5749,state_fallback
+IL-516,IL,macon,1,0.4019,county_matched
+IL-517,IL,kane,1,0.5614,county_matched
+IL-519,IL,,0,0.5749,state_fallback
+IN-502,IN,,0,0.4096,state_fallback
+KS-503,KS,shawnee,1,0.4995,county_matched
+KS-507,KS,,0,0.414,state_fallback
+KY-500,KY,,0,0.3615,state_fallback
+KY-501,KY,,0,0.3615,state_fallback
+KY-502,KY,,0,0.3615,state_fallback
+LA-502,LA,,0,0.3985,state_fallback
+LA-503,LA,jefferson,1,0.436,county_matched
+LA-506,LA,,0,0.3985,state_fallback
+LA-507,LA,,0,0.3985,state_fallback
+LA-509,LA,,0,0.3985,state_fallback
+MA-500,MA,,0,0.656,state_fallback
+MA-502,MA,,0,0.656,state_fallback
+MA-503,MA,,0,0.656,state_fallback
+MA-504,MA,hampden,1,0.5773,county_matched
+MA-505,MA,bristol,1,0.5492,county_matched
+MA-506,MA,worcester,1,0.5758,county_matched
+MA-507,MA,berkshire;franklin;hampshire,3,0.7194,county_matched
+MA-509,MA,,0,0.656,state_fallback
+MA-511,MA,plymouth,1,0.5753,county_matched
+MA-515,MA,,0,0.656,state_fallback
+MA-516,MA,,0,0.656,state_fallback
+MA-519,MA,bristol,1,0.5492,county_matched
+MD-501,MD,,0,0.6536,state_fallback
+MD-503,MD,anne arundel,1,0.5582,county_matched
+MD-505,MD,baltimore,1,0.7138,county_matched
+MD-506,MD,carroll,1,0.3634,county_matched
+MD-509,MD,frederick,1,0.5334,county_matched
+MD-511,MD,,0,0.6536,state_fallback
+MD-513,MD,wicomico;somerset;worcester,3,0.4413,county_matched
+MD-600,MD,prince george's,1,0.8926,county_matched
+MD-601,MD,montgomery,1,0.7861,county_matched
+ME-500,ME,,0,0.529,state_fallback
+MI-500,MI,,0,0.5062,state_fallback
+MI-501,MI,,0,0.5062,state_fallback
+MI-502,MI,wayne,1,0.6845,county_matched
+MI-503,MI,macomb,1,0.4531,county_matched
+MI-504,MI,oakland,1,0.5636,county_matched
+MI-505,MI,genesee,1,0.5393,county_matched
+MI-506,MI,kent,1,0.5205,county_matched
+MI-507,MI,kalamazoo,1,0.5835,county_matched
+MI-508,MI,ingham,1,0.6518,county_matched
+MI-510,MI,saginaw,1,0.4943,county_matched
+MI-512,MI,grand traverse;antrim;leelanau,3,0.4666,county_matched
+MI-514,MI,calhoun,1,0.4357,county_matched
+MI-516,MI,muskegon,1,0.4937,county_matched
+MI-519,MI,ottawa,1,0.3835,county_matched
+MI-523,MI,eaton,1,0.4866,county_matched
+MN-500,MN,hennepin,1,0.7046,county_matched
+MN-501,MN,ramsey,1,0.715,county_matched
+MN-503,MN,dakota;anoka;washington;scott;carver,5,0.5123,county_matched
+MN-504,MN,,0,0.524,state_fallback
+MN-506,MN,,0,0.524,state_fallback
+MN-509,MN,st. louis,1,0.5664,county_matched
+MO-501,MO,st. louis,1,0.6538,county_matched
+MO-503,MO,st. charles;lincoln;warren,3,0.3745,county_matched
+MO-600,MO,greene;christian;webster,3,0.3364,county_matched
+MO-602,MO,jasper;newton,2,0.2398,county_matched
+MO-603,MO,andrew;buchanan;dekalb,3,0.3267,county_matched
+MO-606,MO,,0,0.4141,state_fallback
+MS-501,MS,,0,0.4101,state_fallback
+MS-503,MS,,0,0.4101,state_fallback
+MT-500,MT,,0,0.4041,state_fallback
+NC-500,NC,forsyth,1,0.5616,county_matched
+NC-501,NC,buncombe,1,0.5974,county_matched
+NC-502,NC,durham,1,0.8042,county_matched
+NC-505,NC,mecklenburg,1,0.6668,county_matched
+NC-506,NC,brunswick;new hanover;pender,3,0.434,county_matched
+NC-507,NC,wake,1,0.6225,county_matched
+NC-511,NC,cumberland,1,0.574,county_matched
+NC-513,NC,orange,1,0.7482,county_matched
+NC-516,NC,,0,0.4859,state_fallback
+ND-500,ND,,0,0.3176,state_fallback
+NE-500,NE,,0,0.3917,state_fallback
+NE-501,NE,,0,0.3917,state_fallback
+NE-502,NE,,0,0.3917,state_fallback
+NH-500,NH,,0,0.5282,state_fallback
+NH-501,NH,,0,0.5282,state_fallback
+NH-502,NH,hillsborough,1,0.5295,county_matched
+NJ-500,NJ,atlantic,1,0.5255,county_matched
+NJ-501,NJ,bergen,1,0.5749,county_matched
+NJ-502,NJ,burlington,1,0.5886,county_matched
+NJ-503,NJ,gloucester;cape may;cumberland;camden,4,0.5691,county_matched
+NJ-504,NJ,essex,1,0.7727,county_matched
+NJ-506,NJ,hudson,1,0.7245,county_matched
+NJ-507,NJ,middlesex,1,0.6022,county_matched
+NJ-509,NJ,morris,1,0.5114,county_matched
+NJ-512,NJ,salem,1,0.4253,county_matched
+NJ-513,NJ,somerset,1,0.5949,county_matched
+NJ-514,NJ,mercer,1,0.6914,county_matched
+NJ-516,NJ,warren;sussex;hunterdon,3,0.4222,county_matched
+NM-500,NM,,0,0.5429,state_fallback
+NV-500,NV,clark,1,0.5366,county_matched
+NV-501,NV,washoe,1,0.5082,county_matched
+NY-501,NY,steuben;allegany;livingston;chemung;schuyler,5,0.3718,county_matched
+NY-503,NY,albany,1,0.6455,county_matched
+NY-505,NY,onondaga;oswego;cayuga,3,0.541,county_matched
+NY-507,NY,schenectady,1,0.5675,county_matched
+NY-510,NY,tompkins,1,0.7351,county_matched
+NY-511,NY,,0,0.6086,state_fallback
+NY-512,NY,rensselaer,1,0.5159,county_matched
+NY-513,NY,wayne;ontario;seneca;yates,4,0.4407,county_matched
+NY-514,NY,chautauqua,1,0.3893,county_matched
+NY-518,NY,oneida;madison,2,0.4183,county_matched
+NY-519,NY,columbia;greene,2,0.5062,county_matched
+NY-520,NY,franklin;essex,2,0.4984,county_matched
+NY-522,NY,jefferson;lewis;st. lawrence,3,0.3982,county_matched
+NY-523,NY,,0,0.6086,state_fallback
+NY-525,NY,,0,0.6086,state_fallback
+NY-600,NY,new york,1,0.8678,county_matched
+NY-601,NY,dutchess,1,0.5389,county_matched
+NY-603,NY,nassau;suffolk,2,0.5169,county_matched
+NY-604,NY,westchester,1,0.6759,county_matched
+NY-606,NY,rockland,1,0.5041,county_matched
+NY-608,NY,ulster,1,0.5951,county_matched
+OH-500,OH,hamilton,1,0.5715,county_matched
+OH-501,OH,lucas,1,0.5753,county_matched
+OH-502,OH,cuyahoga,1,0.6652,county_matched
+OH-503,OH,franklin,1,0.6488,county_matched
+OH-504,OH,mahoning,1,0.4845,county_matched
+OH-505,OH,montgomery,1,0.503,county_matched
+OH-506,OH,summit,1,0.5408,county_matched
+OH-507,OH,,0,0.4524,state_fallback
+OH-508,OH,stark,1,0.3997,county_matched
+OK-500,OK,,0,0.3229,state_fallback
+OK-501,OK,tulsa,1,0.4087,county_matched
+OK-502,OK,oklahoma,1,0.4808,county_matched
+OK-503,OK,,0,0.3229,state_fallback
+OK-504,OK,cleveland,1,0.416,county_matched
+OK-505,OK,,0,0.3229,state_fallback
+OK-507,OK,,0,0.3229,state_fallback
+OR-500,OR,lane,1,0.6046,county_matched
+OR-501,OR,multnomah,1,0.7921,county_matched
+OR-502,OR,jackson,1,0.4677,county_matched
+OR-503,OR,,0,0.5645,state_fallback
+OR-504,OR,marion;polk,2,0.4854,county_matched
+OR-505,OR,,0,0.5645,state_fallback
+OR-506,OR,washington,1,0.6554,county_matched
+OR-507,OR,clackamas,1,0.5396,county_matched
+PA-500,PA,,0,0.4996,state_fallback
+PA-502,PA,chester;delaware,2,0.603,county_matched
+PA-504,PA,montgomery,1,0.6263,county_matched
+PA-505,PA,chester,1,0.5776,county_matched
+PA-506,PA,berks,1,0.452,county_matched
+PA-508,PA,lackawanna,1,0.5371,county_matched
+PA-509,PA,,0,0.4996,state_fallback
+PA-510,PA,lancaster,1,0.4117,county_matched
+PA-511,PA,bucks,1,0.5166,county_matched
+PA-512,PA,york,1,0.3695,county_matched
+PA-600,PA,allegheny,1,0.5943,county_matched
+PA-601,PA,,0,0.4996,state_fallback
+PA-603,PA,beaver,1,0.405,county_matched
+PA-605,PA,erie,1,0.4981,county_matched
+PR-502,PR,,0,,unknown
+PR-503,PR,,0,,unknown
+RI-500,RI,,0,0.593,state_fallback
+SC-500,SC,,0,0.4343,state_fallback
+SC-501,SC,,0,0.4343,state_fallback
+SC-503,SC,sumter,1,0.5597,county_matched
+SD-500,SD,,0,0.3561,state_fallback
+TN-500,TN,,0,0.3745,state_fallback
+TN-501,TN,shelby,1,0.6442,county_matched
+TN-502,TN,knox,1,0.4145,county_matched
+TN-504,TN,,0,0.3745,state_fallback
+TN-506,TN,,0,0.3745,state_fallback
+TN-507,TN,,0,0.3745,state_fallback
+TN-509,TN,,0,0.3745,state_fallback
+TN-510,TN,rutherford,1,0.4124,county_matched
+TN-512,TN,blount;sevier;campbell;cocke,4,0.226,county_matched
+TX-500,TX,bexar,1,0.5832,county_matched
+TX-503,TX,austin;travis,2,0.7022,county_matched
+TX-600,TX,dallas,1,0.6495,county_matched
+TX-601,TX,tarrant,1,0.4931,county_matched
+TX-603,TX,el paso,1,0.6666,county_matched
+TX-604,TX,mclennan,1,0.3752,county_matched
+TX-607,TX,,0,0.4647,state_fallback
+TX-700,TX,houston;harris;fort bend;montgomery,4,0.5223,county_matched
+TX-701,TX,,0,0.4647,state_fallback
+UT-500,UT,salt lake,1,0.5357,county_matched
+UT-504,UT,,0,0.3765,state_fallback
+VA-500,VA,richmond;henrico;chesterfield;hanover,4,0.5975,county_matched
+VA-501,VA,norfolk;chesapeake;suffolk;isle of wight;southampton,5,0.5764,county_matched
+VA-503,VA,,0,0.5411,state_fallback
+VA-504,VA,,0,0.5411,state_fallback
+VA-505,VA,,0,0.5411,state_fallback
+VA-508,VA,,0,0.5411,state_fallback
+VA-513,VA,,0,0.5411,state_fallback
+VA-514,VA,fredericksburg;spotsylvania;stafford,3,0.495,county_matched
+VA-521,VA,,0,0.5411,state_fallback
+VA-600,VA,arlington,1,0.806,county_matched
+VA-601,VA,fairfax,1,0.6985,county_matched
+VA-603,VA,,0,0.5411,state_fallback
+VA-604,VA,prince william,1,0.6264,county_matched
+VI-500,VI,,0,,unknown
+VT-500,VT,,0,0.6609,state_fallback
+VT-501,VT,chittenden,1,0.7578,county_matched
+WA-500,WA,king,1,0.7495,county_matched
+WA-501,WA,,0,0.5797,state_fallback
+WA-502,WA,spokane,1,0.4596,county_matched
+WA-503,WA,pierce,1,0.5376,county_matched
+WA-504,WA,snohomish,1,0.5851,county_matched
+WA-508,WA,clark,1,0.5095,county_matched
+WI-500,WI,,0,0.4945,state_fallback
+WI-501,WI,milwaukee,1,0.6913,county_matched
+WI-502,WI,racine,1,0.4712,county_matched
+WI-503,WI,dane,1,0.7546,county_matched
+WV-500,WV,,0,0.297,state_fallback
+WV-501,WV,cabell;wayne,2,0.3514,county_matched
+WV-503,WV,kanawha;putnam;boone;clay,4,0.3647,county_matched
+WY-500,WY,,0,0.2655,state_fallback

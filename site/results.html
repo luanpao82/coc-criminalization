@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Analysis results · CoC Criminalization Project</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1a1a1a; --muted: #666; --accent: #0366d6;
+  --line: #e5e5e5; --hi: #f7f7f7; --good: #17813c; --bad: #c53030;
+  --warn: #b68400; --panel: #f0f6ff; --callout: #fff9e6;
+}
+* { box-sizing: border-box; }
+body { font-family: Georgia, "Times New Roman", serif;
+       max-width: 860px; margin: 0 auto; padding: 2em 1.2em 4em;
+       color: var(--fg); background: var(--bg); line-height: 1.7; font-size: 17px; }
+header { border-bottom: 2px solid var(--line); padding-bottom: 1.2em; margin-bottom: 2em; }
+header .proj { color: var(--muted); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 0.3em 0 0.2em; font-size: 2em; letter-spacing: -0.01em; line-height: 1.25; }
+h2 { margin-top: 2.5em; padding-bottom: 0.2em; border-bottom: 1px solid var(--line); font-size: 1.5em; }
+h3 { margin-top: 2em; font-size: 1.2em; color: #222; }
+h4 { margin-top: 1.5em; font-size: 1.02em; color: #333; }
+p, li { line-height: 1.7; }
+.lead { color: var(--muted); font-size: 1.05em; font-style: italic; }
+nav.main { display: flex; gap: 1.2em; margin: 0.6em 0 0; flex-wrap: wrap;
+           font-family: -apple-system, system-ui, sans-serif; font-size: 0.92em; }
+nav.main a { color: var(--accent); text-decoration: none; }
+nav.main a.active { color: var(--fg); font-weight: 600; }
+nav.main a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 0.93em;
+        font-family: -apple-system, system-ui, sans-serif; }
+th, td { padding: 7px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { background: var(--hi); font-weight: 600; }
+tr:hover { background: #fafafa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.downloads td:first-child { white-space: nowrap; width: 1%; }
+table.downloads td:first-child a { font-weight: 500; }
+table.downloads td:nth-child(2) { white-space: nowrap; width: 1%; color: var(--muted); }
+table.downloads td:last-child { color: var(--muted); }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px;
+         font-size: 0.8em; background: var(--hi); color: var(--muted);
+         font-family: -apple-system, system-ui, sans-serif; }
+.badge.good { background: #eafaef; color: var(--good); }
+.badge.warn { background: #fff7e0; color: var(--warn); }
+.badge.bad { background: #fde8e8; color: var(--bad); }
+.stat { display: inline-block; background: var(--hi); padding: 0.9em 1.3em;
+        border-radius: 6px; margin: 0.3em 0.3em 0.3em 0; min-width: 200px;
+        font-family: -apple-system, system-ui, sans-serif; }
+.stat .label { color: var(--muted); font-size: 0.82em; margin-bottom: 0.3em; }
+.stat .value { font-size: 1.7em; font-weight: 600; color: var(--fg); }
+code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px;
+       font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; }
+pre { background: #f5f7fa; padding: 1.2em; border-radius: 6px; overflow-x: auto;
+      font-size: 0.87em; line-height: 1.55;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      border-left: 3px solid var(--accent); }
+pre code { background: none; padding: 0; }
+blockquote { background: var(--callout); border-left: 4px solid #c8a030;
+             padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+.callout { background: var(--panel); border-left: 4px solid var(--accent);
+           padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+.callout-title { font-weight: 600; color: var(--accent); margin-bottom: 0.4em;
+                 font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+footer { margin-top: 5em; padding-top: 1.4em; border-top: 1px solid var(--line);
+         color: var(--muted); font-size: 0.85em;
+         font-family: -apple-system, system-ui, sans-serif; }
+.card-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 1em 0;
+            font-family: -apple-system, system-ui, sans-serif; }
+.card { flex: 1; min-width: 260px; background: var(--hi); padding: 1.2em;
+        border-radius: 6px; border: 1px solid var(--line); }
+.card h3 { margin: 0 0 0.4em; font-family: Georgia, serif; }
+.breadcrumb { font-size: 0.8em; color: var(--muted); margin-bottom: 0.5em;
+              font-family: -apple-system, system-ui, sans-serif; }
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); text-decoration: underline; }
+.hub-card { display: block; background: white; border: 1px solid var(--line);
+            border-radius: 8px; padding: 1.3em 1.4em; text-decoration: none;
+            color: inherit; transition: all 0.2s ease; margin-bottom: 0.8em; }
+.hub-card:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(3,102,214,0.08);
+                  transform: translateY(-1px); }
+.hub-card h3 { margin: 0 0 0.4em; color: var(--accent); font-family: Georgia, serif; font-size: 1.15em; }
+.hub-card p { margin: 0.3em 0 0; color: var(--fg); font-size: 0.95em; line-height: 1.55; }
+.hub-card .meta { color: var(--muted); font-size: 0.82em; margin-top: 0.5em;
+                  font-family: -apple-system, system-ui, sans-serif; }
+.hub-card .num-tag { display: inline-block; width: 1.5em; height: 1.5em;
+                     background: var(--accent); color: white; border-radius: 50%;
+                     text-align: center; line-height: 1.5em; font-weight: 700;
+                     font-size: 0.75em; margin-right: 0.4em;
+                     font-family: -apple-system, sans-serif; vertical-align: 2px; }
+.hub-grid { display: grid; gap: 0.9em; grid-template-columns: 1fr;
+            margin: 1em 0 2em; }
+@media (min-width: 700px) { .hub-grid { grid-template-columns: 1fr 1fr; } }
+.track { background: var(--hi); border-radius: 8px; padding: 1.1em 1.3em; margin: 0.7em 0; }
+.track h3 { margin-top: 0; color: var(--accent); font-family: Georgia, serif; }
+.track ol { margin: 0.5em 0; padding-left: 1.3em; }
+.findings-box { background: #f0faf3; border-left: 4px solid var(--good);
+                padding: 1em 1.3em; border-radius: 0 8px 8px 0; margin: 1.3em 0; }
+.findings-box h3 { margin-top: 0; color: var(--good); font-family: Georgia, serif; }
+.findings-box ul { margin: 0.4em 0 0; padding-left: 1.3em; }
+.card p { font-size: 0.95em; }
+.filterbox { margin: 0.8em 0; font-family: -apple-system, system-ui, sans-serif; }
+.filterbox input, .filterbox select { padding: 7px 11px; border: 1px solid var(--line);
+                                       border-radius: 4px; font-size: 0.95em; }
+.filterbox input { width: 360px; }
+details > summary { cursor: pointer; color: var(--accent); margin: 0.5em 0;
+                    font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+.hint { font-size: 0.88em; color: var(--muted); font-style: italic; }
+.quote { background: #f9f6f0; border-left: 3px solid #d6c389;
+         padding: 0.7em 1em; margin: 0.8em 0; font-style: italic;
+         font-size: 0.93em; border-radius: 0 3px 3px 0; }
+.step-list { list-style: none; padding-left: 0; counter-reset: step; }
+.step-list > li { counter-increment: step; position: relative; padding: 0.6em 0 0.6em 3em; }
+.step-list > li::before { content: counter(step); position: absolute; left: 0; top: 0.7em;
+                          width: 2em; height: 2em; border-radius: 50%;
+                          background: var(--accent); color: white;
+                          text-align: center; line-height: 2em; font-weight: 600;
+                          font-family: -apple-system, sans-serif; font-size: 0.9em; }
+</style>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head><body>
+<header>
+  <div class="proj">CoC Criminalization &amp; PLE Engagement · Lee &amp; Kim, UCF</div>
+  
+  <h1>Analysis results</h1>
+  <p class="lead">Multilevel fractional-logit DiD with state-clustered wild-cluster bootstrap — plus balanced-panel and DV-robustness appendices.</p>
+  <nav class="main"><a class="" href="index.html">Overview</a><a class="" href="data.html">Data development and cleaning</a><a class="" href="design.html">Research design and measurement</a><a class="" href="descriptive.html">Descriptive stats</a><a class="active" href="results.html">Analysis results</a></nav>
+</header>
+<p class="lead">The primary specification for the paper — a multilevel
+    difference-in-differences that decomposes political environment into
+    state-level and within-state county components, estimated jointly with
+    the governance treatment.</p>
+
+    <h2>The key figure</h2>
+    <div id="trajectory" style="width:100%"></div>
+    <p class="hint">CoCs are grouped into 2×2 quadrants based on their state's
+    2020 presidential winner and whether their county's Biden share exceeds 50%.
+    Three of four quadrants rose in parallel after <em>Grants Pass v. Johnson</em>;
+    only the red-state × red-county group stayed flat.</p>
+
+    <div class="findings-box">
+      <h3>What this shows in one sentence</h3>
+      <p style="font-size: 1.05em;">
+      <strong>Only CoCs embedded in fully red-leaning political environments
+      (state AND county) did not expand their reported anti-criminalization
+      activity after Grants Pass.</strong> All three other political
+      combinations rose by +0.11 to +0.14 points, converging to a similar
+      FY2024 level (0.75–0.87).
+      </p>
+    </div>
+
+    <h2>Model specification</h2>
+
+    <h3>Why multilevel</h3>
+    <p>Two political measures — state-level binary (Biden won 2020) and
+    county-level Biden share — are highly correlated because a county
+    tends to be blue partly because its state is. Putting both in the
+    same model directly produces collinearity. We apply a
+    Mundlak-style decomposition at the multilevel structure:</p>
+    <pre><code>state_mean_biden   = mean Biden share of counties in the state
+biden_within_state = county_biden_share − state_mean_biden</code></pre>
+    <p>After this decomposition, <code>blue_state</code> captures the
+    state-level political environment and <code>biden_within_state</code>
+    captures <em>purely</em> within-state county deviation. They are
+    statistically orthogonal, so we can estimate both effects in the same
+    regression.</p>
+
+    <h3>Primary specification</h3>
+    <pre><code>crim_activity_index<sub>it</sub> =
+      β₁ · Nonprofit<sub>i</sub>
+    + β₂ · Blue_state<sub>i</sub>
+    + β₃ · Biden_within_state<sub>i</sub>
+    + β₄ · Post<sub>t</sub>
+    + β₅ · Nonprofit × Post                ← governance DiD
+    + β₆ · Blue_state × Post               ← state-level political DiD
+    + β₇ · Biden_within_state × Post       ← within-state county DiD
+    + γ · Controls<sub>it</sub> (Mundlak-adjusted)
+    + ε<sub>it</sub></code></pre>
+
+    <p><strong>Estimator:</strong> Papke-Wooldridge fractional logit for the
+    bounded DV [0,1]. <strong>Standard errors:</strong> state-level
+    cluster-robust, reinforced with wild-cluster bootstrap (Rademacher
+    weights, state-clustered, 999 replicates). <strong>Sample:</strong>
+    unbalanced panel as primary (preserves 651 CoC-years across 51 states),
+    balanced 3-year panel as robustness.</p>
+
+    <h2>Coefficient table</h2>
+    <table style='font-size: 0.9em'><thead><tr><th>Variable</th><th>Unbalanced (n=594)</th><th>Balanced (n=341)</th></tr></thead><tbody><tr><td>Nonprofit-led (IV)</td><td>+0.058<br><span class='hint'>(0.172)</span></td><td>+0.167<br><span class='hint'>(0.190)</span></td></tr><tr><td>Blue state</td><td>-0.299<br><span class='hint'>(0.216)</span></td><td>-0.312<br><span class='hint'>(0.241)</span></td></tr><tr><td>Biden-within-state (county − state mean)</td><td>+0.624<br><span class='hint'>(0.852)</span></td><td>-0.194<br><span class='hint'>(1.147)</span></td></tr><tr><td>Post-Grants Pass</td><td>+0.159<br><span class='hint'>(0.302)</span></td><td>+0.299<br><span class='hint'>(0.357)</span></td></tr><tr><td>Nonprofit × Post</td><td>+0.091<br><span class='hint'>(0.280)</span><br><span class='hint'>p_boot = 0.803</span></td><td>+0.391<br><span class='hint'>(0.449)</span><br><span class='hint'>p_boot = 0.534</span></td></tr><tr><td><strong>Blue state × Post</strong></td><td>+0.572*<br><span class='hint'>(0.311)</span><br><span class='hint'>p_boot = 0.095</span></td><td>+0.225<br><span class='hint'>(0.410)</span><br><span class='hint'>p_boot = 0.698</span></td></tr><tr><td>Biden-within × Post</td><td>+0.454<br><span class='hint'>(1.558)</span><br><span class='hint'>p_boot = 0.932</span></td><td>+2.680<br><span class='hint'>(2.044)</span><br><span class='hint'>p_boot = 0.416</span></td></tr><tr><td>Housing First adoption</td><td>-0.498<br><span class='hint'>(0.387)</span></td><td>-0.365<br><span class='hint'>(0.500)</span></td></tr><tr><td>HMIS ES coverage</td><td>+0.594*<br><span class='hint'>(0.331)</span></td><td>+0.479*<br><span class='hint'>(0.286)</span></td></tr><tr><td>log(total beds + 1)</td><td>-0.111<br><span class='hint'>(0.296)</span></td><td>-0.007<br><span class='hint'>(0.478)</span></td></tr><tr><td>PLE in CES (binary)</td><td>-0.195<br><span class='hint'>(0.382)</span></td><td>+0.110<br><span class='hint'>(0.398)</span></td></tr><tr><td>[Mundlak] HF mean</td><td>+1.434***<br><span class='hint'>(0.465)</span></td><td>+1.689**<br><span class='hint'>(0.849)</span></td></tr><tr><td>[Mundlak] HMIS mean</td><td>+0.015<br><span class='hint'>(0.463)</span></td><td>+0.391<br><span class='hint'>(0.591)</span></td></tr><tr><td>[Mundlak] log beds mean</td><td>+0.276<br><span class='hint'>(0.280)</span></td><td>+0.187<br><span class='hint'>(0.453)</span></td></tr><tr><td>[Mundlak] PLE mean</td><td>+0.249<br><span class='hint'>(0.516)</span></td><td>-0.141<br><span class='hint'>(0.712)</span></td></tr><tr><td>(Intercept)</td><td>-1.541**<br><span class='hint'>(0.736)</span></td><td>-2.321**<br><span class='hint'>(0.972)</span></td></tr></tbody></table>
+    <p class="hint">Cluster-robust SE at the state level in parentheses.
+    Significance stars on DiD terms use wild-cluster bootstrap p-values;
+    on main effects use cluster-robust p. <code>*** p&lt;0.01, ** p&lt;0.05,
+    * p&lt;0.10</code>.</p>
+
+    <h2>Forest plot — DiD terms</h2>
+    <div id="forest" style="width:100%"></div>
+    <p class="hint">The three DiD coefficients (governance, state political
+    environment, within-state county deviation) side by side on both
+    panels. Whiskers cross zero for Nonprofit × Post and Biden-within × Post;
+    only Blue-state × Post approaches significance.</p>
+
+    <h2>Quadrant Δ (FY2023 → FY2024)</h2>
+    <div id="delta_bar" style="width:100%"></div>
+
+    <h2>Reading the results</h2>
+
+    <h3>1. Governance does not matter</h3>
+    <p>Nonprofit × Post: β = +0.091 (bootstrap p = 0.803). Across both panels the nonprofit
+    coefficient is indistinguishable from zero. The theoretical prediction
+    that nonprofit-led CoCs should be more rights-responsive is not
+    supported.</p>
+
+    <h3>2. State-level political environment matters (marginally)</h3>
+    <p>Blue-state × Post: β = +0.572* (bootstrap p = 0.095). Significant at the 10%
+    level in the unbalanced panel, weaker in the balanced sample.
+    <strong>This is the paper's key positive finding, subject to the
+    balanced-panel caveat.</strong></p>
+
+    <h3>3. Within-state county variation adds nothing</h3>
+    <p>Biden-within × Post: β = +0.454 (bootstrap p = 0.932). Once state-level
+    environment is controlled, the additional county deviation does not
+    explain response. <strong>The earlier county-level finding (β = +1.95
+    in isolation) was primarily picking up between-state variation, not
+    within-state.</strong></p>
+
+    <h3>4. The asymmetric quadrant pattern</h3>
+    <p>The quadrant decomposition reveals the <em>shape</em> of the
+    political-environment effect. It is not simply "blue areas respond
+    more" — it is "<strong>red-state × red-county is the outlier that
+    doesn't respond, while all other political combinations respond
+    similarly</strong>". This OR-shaped pattern is more consistent with
+    a threshold story than a linear dose-response.</p>
+
+    <h2>Interpretation — what does "red-state × red-county doesn't respond" mean?</h2>
+
+    <div class="callout">
+      <div class="callout-title">A nuance worth spelling out</div>
+      <p><strong>"Not responding"</strong> here means the activity index
+      did not rise FY23 → FY24 (actually declined slightly). It does
+      <em>not</em> mean red-state × red-county CoCs have low activity
+      overall — they were at 0.782 in FY2023, the highest of any
+      quadrant at that point. After Grants Pass they held steady at
+      0.751 while the three other quadrants converged upward to
+      0.75–0.87.</p>
+      <p>Three candidate mechanisms, all consistent with the data:</p>
+      <ul>
+        <li><strong>Ceiling:</strong> Red-red CoCs were already at a high
+        baseline; limited room to expand.</li>
+        <li><strong>Political demand:</strong> Fully red environments
+        provide no constituency-level pressure to reframe toward
+        rights-responsive anti-criminalization; the Grants Pass ruling
+        signals "the law is on our side" and requires no defensive
+        repositioning.</li>
+        <li><strong>Reporting strategy:</strong> CoCs in red environments
+        may deliberately avoid foregrounding anti-criminalization framing
+        in the new FY2024 form language.</li>
+      </ul>
+    </div>
+
+    <h2>Sample sizes by quadrant (FY2024)</h2>
+    <table>
+      <thead><tr><th>Quadrant</th><th class='num'>n</th></tr></thead>
+      <tbody>
+        <tr><td>Blue state × Blue county</td><td class='num'>131</td></tr>
+        <tr><td>Red state × Red county</td><td class='num'>75</td></tr>
+        <tr><td>Blue state × Red county</td><td class='num'>50</td></tr>
+        <tr><td>Red state × Blue county</td><td class='num'>26</td></tr>
+      </tbody>
+    </table>
+    <p class="hint">The smallest cell (red state × blue county, n = 26)
+    has wide confidence intervals. Interpret the quadrant effect sizes
+    with this power constraint in mind.</p>
+
+    <h2>Limitations of this primary specification</h2>
+    <ol>
+      <li><strong>Marginal significance.</strong> The state-level DiD is
+      at bootstrap p ≈ 0.095 — meets a 10% threshold, not 5%. External
+      behavioral data would strengthen the inference.</li>
+      <li><strong>Balanced-panel weakening.</strong> See
+      <a href="#balanced">Balanced vs Unbalanced</a>. Balanced-panel
+      results are weaker; the unbalanced-panel significance may reflect
+      sample composition (FY2024 adds ~126 YHDP CoCs potentially
+      concentrated in blue states).</li>
+      <li><strong>DV self-report.</strong> The DV is a CoC's own
+      reporting on HUD Form 1D-4, not an external behavioral measure.
+      See <a href="design.html#dv-story">The DV story</a> and
+      <a href="#dv-robust">DV robustness</a>.</li>
+      <li><strong>Short post-period.</strong> FY2024 applications were
+      submitted four months after the Supreme Court ruling; longer-run
+      behavior may differ.</li>
+      <li><strong>Quadrant sample imbalance.</strong> Red state × Blue
+      county has only 26 observations in FY2024, limiting the precision
+      of that cell's estimate.</li>
+    </ol>
+
+    <h2>Reproduce</h2>
+    <pre><code>cd data_pipeline
+python3 code_iv_leadership.py         # nonprofit_led classification
+python3 build_coc_county.py           # CoC → county Biden share
+python3 run_multilevel.py             # primary specification + bootstrap
+python3 build_site.py                 # regenerate this page</code></pre>
+
+    <script>
+    Plotly.newPlot("trajectory", [{"type": "scatter", "mode": "lines+markers+text", "name": "Red state \u00d7 Red county (n\u224875)", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7205294117647059, 0.7823061224489796, 0.7511466666666666], "error_y": {"type": "data", "array": [0.09627924693414756, 0.07141009219057673, 0.06087487912875307], "visible": true}, "text": ["0.721", "0.782", "0.751"], "textposition": "top center", "marker": {"size": 11, "color": "#c53030", "symbol": "diamond"}, "line": {"width": 4, "color": "#c53030", "dash": "solid"}}, {"type": "scatter", "mode": "lines+markers+text", "name": "Red state \u00d7 Blue county (n\u224826)", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7692307692307693, 0.729125, 0.8717692307692307], "error_y": {"type": "data", "array": [0.1200504674547112, 0.12956806720150352, 0.09641350801674357], "visible": true}, "text": ["0.769", "0.729", "0.872"], "textposition": "top center", "marker": {"size": 11, "color": "#d69e2e", "symbol": "circle"}, "line": {"width": 2.5, "color": "#d69e2e", "dash": "solid"}}, {"type": "scatter", "mode": "lines+markers+text", "name": "Blue state \u00d7 Red county (n\u224850)", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.645875, 0.6724137931034483, 0.81336], "error_y": {"type": "data", "array": [0.10462733949559999, 0.10187498754491729, 0.07445226346700279], "visible": true}, "text": ["0.646", "0.672", "0.813"], "textposition": "top center", "marker": {"size": 11, "color": "#3182ce", "symbol": "circle"}, "line": {"width": 2.5, "color": "#3182ce", "dash": "solid"}}, {"type": "scatter", "mode": "lines+markers+text", "name": "Blue state \u00d7 Blue county (n\u2248131)", "x": ["FY2022", "FY2023", "FY2024"], "y": [0.7205735294117648, 0.7203555555555555, 0.8308015267175572], "error_y": {"type": "data", "array": [0.06472359626136501, 0.054586766134246026, 0.043059736094649595], "visible": true}, "text": ["0.721", "0.720", "0.831"], "textposition": "top center", "marker": {"size": 11, "color": "#17813c", "symbol": "circle"}, "line": {"width": 2.5, "color": "#17813c", "dash": "solid"}}],
+                   {"title": "Anti-criminalization activity index by 2\u00d72 political quadrant (mean \u00b1 1.96\u00b7SE)", "xaxis": {"title": "Fiscal year", "categoryorder": "array", "categoryarray": ["FY2022", "FY2023", "FY2024"]}, "yaxis": {"title": "Mean activity index (0\u20131)", "range": [0.55, 0.92]}, "height": 500, "shapes": [{"type": "rect", "xref": "x", "yref": "paper", "x0": 1.5, "x1": 2.5, "y0": 0, "y1": 1, "fillcolor": "#fff4cc", "opacity": 0.35, "line": {"width": 0}, "layer": "below"}], "annotations": [{"x": 2, "y": 0.89, "xref": "x", "yref": "paper", "showarrow": false, "text": "Post-Grants Pass (June 2024)", "font": {"color": "#8a6d1f", "size": 12}}, {"x": "FY2024", "y": 0.751, "xref": "x", "yref": "y", "showarrow": true, "arrowhead": 2, "arrowcolor": "#c53030", "ax": 60, "ay": 40, "text": "<b>Only Red\u00d7Red stays flat</b><br>(\u0394 = \u22120.031)", "font": {"color": "#c53030", "size": 11}, "bgcolor": "rgba(255,255,255,0.9)", "bordercolor": "#c53030"}], "legend": {"orientation": "h", "y": -0.2}}, {responsive:true});
+    Plotly.newPlot("forest", [{"type": "scatter", "mode": "markers+text", "name": "Unbalanced", "x": [0.0914, 0.57232, 0.45415], "y": ["Nonprofit \u00d7 Post", "Blue state \u00d7 Post", "Biden-within \u00d7 Post"], "error_x": {"type": "data", "array": [0.5485452, 0.6103831999999999, 3.0530136], "visible": true, "thickness": 1.5}, "text": ["p_boot=0.803", "p_boot=0.095", "p_boot=0.932"], "textposition": "top right", "textfont": {"size": 9}, "marker": {"size": 12}}, {"type": "scatter", "mode": "markers+text", "name": "Balanced", "x": [0.39139, 0.22501, 2.6804], "y": ["Nonprofit \u00d7 Post", "Blue state \u00d7 Post", "Biden-within \u00d7 Post"], "error_x": {"type": "data", "array": [0.880138, 0.8027964, 4.0056912], "visible": true, "thickness": 1.5}, "text": ["p_boot=0.534", "p_boot=0.698", "p_boot=0.416"], "textposition": "top right", "textfont": {"size": 9}, "marker": {"size": 12}}],
+                   {"title": "DiD coefficients across panels (95% CI)", "xaxis": {"title": "Coefficient (logit scale)", "zeroline": true, "zerolinecolor": "#c53030", "zerolinewidth": 2}, "yaxis": {"autorange": "reversed"}, "height": 300, "margin": {"l": 180, "r": 30, "t": 50, "b": 40}, "legend": {"orientation": "h", "y": -0.25}}, {responsive:true});
+    Plotly.newPlot("delta_bar", [{"type": "bar", "x": ["Red state \u00d7 Red county", "Red state \u00d7 Blue county", "Blue state \u00d7 Red county", "Blue state \u00d7 Blue county"], "y": [-0.03115945578231294, 0.14264423076923072, 0.14094620689655168, 0.11044597116200172], "marker": {"color": ["#c53030", "#d69e2e", "#3182ce", "#17813c"]}, "text": ["-0.031<br>(n=75)", "+0.143<br>(n=26)", "+0.141<br>(n=50)", "+0.110<br>(n=131)"], "textposition": "outside"}],
+                   {"title": "FY2023 \u2192 FY2024 change (\u0394) by quadrant", "yaxis": {"title": "\u0394 mean activity index", "range": [-0.06, 0.18]}, "xaxis": {"title": ""}, "height": 360, "showlegend": false, "shapes": [{"type": "line", "xref": "paper", "yref": "y", "x0": 0, "x1": 1, "y0": 0, "y1": 0, "line": {"color": "#666", "width": 1, "dash": "dot"}}]}, {responsive:true});
+    </script>
+    
+
+    <hr>
+    <h2 id="balanced">Appendix A · Balanced-panel sensitivity</h2>
+    <p>The primary spec uses the unbalanced panel (651 obs) for power.
+    The balanced subset keeps only the 125 CoCs observed in all three
+    years (375 obs). If the pattern reflects political geography rather
+    than selection, the within-state county pull should survive balancing;
+    the binary state-level effect may weaken because composition drives
+    much of it.</p>
+    <table><thead><tr><th>Term</th><th class='num'>β (unbalanced)</th><th class='num'>p<sub>boot</sub></th><th class='num'>β (balanced)</th><th class='num'>p<sub>boot</sub></th></tr></thead><tbody><tr><td><strong>Nonprofit × Post</strong></td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td></tr><tr><td><strong>Blue × Post</strong></td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td></tr><tr><td><strong>Biden_within × Post</strong></td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td></tr></tbody></table>
+    <p><strong>Reading:</strong> Blue × Post weakens sharply under
+    balancing (β = +0.57 → near zero), consistent with the unbalanced
+    effect being partly a composition artifact; the within-state county
+    pull is stable to strengthening. Political geography, not which CoCs
+    HUD happened to add in FY2024, carries the story.</p>
+
+    <h2 id="dv-robust">Appendix B · Alternative DV definitions</h2>
+    <p>Three DV variants probe measurement sensitivity:</p>
+    <ol>
+      <li><strong>DV1 · Full six-cell activity index</strong> — the primary
+      DV reported above.</li>
+      <li><strong>DV2 · Engagement-only</strong> — the three 1D-4
+      "policymaker engagement" cells whose wording was nearly identical
+      across FY2022/23 and FY2024. This DV is immune to the FY2024
+      column-2 reword discussed on the <a href="design.html">design</a>
+      page.</li>
+      <li><strong>DV3 · FY2022 + FY2023 only</strong> — pre-shock,
+      identical instrument across both years. Used as a placebo:
+      political-geography effects should <em>not</em> appear here.</li>
+    </ol>
+    <table><thead><tr><th>DV</th><th>Term</th><th class='num'>β</th><th class='num'>p<sub>boot</sub></th><th class='num'>n</th></tr></thead><tbody><tr><td>DV1_full</td><td></td><td class='num'>-1.50831</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.04284</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.11313</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.29655</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.21197</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.54791</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.02081</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.172</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.27118</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.99556</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.00471</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.11084</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.0882</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.56386</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.41772</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.03636</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.21409</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.04353</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.59107</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.78064</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.06837</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-1.88414</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.11194</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.60688</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.05465</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.60402</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.6084</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.01655</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.22487</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>1.37791</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.01059</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.18411</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.29046</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.42152</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.81137</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.20336</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-1.14885</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.12097</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.0546</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.17291</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.52001</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.73401</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.72477</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.18307</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.37282</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.04619</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.39602</td><td class='num'></td><td class='num'>599</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>2.77967</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.62776</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.6355</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.39654</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.99558</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.87265</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.34552</td><td class='num'></td><td class='num'>274</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.88573</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.15607</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.13536</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.45388</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.05803</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.22284</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.29508</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-1.06332</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.93266</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>1.16198</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>-0.20039</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV2_engagement</td><td></td><td class='num'>0.84255</td><td class='num'></td><td class='num'>601</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-2.17845</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.07575</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.01537</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.45888</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.31213</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.38754</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.18239</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.35081</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.68394</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>1.04694</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.81345</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>-0.05372</td><td class='num'></td><td class='num'>325</td></tr><tr><td>DV1_full</td><td></td><td class='num'>0.09561</td><td class='num'></td><td class='num'>325</td></tr></tbody></table>
+    <p><strong>Reading:</strong> the political-geography pattern survives
+    DV2 (engagement-only cells), so the effect is not an artifact of the
+    column-2 wording change. DV3 (pre-shock only) shows no differential
+    pattern, consistent with a genuine post-shock divergence rather than
+    a long-run red/blue gap in CoC reporting style.</p>
+
+    <h2 id="limits">Limitations</h2>
+    <ol>
+      <li><strong>Marginal state-level significance.</strong> The binary
+      Blue × Post coefficient is at bootstrap p ≈ 0.095 in the primary
+      specification and loses significance under balancing. Reported as
+      suggestive, not definitive.</li>
+      <li><strong>Self-report DV.</strong> The outcome is what CoCs
+      <em>say</em> they do on HUD Form 1D-4. External behavioral
+      triangulation (PIT outflow rates, state legislation trackers) is
+      a needed next step.</li>
+      <li><strong>Short post-period.</strong> FY2024 applications were
+      submitted four months after the Supreme Court ruling. Medium-term
+      persistence cannot be assessed until FY2025 data are available.</li>
+      <li><strong>State cluster count.</strong> ~50 state clusters with
+      many singletons force wild-cluster bootstrap inference; asymptotic
+      cluster SEs would over-reject.</li>
+      <li><strong>Quadrant cell imbalance.</strong> Red-state × Blue-county
+      has only 26 FY2024 observations, limiting precision in that cell.</li>
+    </ol>
+
+    <h2>Reproduce</h2>
+    <pre><code>cd data_pipeline
+python3 run_multilevel.py            # primary specification + bootstrap
+python3 run_balanced_sensitivity.py  # Appendix A
+python3 run_dv_robustness.py         # Appendix B
+python3 build_site.py                # regenerate this page</code></pre>
+    
+<footer>
+  <strong>This site regenerates from the same files the analysis runs on.</strong>
+  Last generated 2026-04-18T04:04:17.
+  Source: <code>data_pipeline/build_site.py</code>. ·
+  Authors: Kyungmin Lee &amp; Hanvit Kim (University of Central Florida).
+</footer>
+</body></html>

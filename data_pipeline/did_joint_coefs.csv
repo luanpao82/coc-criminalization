@@ -1,0 +1,63 @@
+spec,variable,coef,se,pvalue,n
+J1·County Biden DiD only,const,-1.66869,0.78763,0.03412,595
+J1·County Biden DiD only,biden_c,-0.22357,0.79956,0.77977,595
+J1·County Biden DiD only,post,0.54006,0.12639,2e-05,595
+J1·County Biden DiD only,did_blue,1.8689,0.93642,0.04596,595
+J1·County Biden DiD only,hf_pct,-0.57228,0.39575,0.14816,595
+J1·County Biden DiD only,hmis_cov,0.61975,0.41981,0.13987,595
+J1·County Biden DiD only,log_beds,-0.0984,0.30274,0.74515,595
+J1·County Biden DiD only,ple_ces_bin,-0.2495,0.34202,0.46569,595
+J1·County Biden DiD only,hf_pct_bar,1.43758,0.60853,0.01816,595
+J1·County Biden DiD only,hmis_cov_bar,-0.05877,0.5892,0.92055,595
+J1·County Biden DiD only,log_beds_bar,0.2677,0.31131,0.38983,595
+J1·County Biden DiD only,ple_ces_bin_bar,0.35745,0.42287,0.39794,595
+J2·Joint (NP + Biden) DiD,const,-1.73206,0.80543,0.03152,594
+J2·Joint (NP + Biden) DiD,nonprofit_led,0.09256,0.20341,0.64908,594
+J2·Joint (NP + Biden) DiD,biden_c,-0.13687,0.85368,0.87262,594
+J2·Joint (NP + Biden) DiD,post,0.49249,0.20263,0.01508,594
+J2·Joint (NP + Biden) DiD,did_np,0.0955,0.27572,0.72906,594
+J2·Joint (NP + Biden) DiD,did_blue,1.95116,1.03239,0.05877,594
+J2·Joint (NP + Biden) DiD,hf_pct,-0.57636,0.39758,0.14715,594
+J2·Joint (NP + Biden) DiD,hmis_cov,0.61331,0.42396,0.148,594
+J2·Joint (NP + Biden) DiD,log_beds,-0.08551,0.3032,0.77792,594
+J2·Joint (NP + Biden) DiD,ple_ces_bin,-0.23968,0.33502,0.47434,594
+J2·Joint (NP + Biden) DiD,hf_pct_bar,1.41274,0.59355,0.01731,594
+J2·Joint (NP + Biden) DiD,hmis_cov_bar,-0.04686,0.59299,0.93701,594
+J2·Joint (NP + Biden) DiD,log_beds_bar,0.26209,0.31223,0.40123,594
+J2·Joint (NP + Biden) DiD,ple_ces_bin_bar,0.32746,0.41886,0.43433,594
+J3·Triple-difference,const,-1.80671,0.76333,0.01794,594
+J3·Triple-difference,nonprofit_led,0.16134,0.21066,0.44375,594
+J3·Triple-difference,biden_c,0.71101,1.31042,0.58742,594
+J3·Triple-difference,post,0.49511,0.21557,0.02163,594
+J3·Triple-difference,did_np,0.05258,0.27023,0.84573,594
+J3·Triple-difference,did_blue,3.27211,1.49418,0.02853,594
+J3·Triple-difference,np_x_biden,-1.78363,1.64505,0.27826,594
+J3·Triple-difference,triple_diff,-2.36337,1.9956,0.2363,594
+J3·Triple-difference,hf_pct,-0.62606,0.40376,0.121,594
+J3·Triple-difference,hmis_cov,0.63066,0.43237,0.14468,594
+J3·Triple-difference,log_beds,-0.11286,0.33002,0.73237,594
+J3·Triple-difference,ple_ces_bin,-0.22757,0.33308,0.49446,594
+J3·Triple-difference,hf_pct_bar,1.42803,0.56476,0.01145,594
+J3·Triple-difference,hmis_cov_bar,-0.06816,0.60179,0.90982,594
+J3·Triple-difference,log_beds_bar,0.30643,0.33877,0.36571,594
+J3·Triple-difference,ple_ces_bin_bar,0.22671,0.42457,0.59336,594
+J4·Triple + year FE,const,-1.88062,1373196245385.3035,1.0,594
+J4·Triple + year FE,nonprofit_led,0.16778,328574321446.28467,1.0,594
+J4·Triple + year FE,biden_c,0.73307,4593096135164.857,1.0,594
+J4·Triple + year FE,post,0.28494,4.5184752975374723e+21,1.0,594
+J4·Triple + year FE,did_np,0.04679,2688850.69771,1.0,594
+J4·Triple + year FE,did_blue,3.24667,887156.49185,1.0,594
+J4·Triple + year FE,np_x_biden,-1.78722,2041460.51209,1.0,594
+J4·Triple + year FE,triple_diff,-2.36712,600022.51552,1.0,594
+J4·Triple + year FE,hf_pct,-0.65339,38612820.12167,1.0,594
+J4·Triple + year FE,hmis_cov,0.62295,20888812.94934,1.0,594
+J4·Triple + year FE,log_beds,-0.10706,3254516.13653,1.0,594
+J4·Triple + year FE,ple_ces_bin,-0.23501,12323684.85823,1.0,594
+J4·Triple + year FE,hf_pct_bar,1.44394,55017937.26543,1.0,594
+J4·Triple + year FE,hmis_cov_bar,-0.06716,19818781.17559,1.0,594
+J4·Triple + year FE,log_beds_bar,0.30324,3987326.0365,1.0,594
+J4·Triple + year FE,ple_ces_bin_bar,0.23111,14330529.21581,1.0,594
+J4·Triple + year FE,yr_2023,0.12494,240433.48082,1.0,594
+J4·Triple + year FE,yr_2024,0.28494,4.518475297537428e+21,1.0,594
+J3,triple_diff_bootstrap_p,,,0.427,
+J2,did_blue_bootstrap_p,,,0.177,

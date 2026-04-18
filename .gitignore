@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+
+# Raw HUD source documents — never commit
+**/*.pdf
+
+# Intermediate extraction outputs (652 JSONs, ~74 MB; derivable from the pipeline)
+data_pipeline/extracted/
+data_pipeline/drafts/
+
+# Local text dumps from OCR / narrative preprocessing
+data_pipeline/drafts/texts/
+
+# Secrets
+.env
+.env.*
+*.key
+credentials*.json

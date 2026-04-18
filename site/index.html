@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>CoC responses to Grants Pass v. Johnson · CoC Criminalization Project</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1a1a1a; --muted: #666; --accent: #0366d6;
+  --line: #e5e5e5; --hi: #f7f7f7; --good: #17813c; --bad: #c53030;
+  --warn: #b68400; --panel: #f0f6ff; --callout: #fff9e6;
+}
+* { box-sizing: border-box; }
+body { font-family: Georgia, "Times New Roman", serif;
+       max-width: 860px; margin: 0 auto; padding: 2em 1.2em 4em;
+       color: var(--fg); background: var(--bg); line-height: 1.7; font-size: 17px; }
+header { border-bottom: 2px solid var(--line); padding-bottom: 1.2em; margin-bottom: 2em; }
+header .proj { color: var(--muted); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 0.3em 0 0.2em; font-size: 2em; letter-spacing: -0.01em; line-height: 1.25; }
+h2 { margin-top: 2.5em; padding-bottom: 0.2em; border-bottom: 1px solid var(--line); font-size: 1.5em; }
+h3 { margin-top: 2em; font-size: 1.2em; color: #222; }
+h4 { margin-top: 1.5em; font-size: 1.02em; color: #333; }
+p, li { line-height: 1.7; }
+.lead { color: var(--muted); font-size: 1.05em; font-style: italic; }
+nav.main { display: flex; gap: 1.2em; margin: 0.6em 0 0; flex-wrap: wrap;
+           font-family: -apple-system, system-ui, sans-serif; font-size: 0.92em; }
+nav.main a { color: var(--accent); text-decoration: none; }
+nav.main a.active { color: var(--fg); font-weight: 600; }
+nav.main a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 0.93em;
+        font-family: -apple-system, system-ui, sans-serif; }
+th, td { padding: 7px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { background: var(--hi); font-weight: 600; }
+tr:hover { background: #fafafa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.downloads td:first-child { white-space: nowrap; width: 1%; }
+table.downloads td:first-child a { font-weight: 500; }
+table.downloads td:nth-child(2) { white-space: nowrap; width: 1%; color: var(--muted); }
+table.downloads td:last-child { color: var(--muted); }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px;
+         font-size: 0.8em; background: var(--hi); color: var(--muted);
+         font-family: -apple-system, system-ui, sans-serif; }
+.badge.good { background: #eafaef; color: var(--good); }
+.badge.warn { background: #fff7e0; color: var(--warn); }
+.badge.bad { background: #fde8e8; color: var(--bad); }
+.stat { display: inline-block; background: var(--hi); padding: 0.9em 1.3em;
+        border-radius: 6px; margin: 0.3em 0.3em 0.3em 0; min-width: 200px;
+        font-family: -apple-system, system-ui, sans-serif; }
+.stat .label { color: var(--muted); font-size: 0.82em; margin-bottom: 0.3em; }
+.stat .value { font-size: 1.7em; font-weight: 600; color: var(--fg); }
+code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px;
+       font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; }
+pre { background: #f5f7fa; padding: 1.2em; border-radius: 6px; overflow-x: auto;
+      font-size: 0.87em; line-height: 1.55;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      border-left: 3px solid var(--accent); }
+pre code { background: none; padding: 0; }
+blockquote { background: var(--callout); border-left: 4px solid #c8a030;
+             padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+.callout { background: var(--panel); border-left: 4px solid var(--accent);
+           padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+.callout-title { font-weight: 600; color: var(--accent); margin-bottom: 0.4em;
+                 font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+footer { margin-top: 5em; padding-top: 1.4em; border-top: 1px solid var(--line);
+         color: var(--muted); font-size: 0.85em;
+         font-family: -apple-system, system-ui, sans-serif; }
+.card-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 1em 0;
+            font-family: -apple-system, system-ui, sans-serif; }
+.card { flex: 1; min-width: 260px; background: var(--hi); padding: 1.2em;
+        border-radius: 6px; border: 1px solid var(--line); }
+.card h3 { margin: 0 0 0.4em; font-family: Georgia, serif; }
+.breadcrumb { font-size: 0.8em; color: var(--muted); margin-bottom: 0.5em;
+              font-family: -apple-system, system-ui, sans-serif; }
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); text-decoration: underline; }
+.hub-card { display: block; background: white; border: 1px solid var(--line);
+            border-radius: 8px; padding: 1.3em 1.4em; text-decoration: none;
+            color: inherit; transition: all 0.2s ease; margin-bottom: 0.8em; }
+.hub-card:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(3,102,214,0.08);
+                  transform: translateY(-1px); }
+.hub-card h3 { margin: 0 0 0.4em; color: var(--accent); font-family: Georgia, serif; font-size: 1.15em; }
+.hub-card p { margin: 0.3em 0 0; color: var(--fg); font-size: 0.95em; line-height: 1.55; }
+.hub-card .meta { color: var(--muted); font-size: 0.82em; margin-top: 0.5em;
+                  font-family: -apple-system, system-ui, sans-serif; }
+.hub-card .num-tag { display: inline-block; width: 1.5em; height: 1.5em;
+                     background: var(--accent); color: white; border-radius: 50%;
+                     text-align: center; line-height: 1.5em; font-weight: 700;
+                     font-size: 0.75em; margin-right: 0.4em;
+                     font-family: -apple-system, sans-serif; vertical-align: 2px; }
+.hub-grid { display: grid; gap: 0.9em; grid-template-columns: 1fr;
+            margin: 1em 0 2em; }
+@media (min-width: 700px) { .hub-grid { grid-template-columns: 1fr 1fr; } }
+.track { background: var(--hi); border-radius: 8px; padding: 1.1em 1.3em; margin: 0.7em 0; }
+.track h3 { margin-top: 0; color: var(--accent); font-family: Georgia, serif; }
+.track ol { margin: 0.5em 0; padding-left: 1.3em; }
+.findings-box { background: #f0faf3; border-left: 4px solid var(--good);
+                padding: 1em 1.3em; border-radius: 0 8px 8px 0; margin: 1.3em 0; }
+.findings-box h3 { margin-top: 0; color: var(--good); font-family: Georgia, serif; }
+.findings-box ul { margin: 0.4em 0 0; padding-left: 1.3em; }
+.card p { font-size: 0.95em; }
+.filterbox { margin: 0.8em 0; font-family: -apple-system, system-ui, sans-serif; }
+.filterbox input, .filterbox select { padding: 7px 11px; border: 1px solid var(--line);
+                                       border-radius: 4px; font-size: 0.95em; }
+.filterbox input { width: 360px; }
+details > summary { cursor: pointer; color: var(--accent); margin: 0.5em 0;
+                    font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+.hint { font-size: 0.88em; color: var(--muted); font-style: italic; }
+.quote { background: #f9f6f0; border-left: 3px solid #d6c389;
+         padding: 0.7em 1em; margin: 0.8em 0; font-style: italic;
+         font-size: 0.93em; border-radius: 0 3px 3px 0; }
+.step-list { list-style: none; padding-left: 0; counter-reset: step; }
+.step-list > li { counter-increment: step; position: relative; padding: 0.6em 0 0.6em 3em; }
+.step-list > li::before { content: counter(step); position: absolute; left: 0; top: 0.7em;
+                          width: 2em; height: 2em; border-radius: 50%;
+                          background: var(--accent); color: white;
+                          text-align: center; line-height: 2em; font-weight: 600;
+                          font-family: -apple-system, sans-serif; font-size: 0.9em; }
+</style>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head><body>
+<header>
+  <div class="proj">CoC Criminalization &amp; PLE Engagement · Lee &amp; Kim, UCF</div>
+  
+  <h1>CoC responses to Grants Pass v. Johnson</h1>
+  <p class="lead">Lee &amp; Kim (UCF) · Multilevel DiD across 325 Continuums of Care, FY2022–FY2024.</p>
+  <nav class="main"><a class="active" href="index.html">Overview</a><a class="" href="data.html">Data development and cleaning</a><a class="" href="design.html">Research design and measurement</a><a class="" href="descriptive.html">Descriptive stats</a><a class="" href="results.html">Analysis results</a></nav>
+</header>
+
+    <p class="lead">How 325 U.S. Continuums of Care responded to the June
+    2024 Supreme Court ruling in <em>Grants Pass v. Johnson</em> — a
+    multilevel difference-in-differences built from 677 HUD application
+    documents (FY2022–FY2024).</p>
+
+    <div class="findings-box">
+      <h3>Headline finding</h3>
+      <p style="font-size: 1.05em; margin: 0.3em 0 0.6em;">
+      <strong>Local political environment — not CoC governance structure —
+      filters federal legal shocks on homelessness criminalization.</strong>
+      </p>
+      <ul>
+        <li><strong>Organizational form doesn't matter.</strong> Nonprofit-led
+        vs. government-led CoCs responded identically
+        (β = +0.09, wild-cluster bootstrap p = 0.80).</li>
+        <li><strong>State political environment does.</strong> Blue-state
+        CoCs raised reported anti-criminalization activity more than
+        red-state CoCs (β = +0.57, p = 0.095). Within-state county
+        variation adds no independent effect.</li>
+        <li><strong>The pattern is asymmetric.</strong> Only fully red-state
+        × red-county CoCs stayed flat (Δ ≈ −0.03). All three other
+        political combinations rose in parallel by +0.11 to +0.14.</li>
+      </ul>
+    </div>
+
+    <h2>The five sections</h2>
+    <div class="hub-grid">
+      <a class="hub-card" href="data.html">
+        <h3>1 · Data development and cleaning</h3>
+        <p>How the 677-document corpus became a three-year CoC panel.
+        Extraction pipeline, agreement metrics, and the review queue.</p>
+      </a>
+      <a class="hub-card" href="design.html">
+        <h3>2 · Research design and measurement</h3>
+        <p>The multilevel DiD specification, H1 (organizational form) vs
+        H2 (political environment) hypotheses, variable construction, and
+        the DV measurement-invariance story.</p>
+      </a>
+      <a class="hub-card" href="descriptive.html">
+        <h3>3 · Descriptive stats</h3>
+        <p>Grants Pass as the policy shock, year-by-year distributions of
+        the anti-criminalization activity index, and which cells of the
+        HUD 1D-4 form drove the FY2024 shift.</p>
+      </a>
+      <a class="hub-card" href="results.html" style="background: #f0faf3; border-color: #17813c;">
+        <h3>4 · Analysis results</h3>
+        <p>The primary multilevel fractional-logit DiD, the four-quadrant
+        political-geography figure, balanced-panel sensitivity, DV
+        robustness, and limitations.</p>
+      </a>
+    </div>
+
+    <h2>Dataset at a glance</h2>
+    <div class="card-row">
+      <div class="stat"><div class="label">Source documents</div><div class="value">677</div></div>
+      <div class="stat"><div class="label">CoC × year records</div><div class="value">612</div></div>
+      <div class="stat"><div class="label">Panel-safe variables</div><div class="value">243</div></div>
+      <div class="stat"><div class="label">Unique CoCs</div><div class="value">325</div></div>
+    </div>
+    
+<footer>
+  <strong>This site regenerates from the same files the analysis runs on.</strong>
+  Last generated 2026-04-18T04:04:17.
+  Source: <code>data_pipeline/build_site.py</code>. ·
+  Authors: Kyungmin Lee &amp; Hanvit Kim (University of Central Florida).
+</footer>
+</body></html>

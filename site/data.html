@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Data development and cleaning · CoC Criminalization Project</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1a1a1a; --muted: #666; --accent: #0366d6;
+  --line: #e5e5e5; --hi: #f7f7f7; --good: #17813c; --bad: #c53030;
+  --warn: #b68400; --panel: #f0f6ff; --callout: #fff9e6;
+}
+* { box-sizing: border-box; }
+body { font-family: Georgia, "Times New Roman", serif;
+       max-width: 860px; margin: 0 auto; padding: 2em 1.2em 4em;
+       color: var(--fg); background: var(--bg); line-height: 1.7; font-size: 17px; }
+header { border-bottom: 2px solid var(--line); padding-bottom: 1.2em; margin-bottom: 2em; }
+header .proj { color: var(--muted); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 0.3em 0 0.2em; font-size: 2em; letter-spacing: -0.01em; line-height: 1.25; }
+h2 { margin-top: 2.5em; padding-bottom: 0.2em; border-bottom: 1px solid var(--line); font-size: 1.5em; }
+h3 { margin-top: 2em; font-size: 1.2em; color: #222; }
+h4 { margin-top: 1.5em; font-size: 1.02em; color: #333; }
+p, li { line-height: 1.7; }
+.lead { color: var(--muted); font-size: 1.05em; font-style: italic; }
+nav.main { display: flex; gap: 1.2em; margin: 0.6em 0 0; flex-wrap: wrap;
+           font-family: -apple-system, system-ui, sans-serif; font-size: 0.92em; }
+nav.main a { color: var(--accent); text-decoration: none; }
+nav.main a.active { color: var(--fg); font-weight: 600; }
+nav.main a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin: 1.2em 0; font-size: 0.93em;
+        font-family: -apple-system, system-ui, sans-serif; }
+th, td { padding: 7px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { background: var(--hi); font-weight: 600; }
+tr:hover { background: #fafafa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.downloads td:first-child { white-space: nowrap; width: 1%; }
+table.downloads td:first-child a { font-weight: 500; }
+table.downloads td:nth-child(2) { white-space: nowrap; width: 1%; color: var(--muted); }
+table.downloads td:last-child { color: var(--muted); }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px;
+         font-size: 0.8em; background: var(--hi); color: var(--muted);
+         font-family: -apple-system, system-ui, sans-serif; }
+.badge.good { background: #eafaef; color: var(--good); }
+.badge.warn { background: #fff7e0; color: var(--warn); }
+.badge.bad { background: #fde8e8; color: var(--bad); }
+.stat { display: inline-block; background: var(--hi); padding: 0.9em 1.3em;
+        border-radius: 6px; margin: 0.3em 0.3em 0.3em 0; min-width: 200px;
+        font-family: -apple-system, system-ui, sans-serif; }
+.stat .label { color: var(--muted); font-size: 0.82em; margin-bottom: 0.3em; }
+.stat .value { font-size: 1.7em; font-weight: 600; color: var(--fg); }
+code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px;
+       font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; }
+pre { background: #f5f7fa; padding: 1.2em; border-radius: 6px; overflow-x: auto;
+      font-size: 0.87em; line-height: 1.55;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      border-left: 3px solid var(--accent); }
+pre code { background: none; padding: 0; }
+blockquote { background: var(--callout); border-left: 4px solid #c8a030;
+             padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+.callout { background: var(--panel); border-left: 4px solid var(--accent);
+           padding: 0.8em 1.2em; margin: 1.4em 0; border-radius: 0 6px 6px 0; }
+.callout-title { font-weight: 600; color: var(--accent); margin-bottom: 0.4em;
+                 font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+footer { margin-top: 5em; padding-top: 1.4em; border-top: 1px solid var(--line);
+         color: var(--muted); font-size: 0.85em;
+         font-family: -apple-system, system-ui, sans-serif; }
+.card-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 1em 0;
+            font-family: -apple-system, system-ui, sans-serif; }
+.card { flex: 1; min-width: 260px; background: var(--hi); padding: 1.2em;
+        border-radius: 6px; border: 1px solid var(--line); }
+.card h3 { margin: 0 0 0.4em; font-family: Georgia, serif; }
+.breadcrumb { font-size: 0.8em; color: var(--muted); margin-bottom: 0.5em;
+              font-family: -apple-system, system-ui, sans-serif; }
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); text-decoration: underline; }
+.hub-card { display: block; background: white; border: 1px solid var(--line);
+            border-radius: 8px; padding: 1.3em 1.4em; text-decoration: none;
+            color: inherit; transition: all 0.2s ease; margin-bottom: 0.8em; }
+.hub-card:hover { border-color: var(--accent); box-shadow: 0 2px 10px rgba(3,102,214,0.08);
+                  transform: translateY(-1px); }
+.hub-card h3 { margin: 0 0 0.4em; color: var(--accent); font-family: Georgia, serif; font-size: 1.15em; }
+.hub-card p { margin: 0.3em 0 0; color: var(--fg); font-size: 0.95em; line-height: 1.55; }
+.hub-card .meta { color: var(--muted); font-size: 0.82em; margin-top: 0.5em;
+                  font-family: -apple-system, system-ui, sans-serif; }
+.hub-card .num-tag { display: inline-block; width: 1.5em; height: 1.5em;
+                     background: var(--accent); color: white; border-radius: 50%;
+                     text-align: center; line-height: 1.5em; font-weight: 700;
+                     font-size: 0.75em; margin-right: 0.4em;
+                     font-family: -apple-system, sans-serif; vertical-align: 2px; }
+.hub-grid { display: grid; gap: 0.9em; grid-template-columns: 1fr;
+            margin: 1em 0 2em; }
+@media (min-width: 700px) { .hub-grid { grid-template-columns: 1fr 1fr; } }
+.track { background: var(--hi); border-radius: 8px; padding: 1.1em 1.3em; margin: 0.7em 0; }
+.track h3 { margin-top: 0; color: var(--accent); font-family: Georgia, serif; }
+.track ol { margin: 0.5em 0; padding-left: 1.3em; }
+.findings-box { background: #f0faf3; border-left: 4px solid var(--good);
+                padding: 1em 1.3em; border-radius: 0 8px 8px 0; margin: 1.3em 0; }
+.findings-box h3 { margin-top: 0; color: var(--good); font-family: Georgia, serif; }
+.findings-box ul { margin: 0.4em 0 0; padding-left: 1.3em; }
+.card p { font-size: 0.95em; }
+.filterbox { margin: 0.8em 0; font-family: -apple-system, system-ui, sans-serif; }
+.filterbox input, .filterbox select { padding: 7px 11px; border: 1px solid var(--line);
+                                       border-radius: 4px; font-size: 0.95em; }
+.filterbox input { width: 360px; }
+details > summary { cursor: pointer; color: var(--accent); margin: 0.5em 0;
+                    font-family: -apple-system, system-ui, sans-serif; font-size: 0.95em; }
+.hint { font-size: 0.88em; color: var(--muted); font-style: italic; }
+.quote { background: #f9f6f0; border-left: 3px solid #d6c389;
+         padding: 0.7em 1em; margin: 0.8em 0; font-style: italic;
+         font-size: 0.93em; border-radius: 0 3px 3px 0; }
+.step-list { list-style: none; padding-left: 0; counter-reset: step; }
+.step-list > li { counter-increment: step; position: relative; padding: 0.6em 0 0.6em 3em; }
+.step-list > li::before { content: counter(step); position: absolute; left: 0; top: 0.7em;
+                          width: 2em; height: 2em; border-radius: 50%;
+                          background: var(--accent); color: white;
+                          text-align: center; line-height: 2em; font-weight: 600;
+                          font-family: -apple-system, sans-serif; font-size: 0.9em; }
+</style>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head><body>
+<header>
+  <div class="proj">CoC Criminalization &amp; PLE Engagement · Lee &amp; Kim, UCF</div>
+  
+  <h1>Data development and cleaning</h1>
+  <p class="lead">From 677 raw HUD documents to a panel-safe dataset — pipeline, agreement metrics, downloads, and open review items.</p>
+  <nav class="main"><a class="" href="index.html">Overview</a><a class="active" href="data.html">Data development and cleaning</a><a class="" href="design.html">Research design and measurement</a><a class="" href="descriptive.html">Descriptive stats</a><a class="" href="results.html">Analysis results</a></nav>
+</header>
+
+    <p class="lead">From 677 HUD CoC Consolidated Application documents
+    (FY2022–FY2024) to an analysis-ready three-year panel. This page
+    documents the pipeline, the agreement metrics, and the outstanding
+    review queue.</p>
+
+    <h2>1 · Source corpus</h2>
+    <div class="card-row">
+      <div class="stat"><div class="label">FY2022 applications</div><div class="value">172</div></div>
+      <div class="stat"><div class="label">FY2023 applications</div><div class="value">197</div></div>
+      <div class="stat"><div class="label">FY2024 applications</div><div class="value">308</div></div>
+      <div class="stat"><div class="label">Total documents</div><div class="value">677</div></div>
+    </div>
+    <p class="hint">FY2024 is the largest year because HUD folded the
+    Youth Homeless Demonstration Program (YHDP) into the main competition.
+    Eight CoCs submit DOCX instead of PDF; nine require OCR and are held
+    out of the analytic sample.</p>
+
+    <h2>2 · Extraction pipeline</h2>
+    <ol>
+      <li><strong>File inventory</strong> (<code>build_file_inventory.py</code>)
+      — indexes every source file, detects scanned PDFs, flags duplicate
+      PDF/DOCX pairs, normalizes CoC IDs.</li>
+      <li><strong>Format-aware adapters</strong> — native-PDF, OCR'd PDF,
+      and DOCX each implement the same output schema. Every cell carries
+      source page, bbox, and extractor version as provenance.</li>
+      <li><strong>Codebook &amp; crosswalk</strong> — 331 canonical FY2024
+      variables mapped across FY2022/23 question IDs. Wording changes
+      flagged explicitly (see the DV measurement-invariance story on the
+      <a href="design.html">design</a> page).</li>
+      <li><strong>Anchor-then-parse</strong> — every question is located
+      by its <code>1B-1.</code> / <code>1D-4.</code>-style anchor, and
+      only the local block is parsed. A parse failure in one block cannot
+      corrupt neighboring variables.</li>
+      <li><strong>Controlled-vocabulary validation</strong> — categorical
+      outputs are checked against the codebook. Out-of-vocab values get
+      <code>needs_review=True</code>; they are never silently coerced.</li>
+      <li><strong>Iteration loop</strong> — extractor diffs against the
+      manual FY2024 spreadsheet, errors classified into six categories,
+      pipeline refined until convergence.</li>
+    </ol>
+
+    <h2>3 · Agreement against the manual reference</h2>
+    <div class="card-row">
+      <div class="stat"><div class="label">Weighted agreement</div><div class="value">96.6%</div></div>
+      <div class="stat"><div class="label">Adjusted (manual-error removed)</div><div class="value">98.2%</div></div>
+      <div class="stat"><div class="label">Panel-safe variables</div><div class="value">243</div></div>
+      <div class="stat"><div class="label">CoC × year records</div><div class="value">612</div></div>
+    </div>
+    <p><strong>Panel-safety categorization:</strong></p>
+    <ul>
+      <li><span class="badge good">panel_safe</span> — present in ≥50% of
+      CoCs in every year. Used directly in the primary regression.</li>
+      <li><span class="badge warn">mostly_panel</span> — present in two
+      of three years. Used with care.</li>
+      <li><span class="badge warn">year_specific</span> — asked in only
+      one year. Cross-sectional use only.</li>
+      <li><span class="badge bad">sparse</span> — free-text narrative
+      fields awaiting Stage-2 LLM coding.</li>
+    </ul>
+
+    <h2>4 · Review queue</h2>
+    <p>399 value disagreements and 1,131
+    auto-fill candidates are staged for PI adjudication.</p>
+    <ul>
+      <li><strong>Value mismatches</strong> — both the manual spreadsheet
+      and the extractor have a value, and they disagree. Every row cites
+      a specific PDF page; when the extractor matches the source, the
+      manual entry is treated as the one to correct.</li>
+      <li><strong>Auto-fill candidates</strong> — the manual cell is
+      blank; the extractor has a value read directly from the PDF. A
+      spot-check of ~30 random rows is recommended before backfilling
+      the spreadsheet.</li>
+    </ul>
+    <p>The pipeline does <strong>not</strong> auto-patch the manual file.
+    Every proposed backport goes through PI review first, preserving
+    provenance.</p>
+
+    <h2>5 · Outstanding data work</h2>
+    <ol>
+      <li><strong>Nine CoCs need OCR.</strong> GA-508, MD-600, MI-508,
+      NJ-511, NV-502, PA-501, TX-624, VI-500, WA-502 ship as scanned or
+      font-encoded PDFs. <code>ocrmypdf</code> infrastructure is in place;
+      the task has not been run.</li>
+      <li><strong>41 narrative variables not yet coded.</strong> Stage-2
+      LLM coding with verbatim quotation is specified but not rolled
+      out (~$50–60 in API cost). None of these are in the primary DV.</li>
+      <li><strong>Formal 20-CoC stratified audit.</strong> A per-coder
+      cross-check against the PDFs is outstanding; this is the last
+      blocker on publishing a clean reference dataset alongside the
+      automated one.</li>
+    </ol>
+
+    <h2>Downloads</h2>
+    <p class="hint">All files regenerate from the pipeline on every build.
+    Click any filename to download. Citations and dates should be updated
+    if you use these in downstream work.</p>
+    <h3>Primary analysis dataset</h3>
+<p class='hint'>Load these for the main regression.</p>
+<table class='downloads'><thead><tr><th>File</th><th>Size</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href='downloads/coc_analysis_ready.xlsx' download><code>coc_analysis_ready.xlsx</code></a></td><td class='num'>1.1 MB</td><td>Primary analysis file — 4 sheets: balanced_panel (125 CoCs × 3 years), unbalanced, fy2024_only, variables. Start here.</td></tr>
+<tr><td><a href='downloads/coc_analysis_ready.csv' download><code>coc_analysis_ready.csv</code></a></td><td class='num'>712.8 KB</td><td>Same data in long-form CSV — easy to load with pandas/readr.</td></tr>
+<tr><td><a href='downloads/coc_panel_wide.xlsx' download><code>coc_panel_wide.xlsx</code></a></td><td class='num'>1.7 MB</td><td>Full wide panel (243 variables × 3 years). Sheets: panel_safe, full_wide, fy2022, fy2023, fy2024, plus dv_harmonized and narrative_codes.</td></tr>
+<tr><td><a href='downloads/coc_panel_long.csv' download><code>coc_panel_long.csv</code></a></td><td class='num'>6.4 MB</td><td>Long form — one row per (CoC, year, field, value). ~164k rows.</td></tr>
+<tr><td><a href='downloads/harmonized_dv.xlsx' download><code>harmonized_dv.xlsx</code></a></td><td class='num'>21.9 KB</td><td>Harmonized DV workbook — crim_activity_index, implemented_anticrim_practice, cell-level 1D-4 indicators across all three years.</td></tr>
+</tbody></table>
+<h3>Data provenance &amp; review</h3>
+<p class='hint'>Source-document index, panel-safety map, crosswalk, and the manual-vs-extractor review queue.</p>
+<table class='downloads'><thead><tr><th>File</th><th>Size</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href='downloads/file_inventory.csv' download><code>file_inventory.csv</code></a></td><td class='num'>36.4 KB</td><td>Source-document index (677 files) with normalized CoC IDs, format, and scan flags.</td></tr>
+<tr><td><a href='downloads/panel_field_map.csv' download><code>panel_field_map.csv</code></a></td><td class='num'>13.1 KB</td><td>Per-variable panel-safety category (panel_safe / mostly_panel / year_specific / sparse).</td></tr>
+<tr><td><a href='downloads/crosswalk.csv' download><code>crosswalk.csv</code></a></td><td class='num'>22.5 KB</td><td>FY2024 canonical field ↔ FY2022/FY2023 question-ID mapping.</td></tr>
+<tr><td><a href='downloads/corpus_diffs.csv' download><code>corpus_diffs.csv</code></a></td><td class='num'>149.0 KB</td><td>Review queue — automation vs manual spreadsheet diffs with PDF page citations.</td></tr>
+<tr><td><a href='downloads/iterations.csv' download><code>iterations.csv</code></a></td><td class='num'>817 B</td><td>Extractor iteration ledger — per-iter agreement, top error, fix applied.</td></tr>
+<tr><td><a href='downloads/extraction_summary.csv' download><code>extraction_summary.csv</code></a></td><td class='num'>15.4 KB</td><td>Per-field extraction coverage and validity rates.</td></tr>
+</tbody></table>
+<h3>Independent-variable coding</h3>
+<p class='hint'>Hand-coded nonprofit/government classification and the CoC → county political-geography merge.</p>
+<table class='downloads'><thead><tr><th>File</th><th>Size</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href='downloads/iv_leadership.csv' download><code>iv_leadership.csv</code></a></td><td class='num'>17.0 KB</td><td>Nonprofit vs government classification per CoC (hand-coded from 1a_2 Collaborative Applicant Name, 99% coverage).</td></tr>
+<tr><td><a href='downloads/iv_county.csv' download><code>iv_county.csv</code></a></td><td class='num'>13.7 KB</td><td>CoC → county presidential-vote merge (MIT/tonmcg 2020 county data), population-weighted to a CoC-level Biden share.</td></tr>
+</tbody></table>
+<h3>Results tables (CSV)</h3>
+<p class='hint'>Coefficient tables behind the figures on the Results page.</p>
+<table class='downloads'><thead><tr><th>File</th><th>Size</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href='downloads/multilevel_coefs.csv' download><code>multilevel_coefs.csv</code></a></td><td class='num'>1.7 KB</td><td>Primary spec — multilevel fractional-logit DiD coefficients, state-clustered SEs, wild-cluster bootstrap p-values.</td></tr>
+<tr><td><a href='downloads/multilevel_quadrant_means.csv' download><code>multilevel_quadrant_means.csv</code></a></td><td class='num'>1.1 KB</td><td>Four-quadrant (state × county politics) pre/post means used in the trajectory figure.</td></tr>
+<tr><td><a href='downloads/balanced_sensitivity_coefs.csv' download><code>balanced_sensitivity_coefs.csv</code></a></td><td class='num'>5.6 KB</td><td>Appendix A — balanced-panel sensitivity coefficients (unbalanced vs balanced).</td></tr>
+<tr><td><a href='downloads/dv_robustness_coefs.csv' download><code>dv_robustness_coefs.csv</code></a></td><td class='num'>6.5 KB</td><td>Appendix B — alternative DV definitions (full / engagement-only / pre-shock only).</td></tr>
+</tbody></table>
+<h3>Documentation (Markdown)</h3>
+<p class='hint'>Codebook, methodology, and human-readable results writeups.</p>
+<table class='downloads'><thead><tr><th>File</th><th>Size</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href='downloads/codebook.md' download><code>codebook.md</code></a></td><td class='num'>74.8 KB</td><td>Variable codebook — 331 canonical fields, controlled vocabulary, observed value domains.</td></tr>
+<tr><td><a href='downloads/data_construction_methodology.md' download><code>data_construction_methodology.md</code></a></td><td class='num'>17.5 KB</td><td>Methods-ready protocol (Krippendorff, Cohen, Gilardi et al., Ziems et al. citations).</td></tr>
+<tr><td><a href='downloads/multilevel_results.md' download><code>multilevel_results.md</code></a></td><td class='num'>5.3 KB</td><td>Human-readable writeup of the primary multilevel DiD results.</td></tr>
+<tr><td><a href='downloads/corpus_agreement.md' download><code>corpus_agreement.md</code></a></td><td class='num'>1.9 KB</td><td>Extractor vs manual agreement audit — per-category rates and failure modes.</td></tr>
+<tr><td><a href='downloads/pilot_diff_report.md' download><code>pilot_diff_report.md</code></a></td><td class='num'>3.3 KB</td><td>Five-CoC pilot iteration trajectory (convergence to ≥98% weighted agreement).</td></tr>
+<tr><td><a href='downloads/main_variables.md' download><code>main_variables.md</code></a></td><td class='num'>14.7 KB</td><td>Operationalization notes for the primary variables used in the regression.</td></tr>
+</tbody></table>
+
+    <p class="hint" style="margin-top:2em;">Missing something? Raw source
+    PDFs and the full extractor source live in the project repository,
+    not on this static site. Contact the authors for access.</p>
+    
+<footer>
+  <strong>This site regenerates from the same files the analysis runs on.</strong>
+  Last generated 2026-04-18T04:04:17.
+  Source: <code>data_pipeline/build_site.py</code>. ·
+  Authors: Kyungmin Lee &amp; Hanvit Kim (University of Central Florida).
+</footer>
+</body></html>

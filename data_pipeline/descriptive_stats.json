@@ -1,0 +1,471 @@
+{
+  "generated_at": "2026-04-18T02:19:22",
+  "sample": {
+    "2022": {
+      "n_records": 166,
+      "n_cocs": 166,
+      "coded_iv": 165,
+      "nonprofit": 82,
+      "government": 83,
+      "pct_nonprofit": 49.4,
+      "with_dv": 141
+    },
+    "2023": {
+      "n_records": 193,
+      "n_cocs": 193,
+      "coded_iv": 193,
+      "nonprofit": 97,
+      "government": 96,
+      "pct_nonprofit": 50.3,
+      "with_dv": 186
+    },
+    "2024": {
+      "n_records": 292,
+      "n_cocs": 292,
+      "coded_iv": 288,
+      "nonprofit": 153,
+      "government": 135,
+      "pct_nonprofit": 52.4,
+      "with_dv": 285
+    }
+  },
+  "activity_index": {
+    "2022": {
+      "overall": {
+        "n": 141,
+        "mean": 0.7128,
+        "sd": 0.2688,
+        "se": 0.0226,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 55,
+        "hist_counts": [
+          3,
+          2,
+          6,
+          53,
+          10,
+          12,
+          55
+        ]
+      },
+      "nonprofit": {
+        "n": 74,
+        "mean": 0.7027,
+        "sd": 0.2441,
+        "se": 0.0284,
+        "min": 0.167,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 0,
+        "at_one": 24,
+        "hist_counts": [
+          0,
+          1,
+          4,
+          30,
+          6,
+          9,
+          24
+        ]
+      },
+      "government": {
+        "n": 67,
+        "mean": 0.7239,
+        "sd": 0.2952,
+        "se": 0.0361,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.833,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 31,
+        "hist_counts": [
+          3,
+          1,
+          2,
+          23,
+          4,
+          3,
+          31
+        ]
+      }
+    },
+    "2023": {
+      "overall": {
+        "n": 186,
+        "mean": 0.7285,
+        "sd": 0.2638,
+        "se": 0.0193,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 80,
+        "hist_counts": [
+          3,
+          1,
+          7,
+          73,
+          11,
+          11,
+          80
+        ]
+      },
+      "nonprofit": {
+        "n": 94,
+        "mean": 0.7305,
+        "sd": 0.2482,
+        "se": 0.0256,
+        "min": 0.167,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 0,
+        "at_one": 38,
+        "hist_counts": [
+          0,
+          1,
+          3,
+          39,
+          5,
+          8,
+          38
+        ]
+      },
+      "government": {
+        "n": 92,
+        "mean": 0.7264,
+        "sd": 0.2802,
+        "se": 0.0292,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 42,
+        "hist_counts": [
+          3,
+          0,
+          4,
+          34,
+          6,
+          3,
+          42
+        ]
+      }
+    },
+    "2024": {
+      "overall": {
+        "n": 285,
+        "mean": 0.8117,
+        "sd": 0.2598,
+        "se": 0.0154,
+        "min": 0.0,
+        "q25": 0.667,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 6,
+        "at_one": 166,
+        "hist_counts": [
+          6,
+          5,
+          10,
+          43,
+          37,
+          18,
+          166
+        ]
+      },
+      "nonprofit": {
+        "n": 152,
+        "mean": 0.8158,
+        "sd": 0.2494,
+        "se": 0.0202,
+        "min": 0.0,
+        "q25": 0.667,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 2,
+        "at_one": 87,
+        "hist_counts": [
+          2,
+          4,
+          3,
+          22,
+          24,
+          10,
+          87
+        ]
+      },
+      "government": {
+        "n": 132,
+        "mean": 0.8081,
+        "sd": 0.2728,
+        "se": 0.0237,
+        "min": 0.0,
+        "q25": 0.6253,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 4,
+        "at_one": 79,
+        "hist_counts": [
+          4,
+          1,
+          7,
+          21,
+          12,
+          8,
+          79
+        ]
+      }
+    }
+  },
+  "cell_rates": [
+    {
+      "field": "1d_4_1_policymakers",
+      "label": "Row 1 \u00b7 Policymaker engagement",
+      "sublabel": "FY22/23: engaged local policymakers to prevent criminalization \u00b7 FY24: engaged legislators on co-responder responses",
+      "years": {
+        "2022": {
+          "overall": 0.9716,
+          "nonprofit": 1.0,
+          "government": 0.9403
+        },
+        "2023": {
+          "overall": 0.9731,
+          "nonprofit": 0.9894,
+          "government": 0.9565
+        },
+        "2024": {
+          "overall": 0.9366,
+          "nonprofit": 0.947,
+          "government": 0.9242
+        }
+      }
+    },
+    {
+      "field": "1d_4_1_prevent_crim",
+      "label": "Row 1 \u00b7 Implementation",
+      "sublabel": "FY22/23: reverse existing criminalization policies \u00b7 FY24: implemented laws for co-responder responses",
+      "years": {
+        "2022": {
+          "overall": 0.4681,
+          "nonprofit": 0.4189,
+          "government": 0.5224
+        },
+        "2023": {
+          "overall": 0.5323,
+          "nonprofit": 0.5,
+          "government": 0.5652
+        },
+        "2024": {
+          "overall": 0.757,
+          "nonprofit": 0.755,
+          "government": 0.7576
+        }
+      }
+    },
+    {
+      "field": "1d_4_2_policymakers",
+      "label": "Row 2 \u00b7 Policymaker engagement",
+      "sublabel": "FY22/23: engaged law enforcement \u00b7 FY24: engaged legislators on minimizing law enforcement",
+      "years": {
+        "2022": {
+          "overall": 0.9645,
+          "nonprofit": 0.973,
+          "government": 0.9552
+        },
+        "2023": {
+          "overall": 0.9624,
+          "nonprofit": 0.9787,
+          "government": 0.9457
+        },
+        "2024": {
+          "overall": 0.9401,
+          "nonprofit": 0.9603,
+          "government": 0.9167
+        }
+      }
+    },
+    {
+      "field": "1d_4_2_prevent_crim",
+      "label": "Row 2 \u00b7 Implementation",
+      "sublabel": "FY22/23: reverse existing \u00b7 FY24: implemented laws minimizing LE for basic life functions",
+      "years": {
+        "2022": {
+          "overall": 0.4965,
+          "nonprofit": 0.473,
+          "government": 0.5224
+        },
+        "2023": {
+          "overall": 0.5161,
+          "nonprofit": 0.5,
+          "government": 0.5326
+        },
+        "2024": {
+          "overall": 0.6655,
+          "nonprofit": 0.6358,
+          "government": 0.697
+        }
+      }
+    },
+    {
+      "field": "1d_4_3_policymakers",
+      "label": "Row 3 \u00b7 Policymaker engagement",
+      "sublabel": "FY22/23: engaged business leaders \u00b7 FY24: engaged legislators on avoiding criminal sanctions",
+      "years": {
+        "2022": {
+          "overall": 0.9149,
+          "nonprofit": 0.9324,
+          "government": 0.8955
+        },
+        "2023": {
+          "overall": 0.9301,
+          "nonprofit": 0.9681,
+          "government": 0.8913
+        },
+        "2024": {
+          "overall": 0.9293,
+          "nonprofit": 0.9536,
+          "government": 0.9084
+        }
+      }
+    },
+    {
+      "field": "1d_4_3_prevent_crim",
+      "label": "Row 3 \u00b7 Implementation",
+      "sublabel": "FY22/23: reverse existing \u00b7 FY24: implemented laws avoiding criminal sanctions",
+      "years": {
+        "2022": {
+          "overall": 0.461,
+          "nonprofit": 0.4189,
+          "government": 0.5075
+        },
+        "2023": {
+          "overall": 0.457,
+          "nonprofit": 0.4468,
+          "government": 0.4674
+        },
+        "2024": {
+          "overall": 0.636,
+          "nonprofit": 0.6358,
+          "government": 0.6412
+        }
+      }
+    }
+  ],
+  "deltas": {
+    "overall": {
+      "FY22_FY23": 0.0157,
+      "FY23_FY24": 0.0832,
+      "FY22_FY24": 0.0989
+    },
+    "nonprofit": {
+      "FY22_FY23": 0.0278,
+      "FY23_FY24": 0.0853,
+      "FY22_FY24": 0.1131
+    },
+    "government": {
+      "FY22_FY23": 0.0025,
+      "FY23_FY24": 0.0817,
+      "FY22_FY24": 0.0842
+    }
+  },
+  "balanced_panel": {
+    "n_cocs": 125,
+    "year_stats": {
+      "2022": {
+        "n": 107,
+        "mean": 0.6838,
+        "sd": 0.2659,
+        "se": 0.0257,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.5,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 36,
+        "hist_counts": [
+          3,
+          1,
+          4,
+          46,
+          9,
+          8,
+          36
+        ]
+      },
+      "2023": {
+        "n": 119,
+        "mean": 0.7143,
+        "sd": 0.2685,
+        "se": 0.0246,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 0.667,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 3,
+        "at_one": 48,
+        "hist_counts": [
+          3,
+          1,
+          3,
+          48,
+          9,
+          7,
+          48
+        ]
+      },
+      "2024": {
+        "n": 122,
+        "mean": 0.8128,
+        "sd": 0.2603,
+        "se": 0.0236,
+        "min": 0.0,
+        "q25": 0.667,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "at_zero": 2,
+        "at_one": 70,
+        "hist_counts": [
+          2,
+          3,
+          6,
+          15,
+          15,
+          11,
+          70
+        ]
+      }
+    },
+    "paired": {
+      "n_paired": 100,
+      "mean_FY22": 0.69,
+      "mean_FY23": 0.7233,
+      "mean_FY24": 0.8184,
+      "mean_delta_23_24": 0.095,
+      "sd_delta_23_24": 0.3091,
+      "share_increased": 0.38,
+      "share_decreased": 0.21,
+      "share_unchanged": 0.41
+    }
+  }
+}
