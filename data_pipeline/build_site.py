@@ -66,6 +66,20 @@ DOWNLOADS = [
     (PIPELINE_DIR / "file_inventory.csv", "provenance",
      "file_inventory.csv",
      "Source-document index (677 files) with normalized CoC IDs, format, and scan flags."),
+    (PIPELINE_DIR / "coc_raw_data.xlsx", "provenance",
+     "coc_raw_data.xlsx",
+     "Comprehensive raw data file — 677 rows × 331 canonical HUD variables + 3 PLE narrative texts. "
+     "Mirrors the manual coc_apps_all_info.xlsx schema but covers all three years, with a schema sheet "
+     "showing which variables still need extraction work."),
+    (PIPELINE_DIR / "coc_raw_for_coding.xlsx", "provenance",
+     "coc_raw_for_coding.xlsx",
+     "Coding workbook — 677 CoC-years with 3 PLE narratives + atomic code columns "
+     "(bool indicators) + auto-computed composite indices. 18 CoC-years coded in the pilot; "
+     "remainder awaiting coauthor review + further coding."),
+    (PIPELINE_DIR / "coc_panel_wide_with_ple.xlsx", "primary",
+     "coc_panel_wide_with_ple.xlsx",
+     "Analytical panel — coc_panel_wide.xlsx + PLE institution indices merged onto the 651 "
+     "analytic CoC-years (currently 18 with PLE codes; NaN elsewhere until coding expands)."),
     (PIPELINE_DIR / "panel_field_map.csv", "provenance",
      "panel_field_map.csv",
      "Per-variable panel-safety category (panel_safe / mostly_panel / year_specific / sparse)."),
@@ -275,7 +289,7 @@ details > summary { cursor: pointer; color: var(--accent); margin: 0.5em 0;
 
 NAV_ITEMS = [
     ("Overview",                         "index.html"),
-    ("Data development and cleaning",    "data.html"),
+    ("Data collection and coding",       "data.html"),
     ("Research design and measurement",  "design.html"),
     ("Descriptive stats",                "descriptive.html"),
     ("Analysis results",                 "results.html"),
@@ -1243,15 +1257,49 @@ def page_data_development(download_records=None):
     wacc = float(last_iter.get("weighted_acc", 0) or 0)
     aacc = float(last_iter.get("adjusted_acc", 0) or 0) if last_iter.get("adjusted_acc") else None
 
+    # Pipeline coverage stats computed live
+    raw_path = PIPELINE_DIR / "coc_raw_data.xlsx"
+    coding_path = PIPELINE_DIR / "coc_raw_for_coding.xlsx"
+    panel_path = PIPELINE_DIR / "coc_panel_wide_with_ple.xlsx"
+    codes_jsonl = PIPELINE_DIR / "drafts" / "pilot_ple_codes.jsonl"
+    n_coded = 0
+    if codes_jsonl.exists():
+        codes_keys = set()
+        for line in codes_jsonl.open():
+            try:
+                r = json.loads(line)
+                codes_keys.add((r["coc_id"], int(r["year"])))
+            except Exception:
+                continue
+        n_coded = len(codes_keys)
+
     mismatches = [d for d in diffs if d.get("manual_value") and d.get("auto_value")]
     autofills  = [d for d in diffs if not d.get("manual_value") and d.get("auto_value")]
     downloads_html = _downloads_block(download_records)
 
     body = f"""
-    <p class="lead">From 677 HUD CoC Consolidated Application documents
-    (FY2022–FY2024) to an analysis-ready three-year panel. This page
-    documents the pipeline, the agreement metrics, and the outstanding
-    review queue.</p>
+    <p class="lead">This page walks coauthors through the four stages of
+    data construction for this study: from the 677 HUD CoC Consolidated
+    Application documents, to a comprehensive raw-data file, to the
+    narrative-coding workbook, to the analytical panel used in the
+    regressions.</p>
+
+    <div style="background:#f6f8fa;border-left:4px solid #4c5fd5;padding:1em 1.2em;margin:1em 0;">
+      <strong>Pipeline at a glance.</strong>
+      <pre style="background:transparent;padding:0;margin:0.6em 0 0 0;font-size:0.9em;line-height:1.5;">
+<b>Stage 1.</b> 677 source PDFs/DOCX            →  <b>coc_raw_data.xlsx</b>
+              (all HUD form fields as columns; structured data filled)
+
+<b>Stage 2.</b> + text slicing of 3 PLE narratives
+              (research-used variables; embedded in raw file)
+
+<b>Stage 3.</b> coc_raw_data → <b>coc_raw_for_coding.xlsx</b>
+              (Claude reads narratives → atomic codes → composite indices)
+              <span style="color:#b7791f">↳ awaiting coauthor review (18 CoC-years coded)</span>
+
+<b>Stage 4.</b> raw + coded indices → <b>coc_panel_wide_with_ple.xlsx</b>
+              (651 CoC-years × variables needed for the regression)</pre>
+    </div>
 
     <h2>1 · Source corpus</h2>
     <div class="card-row">
@@ -1262,96 +1310,274 @@ def page_data_development(download_records=None):
     </div>
     <p class="hint">FY2024 is the largest year because HUD folded the
     Youth Homeless Demonstration Program (YHDP) into the main competition.
-    Eight CoCs submit DOCX instead of PDF; nine require OCR and are held
-    out of the analytic sample.</p>
+    Eight CoCs submit DOCX instead of PDF; a handful require OCR and are
+    flagged rather than silently dropped.</p>
 
-    <h2>2 · Extraction pipeline</h2>
-    <ol>
-      <li><strong>File inventory</strong> (<code>build_file_inventory.py</code>)
-      — indexes every source file, detects scanned PDFs, flags duplicate
-      PDF/DOCX pairs, normalizes CoC IDs.</li>
-      <li><strong>Format-aware adapters</strong> — native-PDF, OCR'd PDF,
-      and DOCX each implement the same output schema. Every cell carries
-      source page, bbox, and extractor version as provenance.</li>
-      <li><strong>Codebook &amp; crosswalk</strong> — 331 canonical FY2024
-      variables mapped across FY2022/23 question IDs. Wording changes
-      flagged explicitly (see the DV measurement-invariance story on the
-      <a href="design.html">design</a> page).</li>
-      <li><strong>Anchor-then-parse</strong> — every question is located
-      by its <code>1B-1.</code> / <code>1D-4.</code>-style anchor, and
-      only the local block is parsed. A parse failure in one block cannot
-      corrupt neighboring variables.</li>
-      <li><strong>Controlled-vocabulary validation</strong> — categorical
-      outputs are checked against the codebook. Out-of-vocab values get
-      <code>needs_review=True</code>; they are never silently coerced.</li>
-      <li><strong>Iteration loop</strong> — extractor diffs against the
-      manual FY2024 spreadsheet, errors classified into six categories,
-      pipeline refined until convergence.</li>
-    </ol>
+    <h2 id="stage1">Stage 1 · Automated PDF → comprehensive raw data file</h2>
+    <p><strong>Goal:</strong> produce a single data file that mirrors the
+    manually-coded <code>coc_apps_all_info.xlsx</code> but extends coverage
+    from FY2024-only (hand-coded by the RA team) to all three years, and
+    captures <em>every</em> HUD CoC Application field as a column — even
+    the ones this study does not yet use.</p>
 
-    <h2>3 · Agreement against the manual reference</h2>
+    <p><strong>Output:</strong>
+    <a href="downloads/coc_raw_data.xlsx" download><code>coc_raw_data.xlsx</code></a>
+    (677 rows × 348 columns; ~2&nbsp;MB).</p>
+
+    <ul>
+      <li><strong>Row universe:</strong> one row per source document in
+      <code>file_inventory.csv</code> — every PDF or DOCX that a CoC
+      submitted across FY2022, FY2023, and FY2024.</li>
+      <li><strong>Column schema:</strong> the 331 canonical HUD variables
+      from <code>codebook.md</code>, in PDF question order
+      (1A → 1B → 1C → 1D → 1E → 2A → 2B → 2C → 3A → 3B → 4A), plus 9
+      meta columns and 8 completeness/PLE-status columns.</li>
+      <li><strong>Extractor:</strong> format-aware adapters
+      (<code>extract_pdf_native.py</code>, <code>extract_docx.py</code>)
+      with an <em>anchor-then-parse</em> rule — every question is located
+      by its <code>1B-1.</code>/<code>1D-4.</code>-style anchor, and only
+      the local block is parsed. A failure in one block cannot corrupt
+      neighboring variables. Categorical outputs are validated against
+      the codebook's controlled vocabularies; out-of-vocab values are
+      flagged rather than coerced.</li>
+      <li><strong>Cross-year harmonization:</strong> FY2024 field IDs are
+      canonical. FY2022/23 content is crosswalked into the same columns
+      where the construct is equivalent (see <code>crosswalk.csv</code>
+      and <code>panel_field_map.csv</code>).</li>
+    </ul>
+
     <div class="card-row">
-      <div class="stat"><div class="label">Weighted agreement</div><div class="value">{wacc:.1%}</div></div>
+      <div class="stat"><div class="label">Canonical variables</div><div class="value">331</div></div>
+      <div class="stat"><div class="label">Weighted agreement vs manual</div><div class="value">{wacc:.1%}</div></div>
       {f'<div class="stat"><div class="label">Adjusted (manual-error removed)</div><div class="value">{aacc:.1%}</div></div>' if aacc else ""}
       <div class="stat"><div class="label">Panel-safe variables</div><div class="value">{panel_safe_n}</div></div>
-      <div class="stat"><div class="label">CoC × year records</div><div class="value">{len(harm)}</div></div>
     </div>
-    <p><strong>Panel-safety categorization:</strong></p>
+
+    <p><strong>Reviewer guide:</strong> open the workbook and start with
+    the <code>schema</code> sheet. Green rows are PLE-relevant fields
+    with text populated. Red rows are canonical variables whose columns
+    are present but not yet filled — they define the roadmap for future
+    extraction waves. Each row reports <code>n_populated</code> and
+    <code>pct_populated</code> across the 677-document corpus so you can
+    see at a glance which fields need work next.</p>
+
+    <p><strong>Known gaps</strong> (surfaced by the Stage 1 extractor):</p>
     <ul>
-      <li><span class="badge good">panel_safe</span> — present in ≥50% of
-      CoCs in every year. Used directly in the primary regression.</li>
-      <li><span class="badge warn">mostly_panel</span> — present in two
-      of three years. Used with care.</li>
-      <li><span class="badge warn">year_specific</span> — asked in only
-      one year. Cross-sectional use only.</li>
-      <li><span class="badge bad">sparse</span> — free-text narrative
-      fields awaiting Stage-2 LLM coding.</li>
+      <li>~20 scanned PDFs — anchor text not present in the text layer.
+      OCR (<code>ocrmypdf</code>) infrastructure is in place but the task
+      has not been run.</li>
+      <li>19 Special NOFO documents — structurally different HUD form
+      (unsheltered funding cycle, FY2022). These do not contain the
+      standard 1D section and are flagged accordingly.</li>
+      <li>3 mis-filed CoC Program <em>Project</em> Applications (SF-424)
+      instead of the <em>Consolidated</em> Application. Require
+      re-sourcing from HUD.</li>
     </ul>
 
-    <h2>4 · Review queue</h2>
-    <p>{len(mismatches):,} value disagreements and {len(autofills):,}
-    auto-fill candidates are staged for PI adjudication.</p>
-    <ul>
-      <li><strong>Value mismatches</strong> — both the manual spreadsheet
-      and the extractor have a value, and they disagree. Every row cites
-      a specific PDF page; when the extractor matches the source, the
-      manual entry is treated as the one to correct.</li>
-      <li><strong>Auto-fill candidates</strong> — the manual cell is
-      blank; the extractor has a value read directly from the PDF. A
-      spot-check of ~30 random rows is recommended before backfilling
-      the spreadsheet.</li>
-    </ul>
-    <p>The pipeline does <strong>not</strong> auto-patch the manual file.
-    Every proposed backport goes through PI review first, preserving
-    provenance.</p>
+    <h2 id="stage2">Stage 2 · Text extraction for research-used variables</h2>
+    <p><strong>Goal:</strong> populate free-text narrative cells for the
+    variables this study measures. Doing Stage-2 narrative coding for
+    all 24 narrative variables in the codebook is a large undertaking;
+    we scoped text extraction to the three People with Lived Experience
+    (PLE) engagement questions because they are the study's primary IV.</p>
 
-    <h2>5 · Outstanding data work</h2>
+    <p><strong>Fields extracted:</strong></p>
+    <ul>
+      <li><code>1d_10</code> — <em>Involving PLE in Service Delivery
+      and Decisionmaking</em> (FY2024 anchor; FY2022/23 equivalent at
+      <code>1d_11</code>, crosswalked in)</li>
+      <li><code>1d_10b</code> — <em>Professional Development and
+      Employment Opportunities for PLE</em></li>
+      <li><code>1d_10c</code> — <em>Routinely Gathering Feedback and
+      Addressing Challenges of PLE</em></li>
+    </ul>
+
+    <p><strong>Method:</strong> year-branched regex anchors
+    (<code>anchors_by_year</code> in <code>extract_narrative.py</code>)
+    with a 1E-1 backstop that guarantees every slice is bounded. Every
+    extracted text cell carries a <code>*_source_page</code> and
+    <code>*_status</code> annotation so reviewers can cross-reference
+    the original PDF.</p>
+
+    <div class="card-row">
+      <div class="stat"><div class="label">FY2022 ok</div><div class="value">143 / 172</div></div>
+      <div class="stat"><div class="label">FY2023 ok</div><div class="value">190 / 197</div></div>
+      <div class="stat"><div class="label">FY2024 ok</div><div class="value">289 / 308</div></div>
+      <div class="stat"><div class="label">3-year ok CoC-years</div><div class="value">622</div></div>
+    </div>
+
+    <p>Other narrative columns (<code>1b_1a</code>, <code>1b_3</code>,
+    <code>1c_4a</code>, <code>1d_11</code> racial-equity, etc.) remain
+    as empty columns in the raw file — the schema is ready, only the
+    extraction pass is pending.</p>
+
+    <h2 id="stage3">Stage 3 · Narrative coding into structured variables</h2>
+
+    <p><strong>Goal:</strong> turn each PLE narrative into a small set of
+    machine-readable atomic codes that can enter a regression, while
+    keeping every code defensible against its source text.</p>
+
+    <p><strong>Output:</strong>
+    <a href="downloads/coc_raw_for_coding.xlsx" download><code>coc_raw_for_coding.xlsx</code></a>
+    (677 rows × 41 columns; ~1&nbsp;MB). One sheet, one row per CoC-year.</p>
+
+    <h3>The coding protocol</h3>
     <ol>
-      <li><strong>Nine CoCs need OCR.</strong> GA-508, MD-600, MI-508,
-      NJ-511, NV-502, PA-501, TX-624, VI-500, WA-502 ship as scanned or
-      font-encoded PDFs. <code>ocrmypdf</code> infrastructure is in place;
-      the task has not been run.</li>
-      <li><strong>41 narrative variables not yet coded.</strong> Stage-2
-      LLM coding with verbatim quotation is specified but not rolled
-      out (~$50–60 in API cost). None of these are in the primary DV.</li>
-      <li><strong>Formal 20-CoC stratified audit.</strong> A per-coder
-      cross-check against the PDFs is outstanding; this is the last
-      blocker on publishing a clean reference dataset alongside the
-      automated one.</li>
+      <li><strong>Atomic-code schema</strong> — 15 boolean indicators +
+      one free-form frequency string across the 3 fields. Codes are
+      grounded in Arnstein's (1969) participation ladder: representation
+      (ladder top), compensation (tokenism defense), feedback loop
+      (delegated power).
+      <ul>
+        <li><code>ple_umbrella</code> (6): <code>on_board</code>,
+        <code>on_committees</code>, <code>compensated</code>,
+        <code>hiring_advertised</code>, <code>formal_policy</code>,
+        <code>decisionmaking</code></li>
+        <li><code>ple_prof_dev</code> (5): <code>paid_positions</code>,
+        <code>comp_policy_formal</code>, <code>training_pipeline</code>,
+        <code>career_advancement</code>, <code>scope_beyond_tokenism</code></li>
+        <li><code>ple_feedback</code> (4 + freq): <code>mechanism_formal</code>,
+        <code>acts_on_feedback</code>, <code>addresses_barriers</code>,
+        <code>closes_the_loop</code>, <code>frequency</code></li>
+      </ul></li>
+
+      <li><strong>Claude Code reads each narrative</strong> and returns a
+      JSON object with every code plus a one-sentence <code>summary</code>
+      and a list of <code>evidence</code>: up to three
+      <em>verbatim quotations</em> from the source text that justify the
+      coded values. If a field is not discussed in the narrative, the
+      code is <code>null</code>; the model is instructed never to
+      fabricate.</li>
+
+      <li><strong>Scoring rule</strong> (Krippendorff 2018 §4.3, direct
+      inference): <code>True → 1</code>, <code>False → 0</code>,
+      <code>null → 0</code>. Rationale: HUD's instrument directly
+      elicits the practice, so a CoC's non-mention is substantive evidence
+      of absence, not of uncertainty. A robustness column pair
+      (<code>*_availcase</code>) computes the available-case mean that
+      skips nulls, for sensitivity checks.</li>
+
+      <li><strong>Composite indices</strong> are computed per CoC-year
+      (range 0 → 1):
+      <ul>
+        <li><code>ple_representation</code> = mean(on_board,
+        on_committees, formal_policy, decisionmaking)</li>
+        <li><code>ple_compensation</code> = mean(compensated,
+        paid_positions, comp_policy_formal)</li>
+        <li><code>ple_feedback_loop</code> = mean(mechanism_formal,
+        acts_on_feedback, addresses_barriers, closes_the_loop)</li>
+        <li><code>ple_institution</code> = mean of the three
+        sub-indices — the headline IV</li>
+      </ul></li>
     </ol>
 
-    <h2>Downloads</h2>
-    <p class="hint">All files regenerate from the pipeline on every build.
-    Click any filename to download. Citations and dates should be updated
-    if you use these in downstream work.</p>
-    {downloads_html}
+    <h3 style="color:#b7791f">Coauthor review requested</h3>
+    <div style="background:#fffbeb;border-left:4px solid #b7791f;padding:1em 1.2em;">
+      <p style="margin-top:0">{n_coded} CoC-years are currently fully
+      coded (the pilot batch). Before scaling coding to the remaining
+      ~600 CoC-years, we need coauthor sign-off on three things:</p>
 
-    <p class="hint" style="margin-top:2em;">Missing something? Raw source
-    PDFs and the full extractor source live in the project repository,
-    not on this static site. Contact the authors for access.</p>
+      <ol>
+        <li><strong>Evidence ↔ code fidelity.</strong> Open
+        <code>coc_raw_for_coding.xlsx</code>, sort by <code>coc_id</code>
+        and <code>year</code>, and for each coded row check that the
+        quotations in the three <code>*_evidence</code> columns actually
+        support the 0/1 values in the atomic-code columns. If any code
+        is not supported by its evidence, flip it in the cell and note
+        the issue in <code>reviewer_notes</code>.</li>
+
+        <li><strong>Schema validity.</strong> Are the 15 atomic indicators
+        the right operationalization of institutionalized PLE engagement?
+        Should any be added (e.g., youth-specific representation) or
+        dropped (e.g., <code>hiring_advertised</code> if too weak)?
+        Composite-index formulas are reported above and can be adjusted.</li>
+
+        <li><strong>Scoring convention.</strong> We score
+        <code>null → 0</code> (absent mention = absent practice). If
+        coauthors prefer the available-case convention (skip nulls
+        entirely) as the primary, say so — both columns already exist
+        in <code>pilot_ple_variables.csv</code>.</li>
+      </ol>
+
+      <p>Once items 2 and 3 are confirmed, the pilot's 18 × 3 = 54
+      narrative codings scale to ~1,800 across the full corpus.
+      Iterating the schema after full coding is expensive; now is the
+      right moment to weigh in.</p>
+    </div>
+
+    <h2 id="stage4">Stage 4 · Analytical panel for the regression</h2>
+    <p><strong>Goal:</strong> select from the comprehensive raw file only
+    the variables the primary multilevel DiD specification needs, and
+    join in the PLE composite indices. This is the file the analysis
+    scripts read.</p>
+
+    <p><strong>Output:</strong>
+    <a href="downloads/coc_panel_wide_with_ple.xlsx" download><code>coc_panel_wide_with_ple.xlsx</code></a>
+    (651 CoC-years × 264 columns). Built by <code>merge_ple_variables.py</code>
+    from the existing <code>coc_panel_wide.xlsx</code> plus
+    <code>drafts/pilot_ple_variables.csv</code>.</p>
+
+    <ul>
+      <li><strong>Row scope:</strong> 651 = 172 (FY2022) + 195 (FY2023)
+      + 284 (FY2024), after excluding Special-NOFO submissions that do
+      not carry the DV. Balanced subset (125 CoCs observed in all three
+      years) is a sheet within <code>coc_analysis_ready.xlsx</code>.</li>
+      <li><strong>Carried-in variables</strong> from
+      <code>coc_panel_wide.xlsx</code>: all 245 structured variables used
+      for the DV construction, political geography, organizational
+      controls, and the Mundlak within-CoC means.</li>
+      <li><strong>New PLE columns</strong> (from
+      <code>pilot_ple_variables.csv</code>): the four composite indices
+      plus 15 atomic bool indicators. Currently non-null for the
+      {n_coded} pilot-coded CoC-years; NaN elsewhere until Stage 3
+      coding is expanded.</li>
+      <li><strong>Used by:</strong> <code>run_multilevel.py</code>
+      (primary DiD), <code>run_balanced_sensitivity.py</code>,
+      <code>run_dv_robustness.py</code>. The existing specifications run
+      unchanged; PLE variables enter as new regressors in the extended
+      spec.</li>
+    </ul>
+
+    <h2>Reproducing the pipeline end-to-end</h2>
+    <pre><code>cd data_pipeline
+python3 build_file_inventory.py    # Stage 1 prerequisite
+python3 router.py                  # Stage 1 — structured extraction
+python3 build_raw_data.py          # Stage 1+2 consolidated raw file
+python3 build_coding_file.py       # Stage 3 — coding workbook
+# [Stage 3 coding runs inline or via the Claude API]
+python3 merge_ple_variables.py     # Stage 4 — analytical panel
+python3 run_multilevel.py          # Primary regression</code></pre>
+
+    <h2>Downloads — the three files from this pipeline</h2>
+    <p class="hint">Just the files produced by the four stages above.
+    Open them in Excel or Numbers. Each link downloads the current build.</p>
+    <table class="downloads"><thead><tr>
+      <th>File</th><th>Stage</th><th>What it is</th>
+    </tr></thead><tbody>
+      <tr>
+        <td><a href="downloads/coc_raw_data.xlsx" download><code>coc_raw_data.xlsx</code></a></td>
+        <td>Stage 1 + 2</td>
+        <td>Comprehensive raw data — 677 rows × 331 HUD variables + meta
+        + 3 PLE narratives. <em>Open the <code>schema</code> sheet to see
+        which variables are populated vs. awaiting extraction.</em></td>
+      </tr>
+      <tr>
+        <td><a href="downloads/coc_raw_for_coding.xlsx" download><code>coc_raw_for_coding.xlsx</code></a></td>
+        <td>Stage 3</td>
+        <td>Coding workbook — 3 PLE narratives + 15 atomic code columns
+        + 4 composite indices per CoC-year. {n_coded} CoC-years coded
+        (pilot). <strong>This is the file to review.</strong></td>
+      </tr>
+      <tr>
+        <td><a href="downloads/coc_panel_wide_with_ple.xlsx" download><code>coc_panel_wide_with_ple.xlsx</code></a></td>
+        <td>Stage 4</td>
+        <td>Analytical panel — 651 CoC-years × 264 columns. Feeds the
+        regression in <code>run_multilevel.py</code>.</td>
+      </tr>
+    </tbody></table>
     """
-    return wrap("Data development and cleaning", "data.html", body,
-                "From 677 raw HUD documents to a panel-safe dataset — pipeline, agreement metrics, downloads, and open review items.")
+    return wrap("Data collection and coding", "data.html", body,
+                "Four-stage pipeline: automated digitization → text extraction → narrative coding → analytical panel. Coauthor review requested at Stage 3.")
 
 
 def _downloads_block(records: list[dict]) -> str:

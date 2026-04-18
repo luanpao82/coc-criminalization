@@ -1,13 +1,18 @@
 """Stage-2 LLM narrative extractor.
 
-Extracts structured codes from the six priority narrative variables:
+Extracts structured codes from the priority narrative variables:
 
-  1b_1a — Experience Promoting Racial Equity
-  1b_3  — Strategy to Solicit/Consider Opinions on Ending Homelessness
-  1d_3  — Street Outreach Scope
-  1d_6a — Information & Training on Mainstream Benefits
-  1d_11 — Involving Individuals with Lived Experience in Service Delivery
-  2c_1  — Reduction in First Time Homeless — Risk Factors
+  1b_1a           — Experience Promoting Racial Equity
+  1b_3            — Strategy to Solicit/Consider Opinions on Ending Homelessness
+  1d_3            — Street Outreach Scope
+  1d_6a           — Information & Training on Mainstream Benefits
+  ple_umbrella    — Involving PLE in Service Delivery & Decisionmaking
+                    (anchors: FY22/23 = 1D-11; FY24 = 1D-10)
+  ple_prof_dev    — Professional Development & Employment for PLE
+                    (anchors: FY22/23 = 1D-11b; FY24 = 1D-10b)
+  ple_feedback    — Routinely Gathering Feedback from PLE
+                    (anchors: FY22/23 = 1D-11c; FY24 = 1D-10c)
+  2c_1            — Reduction in First Time Homeless — Risk Factors
 
 Design rules (per data_construction_methodology.md §4.2)
   * Each LLM call MUST return verbatim sentence quotations as evidence.
@@ -92,17 +97,55 @@ NARRATIVE_SPECS = {
             "evidence": "list[string] — up to 3 verbatim quotations",
         },
     },
-    "1d_11": {
-        "anchor": r"\b1D-11\.",
-        "next_anchor": r"\b1E-1\.",
+    "ple_umbrella": {
+        "anchors_by_year": {
+            "2022": {"anchor": r"\b1D-11\.",  "next_anchor": r"\b1D-11a\.|\b1E-1\."},
+            "2023": {"anchor": r"\b1D-11\.",  "next_anchor": r"\b1D-11a\.|\b1E-1\."},
+            "2024": {"anchor": r"\b1D-10\.",  "next_anchor": r"\b1D-10a\.|\b1E-1\."},
+        },
         "title": "Involving Individuals with Lived Experience in Service Delivery and Decisionmaking",
         "schema": {
-            "ple_on_board": "bool — PLE on governing board?",
-            "ple_on_committees": "bool",
-            "ple_compensated": "bool — are PLE compensated for their time?",
-            "ple_hiring_advertised": "bool",
-            "formal_policy": "bool — is there a formal/written policy for PLE engagement?",
-            "summary": "string",
+            "ple_on_board": "bool — PLE formally seated on the CoC governing board?",
+            "ple_on_committees": "bool — PLE on CoC committees/workgroups?",
+            "ple_compensated": "bool — are PLE compensated (wage/stipend/transport) for their time?",
+            "ple_hiring_advertised": "bool — are PLE roles publicly advertised rather than hand-picked?",
+            "formal_policy": "bool — is there a written/codified policy governing PLE engagement?",
+            "decisionmaking_authority": "bool — do PLE have voting or veto power on policy decisions (beyond advisory)?",
+            "summary": "string — one-sentence summary of the CoC's PLE engagement structure",
+            "evidence": "list[string] — up to 3 verbatim quotations supporting the codes above",
+        },
+    },
+    "ple_prof_dev": {
+        "anchors_by_year": {
+            "2022": {"anchor": r"\b1D-11b\.", "next_anchor": r"\b1D-11c\.|\b1E-1\."},
+            "2023": {"anchor": r"\b1D-11b\.", "next_anchor": r"\b1D-11c\.|\b1E-1\."},
+            "2024": {"anchor": r"\b1D-10b\.", "next_anchor": r"\b1D-10c\.|\b1E-1\."},
+        },
+        "title": "Professional Development and Employment Opportunities for Individuals with Lived Experience",
+        "schema": {
+            "paid_positions_exist": "bool — are there paid staff positions for PLE described?",
+            "compensation_policy_formal": "bool — formal written compensation policy (rates/schedule)?",
+            "training_pipeline_described": "bool — training, mentorship, or certification pathway for PLE?",
+            "career_advancement_described": "bool — promotion or advancement path described, not only entry-level?",
+            "scope_beyond_tokenism": "bool — evidence of PLE in substantive roles (supervisory/programmatic) rather than single advisory seat?",
+            "summary": "string — one-sentence summary",
+            "evidence": "list[string] — up to 3 verbatim quotations",
+        },
+    },
+    "ple_feedback": {
+        "anchors_by_year": {
+            "2022": {"anchor": r"\b1D-11c\.", "next_anchor": r"\b1D-12\.|\b1E-1\."},
+            "2023": {"anchor": r"\b1D-11c\.", "next_anchor": r"\b1D-12\.|\b1E-1\."},
+            "2024": {"anchor": r"\b1D-10c\.", "next_anchor": r"\b1D-11\.|\b1E-1\."},
+        },
+        "title": "Routinely Gathering Feedback and Addressing Challenges of Individuals with Lived Experience",
+        "schema": {
+            "feedback_mechanism_formal": "bool — formal channel (standing meeting, survey, focus group) vs ad-hoc?",
+            "feedback_frequency": "string — stated cadence (e.g., 'monthly', 'quarterly', 'annual', 'continuous'); null if unstated",
+            "acts_on_feedback": "bool — concrete example of feedback causing a policy/practice change?",
+            "addresses_barriers": "bool — accommodations described (language, transport, childcare, tech access)?",
+            "closes_the_loop": "bool — does the CoC report back to PLE on how feedback was used?",
+            "summary": "string — one-sentence summary",
             "evidence": "list[string] — up to 3 verbatim quotations",
         },
     },
@@ -204,12 +247,23 @@ def call_claude(client, system_prompt: str, user_prompt: str, cache: bool = True
         return {"_parse_error": str(e), "_raw": raw[:500]}
 
 
+def resolve_anchors(spec: dict, year: str) -> tuple[str, str]:
+    """Pick (anchor, next_anchor) for this year — year-branched fields override
+    the shared defaults. Raises KeyError if a year-branched field has no entry
+    for the requested year (fail loud rather than fall back silently)."""
+    if "anchors_by_year" in spec:
+        yr_spec = spec["anchors_by_year"][year]
+        return yr_spec["anchor"], yr_spec["next_anchor"]
+    return spec["anchor"], spec["next_anchor"]
+
+
 def process_one(client, coc_id: str, year: str, field_id: str, dry_run: bool) -> dict | None:
     pdf_path = find_source_file(coc_id, year)
     if pdf_path is None or pdf_path.suffix.lower() != ".pdf":
         return None
     spec = NARRATIVE_SPECS[field_id]
-    text, page = slice_narrative(pdf_path, spec["anchor"], spec["next_anchor"])
+    anchor, next_anchor = resolve_anchors(spec, year)
+    text, page = slice_narrative(pdf_path, anchor, next_anchor)
     if len(text) < 30:
         return {"coc_id": coc_id, "year": year, "field_id": field_id,
                 "status": "no_narrative", "source_page": page}
