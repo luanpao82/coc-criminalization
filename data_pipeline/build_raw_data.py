@@ -329,6 +329,63 @@ def main():
         HERE / "stage1_flagged.csv", index=False)
     print(f"\n[stage1_flagged.csv] wrote {len(flagged_export)} flagged rows")
 
+    # ---- Write stage2_narratives.csv — per-PDF × per-narrative status ----
+    # Because each of the three PLE narratives is extracted independently, a
+    # file can be 3/3, 2/3, 1/3, or 0/3 ok. Partial cases (2/3 or 1/3) are
+    # invisible in stage1_flagged.csv (which only looks at ple_umbrella) and
+    # are the most useful review candidates — they suggest a recoverable
+    # anchor issue specific to one section rather than a dead file.
+    REVIEW_NEED = {
+        "MIS_FILED_PROJECT_APP":   "RE_SOURCE: replace file from HUD e-snaps, then re-run extraction",
+        "SCANNED":                 "OCR_THEN_REVIEW: run ocrmypdf, then verify the 3 extracted narratives",
+        "ANCHOR_NOT_FOUND":        "HUMAN_REVIEW: open the PDF, locate the missing narrative by hand",
+        "PLE_BLOCK_ABSENT":        "HUMAN_REVIEW: confirm the section is absent vs just non-standard formatting",
+        "LOW_TEXT":                "OCR_THEN_REVIEW: text layer near-empty, may need OCR or manual entry",
+        "UNKNOWN_FORMAT":          "HUMAN_REVIEW: inspect document structure; is this the right file?",
+        "SPECIAL_NOFO_INSTRUMENT": "EXCLUDED: different HUD form, no 1D PLE section — excluded by design",
+        "NOT_PDF":                 "USE_PDF_SIBLING: this DOCX has a parallel PDF — use the PDF",
+        "FILE_NOT_FOUND":          "RE_SOURCE: file not present in OneDrive",
+        "ok":                      "",
+    }
+    s2 = out[out["year"].isin([2022, 2023, 2024])].copy()
+    s2["n_ple_ok"] = (
+        (s2["ple_umbrella_status_code"] == "ok").astype(int)
+        + (s2["ple_prof_dev_status_code"] == "ok").astype(int)
+        + (s2["ple_feedback_status_code"] == "ok").astype(int)
+    )
+
+    def _per_row_review(r):
+        if r["n_ple_ok"] == 3:
+            return ""
+        # Prefer the most severe non-ok code among the 3
+        codes = [r[f"{f}_status_code"] for f in PLE_TEXT_FIELDS
+                 if r[f"{f}_status_code"] not in ("", "ok")]
+        if not codes:
+            return ""
+        severity = ["MIS_FILED_PROJECT_APP", "SCANNED", "LOW_TEXT",
+                    "ANCHOR_NOT_FOUND", "PLE_BLOCK_ABSENT",
+                    "UNKNOWN_FORMAT", "SPECIAL_NOFO_INSTRUMENT",
+                    "NOT_PDF", "FILE_NOT_FOUND"]
+        codes.sort(key=lambda c: severity.index(c) if c in severity else 99)
+        return REVIEW_NEED.get(codes[0], "HUMAN_REVIEW")
+
+    s2["review_needed"] = s2.apply(_per_row_review, axis=1)
+    s2_needs = s2[s2["n_ple_ok"] < 3].copy()
+    s2_export = s2_needs[[
+        "original_filename", "coc_id", "year", "format", "n_ple_ok",
+        "ple_umbrella_status_code", "ple_prof_dev_status_code",
+        "ple_feedback_status_code", "review_needed",
+    ]].rename(columns={
+        "ple_umbrella_status_code": "umbrella",
+        "ple_prof_dev_status_code": "prof_dev",
+        "ple_feedback_status_code": "feedback",
+    })
+    s2_export.sort_values(["n_ple_ok", "year", "coc_id"]).to_csv(
+        HERE / "stage2_narratives.csv", index=False)
+
+    print(f"[stage2_narratives.csv] wrote {len(s2_export)} rows needing Stage 2 attention")
+    print("  per-file narrative counts:", s2["n_ple_ok"].value_counts().sort_index().to_dict())
+
     size_kb = OUT_PATH.stat().st_size / 1024
     print(f"\n[done] {OUT_PATH.name}  ({size_kb:.0f} KB)")
     print(f"  raw_data: {len(out)} rows × {len(out.columns)} cols")

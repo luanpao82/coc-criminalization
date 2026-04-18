@@ -369,6 +369,10 @@ def load_stage1_flagged():
     return load_csv(PIPELINE_DIR / "stage1_flagged.csv")
 
 
+def load_stage2_narratives():
+    return load_csv(PIPELINE_DIR / "stage2_narratives.csv")
+
+
 def load_extraction_summary():
     return load_csv(PIPELINE_DIR / "extraction_summary.csv")
 
@@ -1254,6 +1258,7 @@ def page_data_development(download_records=None):
     harm = load_harmonized()
     diffs = load_corpus_diffs()
     stage1_flagged = load_stage1_flagged()
+    stage2_narratives = load_stage2_narratives()
     download_records = download_records or []
 
     by_year = Counter(r["year"] for r in inv)
@@ -1404,6 +1409,8 @@ def page_data_development(download_records=None):
     <code>1c_4a</code>, <code>1d_11</code> racial-equity, etc.) remain
     as empty columns in the raw file — the schema is ready, only the
     extraction pass is pending.</p>
+
+    {_stage2_narratives_block(stage2_narratives)}
 
     <h2 id="stage3">Stage 3 · Narrative coding into structured variables</h2>
 
@@ -1660,6 +1667,136 @@ def _stage1_flagged_block(rows: list[dict]) -> str:
     (different HUD form, no 1D PLE section) rather than a bug — they are
     listed so the exclusion is transparent, but no action is needed.
     Everything else is a genuine gap.
+    </p>
+    """
+
+
+def _stage2_narratives_block(rows: list[dict]) -> str:
+    """Render the Stage 2 per-narrative extraction status.
+
+    Unlike Stage 1 (file-level), Stage 2 extracts three independent PLE
+    narratives per file, so a CoC-year can be 3/3, 2/3, 1/3, or 0/3 ok.
+    Partial cases are the most useful review candidates — they usually
+    reflect a section-specific anchor mismatch rather than a dead file."""
+    if not rows:
+        return ("<p class='hint'><em>stage2_narratives.csv not found — "
+                "run <code>python3 build_raw_data.py</code> to regenerate.</em></p>")
+
+    # Bucket by n_ple_ok (0, 1, or 2 — any row here has < 3 ok)
+    full = [r for r in rows if r["n_ple_ok"] == "3"]  # should be empty by construction
+    two_of_three = [r for r in rows if r["n_ple_ok"] == "2"]
+    one_of_three = [r for r in rows if r["n_ple_ok"] == "1"]
+    zero_of_three = [r for r in rows if r["n_ple_ok"] == "0"]
+    n_rows = len(rows)
+
+    # Cards ordered by urgency (partials first — they're recoverable)
+    cards = []
+    if two_of_three:
+        cards.append(f'<div class="stat"><div class="label">Partial · 2 of 3 ok</div>'
+                     f'<div class="value">{len(two_of_three)}</div></div>')
+    if one_of_three:
+        cards.append(f'<div class="stat"><div class="label">Partial · 1 of 3 ok</div>'
+                     f'<div class="value">{len(one_of_three)}</div></div>')
+    cards.append(f'<div class="stat"><div class="label">All 3 narratives missing</div>'
+                 f'<div class="value">{len(zero_of_three)}</div></div>')
+    cards_html = '<div class="card-row">' + "\n".join(cards) + "</div>"
+
+    # Bucket rows by review_needed action (short classifier at start of string)
+    action_classes = {
+        "RE_SOURCE": ("bad", "Replace file"),
+        "HUMAN_REVIEW": ("warn", "Human review"),
+        "OCR_THEN_REVIEW": ("warn", "OCR + review"),
+        "EXCLUDED": ("good", "Excluded by design"),
+        "USE_PDF_SIBLING": ("good", "Use PDF sibling"),
+    }
+    def _cls(review_needed: str) -> tuple[str, str]:
+        for prefix, (badge, label) in action_classes.items():
+            if review_needed.startswith(prefix):
+                return badge, label
+        return "warn", "Review"
+
+    # Build the status-per-narrative table, sorted: partial cases first,
+    # then zero-of-three grouped by action
+    rows_sorted = sorted(rows, key=lambda r: (
+        -int(r["n_ple_ok"]) if r["n_ple_ok"] != "" else 0,  # 2-of-3 before 1-of-3 before 0-of-3
+        r["review_needed"],
+        r["year"], r["coc_id"],
+    ))
+
+    def _cell(code: str) -> str:
+        if code == "ok":
+            return "<td style='background:#e6f4ea;color:#137333;font-weight:600;text-align:center'>ok</td>"
+        if not code:
+            return "<td class='num'>—</td>"
+        return f"<td style='background:#fce8e6;color:#a50e0e;text-align:center'><code style='font-size:0.85em'>{html.escape(code)}</code></td>"
+
+    table_rows = []
+    for r in rows_sorted:
+        badge, action_label = _cls(r["review_needed"])
+        # Strip the prefix off review_needed to keep the detail concise
+        detail = r["review_needed"]
+        for p in action_classes:
+            if detail.startswith(p + ":"):
+                detail = detail[len(p)+1:].strip()
+                break
+        table_rows.append(
+            f"<tr>"
+            f"<td><code>{html.escape(r['original_filename'])}</code></td>"
+            f"<td>{html.escape(r['coc_id'])}</td>"
+            f"<td class='num'>{html.escape(str(r['year']))}</td>"
+            f"<td class='num'><strong>{r['n_ple_ok']}/3</strong></td>"
+            f"{_cell(r['umbrella'])}"
+            f"{_cell(r['prof_dev'])}"
+            f"{_cell(r['feedback'])}"
+            f"<td><span class='badge {badge}'>{html.escape(action_label)}</span></td>"
+            f"<td>{html.escape(detail)}</td>"
+            f"</tr>"
+        )
+
+    table_html = (
+        "<table class='downloads'><thead><tr>"
+        "<th>Source file</th><th>CoC</th><th>Year</th><th>OK</th>"
+        "<th>umbrella</th><th>prof_dev</th><th>feedback</th>"
+        "<th>Review kind</th><th>Detail</th>"
+        "</tr></thead><tbody>" + "\n".join(table_rows) + "</tbody></table>"
+    )
+
+    partial_note = ""
+    partials = two_of_three + one_of_three
+    if partials:
+        partial_note = (
+            f"<p><strong>{len(partials)} partial extraction(s)</strong> — "
+            f"the PDF is readable and at least one narrative extracted cleanly, "
+            f"but a specific section's anchor did not match. These are "
+            f"the highest-value review targets: a coauthor can open the PDF at "
+            f"the listed section and confirm whether the narrative is missing "
+            f"or just formatted differently.</p>"
+        )
+
+    return f"""
+    <h3 id="stage2-flagged" style="color:#b7791f">Text extraction — files that need attention ({n_rows})</h3>
+    <p>Each file has three independent PLE narrative extractions (umbrella,
+    prof_dev, feedback). The counts below show how many of the three
+    succeeded; partial cases (2 of 3 or 1 of 3) are surfaced separately
+    because they usually reflect a section-level fix rather than a file-level
+    block.</p>
+
+    {cards_html}
+
+    {partial_note}
+
+    <details open><summary><strong>Show all {n_rows} files</strong>
+    &nbsp;<span class='hint'>(partial cases first; then grouped by review action)</span></summary>
+    {table_html}
+    </details>
+
+    <p class='hint' style='margin-top:0.5em;'>
+    The <span class='badge warn'>Human review</span> label means the PDF
+    text exists and a coauthor's judgment is needed — typically either
+    locating a narrative that uses non-standard numbering, or confirming
+    that the section is genuinely absent. Rows marked
+    <span class='badge good'>Excluded by design</span> are the Special-NOFO
+    files — no action required, listed only for transparency.
     </p>
     """
 
