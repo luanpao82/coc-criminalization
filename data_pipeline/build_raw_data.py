@@ -38,7 +38,9 @@ META_COLS = [
 ]
 COMPLETENESS_COLS = [
     "n_fields_populated", "pct_fields_populated",
-    "ple_umbrella_status", "ple_prof_dev_status", "ple_feedback_status",
+    "ple_umbrella_status_code", "ple_umbrella_status",
+    "ple_prof_dev_status_code", "ple_prof_dev_status",
+    "ple_feedback_status_code", "ple_feedback_status",
 ]
 
 # PLE narrative fields: research-used, text populated
@@ -96,43 +98,42 @@ def slice_ple_narratives(inventory: pd.DataFrame) -> dict[tuple, dict]:
         is_scanned = bool(row.get("is_scanned"))
         rec: dict = {}
         for ple_fid in PLE_TEXT_FIELDS:
+            def _set(code, detail=None, text="", page=None):
+                rec[f"{ple_fid}_status_code"] = code
+                rec[f"{ple_fid}_status"] = detail or code
+                rec[f"{ple_fid}_text"] = text
+                rec[f"{ple_fid}_page"] = page
+
             if not is_pdf:
-                rec[f"{ple_fid}_text"] = ""
-                rec[f"{ple_fid}_page"] = None
-                rec[f"{ple_fid}_status"] = f"NOT_PDF (format={row.get('format')})"
+                _set("NOT_PDF", f"NOT_PDF (format={row.get('format')})")
                 continue
             path = Path(DATA_DIR) / fname
             if not path.exists():
-                rec[f"{ple_fid}_text"] = ""; rec[f"{ple_fid}_page"] = None
-                rec[f"{ple_fid}_status"] = "FILE_NOT_FOUND"
+                _set("FILE_NOT_FOUND", "source file not found")
                 continue
             if is_scanned:
-                rec[f"{ple_fid}_text"] = ""; rec[f"{ple_fid}_page"] = None
-                rec[f"{ple_fid}_status"] = "SCANNED (needs OCR)"
+                _set("SCANNED", "scanned PDF — pdftotext yields no usable layer (needs OCR)")
                 continue
             spec = NARRATIVE_SPECS[ple_fid]
             try:
                 anchor, next_anchor = resolve_anchors(spec, year)
                 text, page = slice_narrative(path, anchor, next_anchor)
             except Exception as e:
-                rec[f"{ple_fid}_text"] = ""; rec[f"{ple_fid}_page"] = None
-                rec[f"{ple_fid}_status"] = f"ERROR: {e}"
+                _set("ERROR", f"ERROR: {e}")
                 continue
             if len(text) >= 30:
-                rec[f"{ple_fid}_text"] = text[:32000]
-                rec[f"{ple_fid}_page"] = page
-                rec[f"{ple_fid}_status"] = "ok"
+                _set("ok", "ok", text=text[:32000], page=page)
             else:
-                rec[f"{ple_fid}_text"] = ""
-                rec[f"{ple_fid}_page"] = None
-                # Classify based on PDF content
                 body = pdf_text(fname)
                 if "SF-424" in body and "Before Starting the Project Application" in body:
-                    rec[f"{ple_fid}_status"] = "MIS_FILED_PROJECT_APP"
+                    _set("MIS_FILED_PROJECT_APP",
+                         "source is CoC Program Project Application (SF-424), not Consolidated App")
                 elif "Special NOFO" in body or "Special Notice of Funding Opportunity" in body:
-                    rec[f"{ple_fid}_status"] = "SPECIAL_NOFO_INSTRUMENT"
+                    _set("SPECIAL_NOFO_INSTRUMENT",
+                         "Special NOFO CoC Application (unsheltered set-aside) — different HUD instrument")
                 else:
-                    rec[f"{ple_fid}_status"] = "ANCHOR_NOT_FOUND"
+                    _set("ANCHOR_NOT_FOUND",
+                         "PLE narrative anchor not found in this PDF")
         out[key] = rec
         if (i + 1) % 120 == 0:
             print(f"  ...sliced {i+1}/{len(inventory)}")
@@ -171,6 +172,7 @@ def main():
     # Inject PLE narrative text into canonical columns 1d_10 / 1d_10b / 1d_10c
     for ple_fid, canonical_col in PLE_TEXT_FIELDS.items():
         out[f"{ple_fid}_status"] = ""
+        out[f"{ple_fid}_status_code"] = ""
         out[f"{ple_fid}_page"] = pd.NA
     for i, row in out.iterrows():
         key = (row["coc_id"], row["year"])
@@ -183,6 +185,7 @@ def main():
                 out.at[i, canonical_col] = txt
             out.at[i, f"{ple_fid}_page"] = rec.get(f"{ple_fid}_page")
             out.at[i, f"{ple_fid}_status"] = rec.get(f"{ple_fid}_status", "")
+            out.at[i, f"{ple_fid}_status_code"] = rec.get(f"{ple_fid}_status_code", "")
 
     # ---- Row-level completeness ----
     def row_completeness(row):
@@ -287,6 +290,44 @@ def main():
             elif cls and "not yet extracted" in cls:
                 for c in row:
                     c.fill = red
+
+    # ---- Write stage1_flagged.csv for the coauthor-facing site ----
+    # Any row where the PLE umbrella status is not "ok" is something a
+    # coauthor can act on. The status codes from classify_missing carry the
+    # diagnosis; this export adds a plain-language "action_needed" column.
+    ACTIONS = {
+        "MIS_FILED_PROJECT_APP":
+            "Replace: find correct Consolidated Application on HUD e-snaps and swap in OneDrive",
+        "SCANNED":
+            "OCR: run ocrmypdf on the PDF, or hand-enter key fields from the source",
+        "SPECIAL_NOFO_INSTRUMENT":
+            "Exclude: FY2022 unsheltered set-aside — different HUD form, no 1D PLE section; excluded by design",
+        "ANCHOR_NOT_FOUND":
+            "Review: PDF has text but non-standard template; manually confirm or re-source",
+        "PLE_BLOCK_ABSENT":
+            "Review: 1D-* anchors present but PLE block missing; likely incomplete submission",
+        "LOW_TEXT":
+            "Review: PDF text layer nearly empty; may be scanned or corrupt",
+        "UNKNOWN_FORMAT":
+            "Review: document structure unrecognized; check whether this is the correct file",
+        "NOT_PDF":
+            "Use PDF sibling: this is a DOCX duplicate — the parallel PDF is the authoritative source",
+        "FILE_NOT_FOUND":
+            "Re-source: file listed in inventory but not present in OneDrive",
+        "OUT_OF_SCOPE":
+            "Ignore: year outside the FY2022–2024 analysis panel",
+    }
+    flagged = out[out["ple_umbrella_status_code"] != "ok"].copy()
+    flagged["action_needed"] = flagged["ple_umbrella_status_code"].map(ACTIONS).fillna("Review")
+    flagged_export = flagged[[
+        "original_filename", "coc_id", "year", "format", "num_pages", "is_scanned",
+        "ple_umbrella_status_code", "ple_umbrella_status", "action_needed",
+        "pct_fields_populated", "n_fields_populated",
+    ]].rename(columns={"ple_umbrella_status_code": "status_code",
+                       "ple_umbrella_status": "status_detail"})
+    flagged_export.sort_values(["status_code", "year", "coc_id"]).to_csv(
+        HERE / "stage1_flagged.csv", index=False)
+    print(f"\n[stage1_flagged.csv] wrote {len(flagged_export)} flagged rows")
 
     size_kb = OUT_PATH.stat().st_size / 1024
     print(f"\n[done] {OUT_PATH.name}  ({size_kb:.0f} KB)")

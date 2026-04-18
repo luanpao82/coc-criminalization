@@ -365,6 +365,10 @@ def load_corpus_diffs():
     return load_csv(PIPELINE_DIR / "corpus_diffs.csv")
 
 
+def load_stage1_flagged():
+    return load_csv(PIPELINE_DIR / "stage1_flagged.csv")
+
+
 def load_extraction_summary():
     return load_csv(PIPELINE_DIR / "extraction_summary.csv")
 
@@ -1249,6 +1253,7 @@ def page_data_development(download_records=None):
     fm = load_field_map()
     harm = load_harmonized()
     diffs = load_corpus_diffs()
+    stage1_flagged = load_stage1_flagged()
     download_records = download_records or []
 
     by_year = Counter(r["year"] for r in inv)
@@ -1361,18 +1366,7 @@ def page_data_development(download_records=None):
     <code>pct_populated</code> across the 677-document corpus so you can
     see at a glance which fields need work next.</p>
 
-    <p><strong>Known gaps</strong> (surfaced by the Stage 1 extractor):</p>
-    <ul>
-      <li>~20 scanned PDFs — anchor text not present in the text layer.
-      OCR (<code>ocrmypdf</code>) infrastructure is in place but the task
-      has not been run.</li>
-      <li>19 Special NOFO documents — structurally different HUD form
-      (unsheltered funding cycle, FY2022). These do not contain the
-      standard 1D section and are flagged accordingly.</li>
-      <li>3 mis-filed CoC Program <em>Project</em> Applications (SF-424)
-      instead of the <em>Consolidated</em> Application. Require
-      re-sourcing from HUD.</li>
-    </ul>
+    {_stage1_flagged_block(stage1_flagged)}
 
     <h2 id="stage2">Stage 2 · Text extraction for research-used variables</h2>
     <p><strong>Goal:</strong> populate free-text narrative cells for the
@@ -1578,6 +1572,96 @@ python3 run_multilevel.py          # Primary regression</code></pre>
     """
     return wrap("Data collection and coding", "data.html", body,
                 "Four-stage pipeline: automated digitization → text extraction → narrative coding → analytical panel. Coauthor review requested at Stage 3.")
+
+
+def _stage1_flagged_block(rows: list[dict]) -> str:
+    """Render the Stage 1 'files that need attention' section.
+
+    Groups 677-file failures by status_code, shows summary counts, then
+    lists every flagged file with its action for coauthor follow-up."""
+    if not rows:
+        return ("<p class='hint'><em>stage1_flagged.csv not found — "
+                "run <code>python3 build_raw_data.py</code> to regenerate.</em></p>")
+
+    # Count per status_code
+    counts = Counter(r["status_code"] for r in rows)
+    # Suppress NOT_PDF and OUT_OF_SCOPE — those are inventory-level, not
+    # data-quality issues the coauthors need to act on.
+    actionable_codes = [c for c in counts if c not in ("NOT_PDF", "OUT_OF_SCOPE")]
+    actionable_rows = [r for r in rows if r["status_code"] in actionable_codes]
+    n_total = len(actionable_rows)
+
+    # Summary cards ordered by urgency
+    CATEGORY_ORDER = [
+        ("MIS_FILED_PROJECT_APP", "Mis-filed — wrong HUD form",         "bad"),
+        ("SCANNED",               "Scanned PDFs — need OCR",            "warn"),
+        ("ANCHOR_NOT_FOUND",      "Non-standard template — review",     "warn"),
+        ("PLE_BLOCK_ABSENT",      "Incomplete — PLE block missing",     "warn"),
+        ("LOW_TEXT",              "Low text — likely scanned/corrupt",  "warn"),
+        ("UNKNOWN_FORMAT",        "Unknown format",                     "warn"),
+        ("SPECIAL_NOFO_INSTRUMENT", "Special NOFO — excluded by design","good"),
+    ]
+    cards = []
+    for code, label, badge in CATEGORY_ORDER:
+        n = counts.get(code, 0)
+        if n == 0:
+            continue
+        cards.append(
+            f'<div class="stat"><div class="label">{html.escape(label)}</div>'
+            f'<div class="value">{n}</div></div>'
+        )
+    cards_html = '<div class="card-row">' + "\n".join(cards) + "</div>"
+
+    # Full table of flagged files — sorted by urgency then year/coc_id
+    url_order = {c: i for i, (c, _, _) in enumerate(CATEGORY_ORDER)}
+    actionable_rows.sort(key=lambda r: (url_order.get(r["status_code"], 99),
+                                         r["year"], r["coc_id"]))
+
+    LABEL_MAP = {c: label for c, label, _ in CATEGORY_ORDER}
+    BADGE_MAP = {c: badge for c, _, badge in CATEGORY_ORDER}
+    table_rows = []
+    for r in actionable_rows:
+        code = r["status_code"]
+        badge = BADGE_MAP.get(code, "warn")
+        label = LABEL_MAP.get(code, code)
+        table_rows.append(
+            f"<tr>"
+            f"<td><code>{html.escape(r['original_filename'])}</code></td>"
+            f"<td>{html.escape(r['coc_id'])}</td>"
+            f"<td class='num'>{html.escape(str(r['year']))}</td>"
+            f"<td><span class='badge {badge}'>{html.escape(label)}</span></td>"
+            f"<td>{html.escape(r['action_needed'])}</td>"
+            f"</tr>"
+        )
+    table_html = (
+        "<table class='downloads'><thead><tr>"
+        "<th>Source file</th><th>CoC</th><th>Year</th>"
+        "<th>Category</th><th>What to do</th>"
+        "</tr></thead><tbody>" + "\n".join(table_rows) + "</tbody></table>"
+    )
+
+    return f"""
+    <h3 id="stage1-flagged" style="color:#b7791f">Files that need attention ({n_total})</h3>
+    <p>Of the 677 source documents, <strong>{n_total}</strong> did not
+    pass Stage 1 extraction cleanly. The categories below are in priority
+    order for coauthor follow-up. Each row names the exact file
+    (look it up in the OneDrive <code>Data/</code> folder) and what
+    action would unblock it.</p>
+
+    {cards_html}
+
+    <details open><summary><strong>Show all {n_total} files</strong>
+    &nbsp;<span class='hint'>(sorted by category, then year, then CoC)</span></summary>
+    {table_html}
+    </details>
+
+    <p class='hint' style='margin-top:0.5em;'>
+    The <strong>Special NOFO</strong> files are a design-level exclusion
+    (different HUD form, no 1D PLE section) rather than a bug — they are
+    listed so the exclusion is transparent, but no action is needed.
+    Everything else is a genuine gap.
+    </p>
+    """
 
 
 def _downloads_block(records: list[dict]) -> str:
